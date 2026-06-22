@@ -108,7 +108,7 @@
             display: none;
         }
 
-        /* Header Principal - FIXO 1cm ABAIXO DO TOPO */
+        /* Header Principal */
         .header {
             background: #075e54;
             color: white;
@@ -117,11 +117,12 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: fixed;
-            top: 1cm;
-            left: 0;
-            width: 100%;
+            position: relative;
+            /* BARRA SUPERIOR FIXA */
+            position: sticky;
+            top: 0;
             z-index: 100;
+            flex-shrink: 0;
         }
 
         .header-left {
@@ -144,8 +145,8 @@
         }
 
         .back-admin-btn:hover {
-            background: rgba(255,255,255,0.3);
-        }
+            background: rgba(255,255,255,0.3);        }
+
         .header h2 {
             font-size: 20px;
             font-weight: 500;
@@ -193,8 +194,8 @@
 
         .settings-menu.show {
             display: block;
-            animation: fadeIn 0.2s;
-        }
+            animation: fadeIn 0.2s;        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -242,8 +243,8 @@
             flex: 1;
         }
 
-        .settings-menu-item .menu-status {
-            font-size: 11px;            color: #25d366;
+        .settings-menu-item .menu-status {            font-size: 11px;
+            color: #25d366;
             font-weight: bold;
         }
 
@@ -262,8 +263,6 @@
             flex: 1;
             overflow-y: auto;
             background: white;
-            /* Espaço para o header fixo (1cm + altura aproximada do header) */
-            margin-top: calc(1cm + 66px);
         }
 
         .conversation-item {
@@ -292,8 +291,8 @@
             font-size: 20px;
             font-weight: bold;
             margin-right: 15px;
-            flex-shrink: 0;        }
-
+            flex-shrink: 0;
+        }
         .conversation-avatar.group {
             background: #5b61c3;
         }
@@ -341,8 +340,8 @@
         .no-conversations {
             text-align: center;
             padding: 60px 20px;
-            color: #999;        }
-
+            color: #999;
+        }
         .no-conversations h3 {
             margin-bottom: 10px;
             color: #666;
@@ -369,7 +368,6 @@
             display: flex;
         }
 
-        /* Chat Header - FIXO 1cm ABAIXO DO TOPO */
         .chat-header {
             background: #075e54;
             color: white;
@@ -378,11 +376,12 @@
             align-items: center;
             gap: 15px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: fixed;
-            top: 1cm;
-            left: 0;
-            width: 100%;
+            position: relative;
+            /* BARRA SUPERIOR DO CHAT FIXA */
+            position: sticky;
+            top: 0;
             z-index: 100;
+            flex-shrink: 0;
         }
 
         .back-button {
@@ -390,8 +389,8 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            display: flex;            align-items: center;
-            justify-content: center;
+            display: flex;
+            align-items: center;            justify-content: center;
             cursor: pointer;
             font-size: 18px;
             transition: background 0.3s;
@@ -439,8 +438,8 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 18px;            transition: background 0.3s;
-        }
+            font-size: 18px;
+            transition: background 0.3s;        }
 
         .chat-menu-btn:hover {
             background: rgba(255,255,255,0.3);
@@ -488,8 +487,8 @@
             color: #d32f2f;
         }
 
-        .chat-menu-item.danger:hover {            background: #ffebee;
-        }
+        .chat-menu-item.danger:hover {
+            background: #ffebee;        }
 
         .chat-menu-item input[type="file"] {
             display: none;
@@ -519,8 +518,6 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-            /* Espaço para o chat-header fixo (1cm + altura aproximada do header) */
-            margin-top: calc(1cm + 70px);
         }
 
         .message {
@@ -537,10 +534,10 @@
             border-bottom-right-radius: 4px;
         }
 
-        .message.received {            background: white;
+        .message.received {
+            background: white;
             align-self: flex-start;
-            border-bottom-left-radius: 4px;
-        }
+            border-bottom-left-radius: 4px;        }
 
         .message-sender {
             font-size: 12px;
@@ -579,6 +576,8 @@
             gap: 10px;
             border-top: 1px solid #ddd;
             align-items: center;
+            /* BARRA INFERIOR DO CHAT FIXA */
+            flex-shrink: 0;
         }
 
         .message-input-area input[type="text"] {
@@ -586,8 +585,8 @@
             padding: 12px 20px;
             border: none;
             border-radius: 25px;
-            font-size: 15px;            outline: none;
-            background: white;
+            font-size: 15px;
+            outline: none;            background: white;
         }
 
         .send-button {
@@ -635,8 +634,8 @@
         }
 
         .modal-content {
-            background: white;            padding: 30px;
-            border-radius: 15px;
+            background: white;
+            padding: 30px;            border-radius: 15px;
             width: 90%;
             max-width: 400px;
             max-height: 85vh;
@@ -684,8 +683,8 @@
             color: white;
         }
 
-        .btn-confirm:hover {            background: #054a3f;
-        }
+        .btn-confirm:hover {
+            background: #054a3f;        }
 
         .btn-cancel {
             background: #e0e0e0;
@@ -782,8 +781,8 @@
             font-size: 14px;
         }
 
-        /* Modal de visualização de imagem */        .image-viewer {
-            display: none;
+        /* Modal de visualização de imagem */
+        .image-viewer {            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -831,8 +830,8 @@
 
         @media (max-width: 768px) {
             .login-container {
-                padding: 30px 20px;            }
-
+                padding: 30px 20px;
+            }
             .message {
                 max-width: 85%;
             }
@@ -880,8 +879,8 @@
 <!-- Tela Principal -->
 <div id="main-screen">
     <div class="header">
-        <div class="header-left">            <div class="back-admin-btn" id="back-admin-btn" title="Voltar">←</div>
-            <h2 id="main-title">Conversas</h2>
+        <div class="header-left">
+            <div class="back-admin-btn" id="back-admin-btn" title="Voltar">←</div>            <h2 id="main-title">Conversas</h2>
         </div>
         <div class="header-actions">
             <div class="settings-container">
@@ -929,8 +928,8 @@
             <div class="chat-menu" id="chat-menu">
                 <div class="chat-menu-item" id="menu-clear-messages">
                     <span class="menu-icon">🗑️</span>
-                    <span class="menu-text">Limpar mensagens</span>                </div>
-                <!-- BOTÃO FOTO (CÂMERA) OCULTO -->
+                    <span class="menu-text">Limpar mensagens</span>
+                </div>                <!-- BOTÃO FOTO (CÂMERA) OCULTO -->
                 <div class="chat-menu-item" id="menu-camera" style="display: none;">
                     <span class="menu-icon">📷</span>
                     <span class="menu-text">Foto (Câmera)</span>
@@ -978,8 +977,8 @@
         <div class="modal-buttons">
             <button class="btn-cancel" id="cancel-add-contact">Cancelar</button>
             <button class="btn-confirm" id="confirm-add-contact">Adicionar</button>
-        </div>    </div>
-</div>
+        </div>
+    </div></div>
 
 <!-- Modal 1: Seleção de Contatos para Grupo -->
 <div class="modal" id="select-contacts-modal">
@@ -1027,8 +1026,8 @@
         apiKey: "AIzaSyD6sVu3hsBK0AyH4jxr3lj94Hj7JAj16_g",
         authDomain: "chat-94349.firebaseapp.com",
         projectId: "chat-94349",
-        storageBucket: "chat-94349.firebasestorage.app",        messagingSenderId: "1058859014174",
-        appId: "1:1058859014174:web:19d7b3ceef6f6dda1e360f"
+        storageBucket: "chat-94349.firebasestorage.app",
+        messagingSenderId: "1058859014174",        appId: "1:1058859014174:web:19d7b3ceef6f6dda1e360f"
     };
 
     const app = initializeApp(firebaseConfig);
@@ -1076,8 +1075,8 @@
     const imageViewer = document.getElementById('image-viewer');
     const viewerImage = document.getElementById('viewer-image');
     const toast = document.getElementById('toast');
-    const settingsBtn = document.getElementById('settings-btn');    const settingsMenu = document.getElementById('settings-menu');
-    const backAdminBtn = document.getElementById('back-admin-btn');
+    const settingsBtn = document.getElementById('settings-btn');
+    const settingsMenu = document.getElementById('settings-menu');    const backAdminBtn = document.getElementById('back-admin-btn');
     const mainTitle = document.getElementById('main-title');
 
     // Modais de grupo
@@ -1125,8 +1124,8 @@
         if (!file || !file.type.startsWith('audio/')) return showToast('❌ Selecione um áudio válido (max 5MB)');
         if (file.size > 5 * 1024 * 1024) return showToast('❌ Máximo 5MB');
         const reader = new FileReader();
-        reader.onload = (e) => {            const audioData = e.target.result;
-            localStorage.setItem('ichat_notification_sound', audioData);
+        reader.onload = (e) => {
+            const audioData = e.target.result;            localStorage.setItem('ichat_notification_sound', audioData);
             notificationSound = new Audio(audioData);
             notificationSound.volume = 0.7;
             soundEnabled = true;
@@ -1174,8 +1173,8 @@
     }
 
     function showError(message) {
-        loginError.textContent = message;        loginError.style.display = 'block';
-        setTimeout(() => loginError.style.display = 'none', 3000);
+        loginError.textContent = message;
+        loginError.style.display = 'block';        setTimeout(() => loginError.style.display = 'none', 3000);
     }
 
     async function logout() {
@@ -1223,8 +1222,8 @@
             chatMenu.classList.remove('show');
             closeChat();
         } catch (error) {
-            console.error("Erro ao sair do grupo:", error);            showToast("❌ Erro ao sair do grupo.");
-        }
+            console.error("Erro ao sair do grupo:", error);
+            showToast("❌ Erro ao sair do grupo.");        }
     }
 
     // ========== NOVO GRUPO - FLUXO COMPLETO ==========
@@ -1321,11 +1320,12 @@
     }
 
     async function createGroup() {
-        const groupName = groupNameInput.value.trim();        if (!groupName) return showToast('⚠️ Digite o nome do grupo');
-        if (selectedGroupMembers.length < 1) return showToast('⚠️ Selecione pelo menos 1 contato');
+        const groupName = groupNameInput.value.trim();
+        if (!groupName) return showToast('⚠️ Digite o nome do grupo');        if (selectedGroupMembers.length < 1) return showToast('⚠️ Selecione pelo menos 1 contato');
 
         try {
             const membersEmails = [currentUser.email, ...selectedGroupMembers.map(m => m.email)];
+            // Remove duplicatas (caso o usuário já esteja na lista)
             const uniqueMembers = [...new Set(membersEmails)];
 
             const groupData = {
@@ -1525,12 +1525,6 @@
         if (!currentUser) return;
         conversationsList.innerHTML = '<div class="loading">Carregando...</div>';
 
-        // Limpa listeners anteriores
-        if (window._conversationsUnsubs) {
-            window._conversationsUnsubs.forEach(u => u && u());
-            window._conversationsUnsubs = null;
-        }
-
         // Listener de contatos individuais
         const contactsQuery = query(collection(db, "contatos"), where("userEmail", "==", currentUser.email));
         const unsubContacts = onSnapshot(contactsQuery, (snapshot) => {
@@ -1547,6 +1541,7 @@
             renderConversationsList();
         });
 
+        // Guarda os unsubscribes para limpar ao deslogar
         window._conversationsUnsubs = [unsubContacts, unsubGroups];
     }
 
@@ -1566,12 +1561,12 @@
             const itemDiv = document.createElement('div');
             itemDiv.className = 'conversation-item';
             itemDiv.setAttribute('data-group-id', group.id);
+
             const avatar = document.createElement('div');
             avatar.className = 'conversation-avatar group';
             avatar.textContent = '👥';
 
-            const infoDiv = document.createElement('div');
-            infoDiv.className = 'conversation-info';
+            const infoDiv = document.createElement('div');            infoDiv.className = 'conversation-info';
 
             const nameDiv = document.createElement('div');
             nameDiv.className = 'conversation-name';
@@ -1590,7 +1585,7 @@
             itemDiv.onclick = () => openGroupChat(group);
             conversationsList.appendChild(itemDiv);
 
-            // Listener das mensagens do grupo
+            // Listener das mensagens do grupo para atualizar última mensagem
             const messagesQuery = query(
                 collection(db, "grupos", group.id, "mensagens"),
                 orderBy("timestamp", "desc")
@@ -1615,12 +1610,12 @@
                 prevCount = snap.size;
             });
         });
+
         // Renderiza CONTATOS INDIVIDUAIS
         contactsArr.forEach(contact => {
             const conversationId = getConversationId(currentUser.email, contact.contactEmail);
             const messagesQuery = query(collection(db, "conversas", conversationId, "mensagens"), orderBy("timestamp", "desc"));
-            const itemDiv = document.createElement('div');
-            itemDiv.className = 'conversation-item';
+            const itemDiv = document.createElement('div');            itemDiv.className = 'conversation-item';
             itemDiv.setAttribute('data-email', contact.contactEmail);
             itemDiv.onclick = () => openNormalChat(contact);
             const avatar = document.createElement('div');
@@ -1664,12 +1659,12 @@
             isAdminView: false,
             isGroup: false
         };
-        document.getElementById('chat-avatar').textContent = contact.displayName.charAt(0).toUpperCase();        document.getElementById('chat-avatar').classList.remove('group');
+        document.getElementById('chat-avatar').textContent = contact.displayName.charAt(0).toUpperCase();
+        document.getElementById('chat-avatar').classList.remove('group');
         chatContactName.textContent = contact.displayName;
         chatContactName.classList.remove('blinking');
         document.getElementById('chat-contact-status').textContent = 'online';
-        mainScreen.classList.remove('active');
-        chatScreen.classList.add('active');
+        mainScreen.classList.remove('active');        chatScreen.classList.add('active');
         messageInput.disabled = false;
         sendBtn.disabled = false;
         messageInput.placeholder = "Digite uma mensagem...";
@@ -1713,12 +1708,12 @@
         const clearItem = document.getElementById('menu-clear-messages');
         const cameraItem = document.getElementById('menu-camera');
         const galleryItem = document.getElementById('menu-gallery');
-        const deleteFriendItem = document.getElementById('menu-delete-friend');        const leaveGroupItem = document.getElementById('menu-leave-group');
-        if (clearItem) clearItem.style.display = 'none';
+        const deleteFriendItem = document.getElementById('menu-delete-friend');
+        const leaveGroupItem = document.getElementById('menu-leave-group');
+        if (clearItem) clearItem.style.display = 'none'; // Não permite limpar mensagens do grupo
         if (cameraItem) cameraItem.style.display = 'none';
         if (galleryItem) galleryItem.style.display = 'flex';
-        if (deleteFriendItem) deleteFriendItem.style.display = 'none';
-        if (leaveGroupItem) leaveGroupItem.style.display = 'flex';
+        if (deleteFriendItem) deleteFriendItem.style.display = 'none';        if (leaveGroupItem) leaveGroupItem.style.display = 'flex';
         loadGroupMessages();
         messageInput.focus();
     }
@@ -1762,11 +1757,11 @@
             if (isNew && isFromOther) {
                 playNotificationSound();
                 chatContactName.classList.add('blinking');
-                setTimeout(() => chatContactName.classList.remove('blinking'), 5000);            }
+                setTimeout(() => chatContactName.classList.remove('blinking'), 5000);
+            }
             prevCount = snapshot.size;
         });
     }
-
     // ========== CARREGAR MENSAGENS DO GRUPO ==========
     function loadGroupMessages() {
         if (messagesListener) messagesListener();
@@ -1791,6 +1786,7 @@
                 const msg = doc.data();
                 const div = document.createElement('div');
                 div.className = `message ${msg.enviadoPor === currentUser.email ? 'sent' : 'received'}`;
+                // Mostra nome do remetente em grupos (exceto nas próprias mensagens)
                 if (msg.enviadoPor !== currentUser.email && msg.nomeRemetente) {
                     const senderDiv = document.createElement('div');
                     senderDiv.className = 'message-sender';
@@ -1811,11 +1807,11 @@
                 }
                 const timeDiv = document.createElement('div');
                 timeDiv.className = 'message-time';
-                const time = msg.timestamp ? msg.timestamp.toDate() : new Date();                timeDiv.textContent = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                const time = msg.timestamp ? msg.timestamp.toDate() : new Date();
+                timeDiv.textContent = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 div.appendChild(timeDiv);
                 messagesArea.appendChild(div);
-            });
-            messagesArea.scrollTop = messagesArea.scrollHeight;
+            });            messagesArea.scrollTop = messagesArea.scrollHeight;
             if (isNew && isFromOther) {
                 playNotificationSound();
                 chatContactName.classList.add('blinking');
@@ -1831,6 +1827,7 @@
         if (!text) return;
 
         if (currentChat.isGroup) {
+            // Envia para grupo
             await addDoc(collection(db, "grupos", currentChat.groupId, "mensagens"), {
                 texto: text,
                 tipo: 'texto',
@@ -1838,11 +1835,13 @@
                 nomeRemetente: currentUser.email.split('@')[0],
                 timestamp: serverTimestamp()
             });
+            // Atualiza última mensagem do grupo
             await updateDoc(doc(db, "grupos", currentChat.groupId), {
                 lastMessage: `${currentUser.email.split('@')[0]}: ${text}`,
                 lastMessageTime: serverTimestamp()
             });
         } else {
+            // Envia para conversa individual
             const conversationId = getConversationId(currentUser.email, currentChat.contactEmail);
             await addDoc(collection(db, "conversas", conversationId, "mensagens"), {
                 texto: text, tipo: 'texto', enviadoPor: currentUser.email, timestamp: serverTimestamp()
@@ -1860,8 +1859,8 @@
         for (let i = 0; i < snapshot.docs.length; i += 500) {
             const batch = writeBatch(db);
             snapshot.docs.slice(i, i+500).forEach(d => batch.delete(d.ref));
-            await batch.commit();        }
-        showToast('✅ Conversa apagada');
+            await batch.commit();
+        }        showToast('✅ Conversa apagada');
         chatMenu.classList.remove('show');
     }
     
@@ -1909,8 +1908,8 @@
         await setDoc(doc(db, "contatos", `${email.replace(/\./g, '_')}_${currentUser.email.replace(/\./g, '_')}`), {
             userEmail: email, contactEmail: currentUser.email, displayName: currentUser.email.split('@')[0], addedAt: serverTimestamp()
         });
-        showToast('✅ Contato adicionado');        closeAddContactModal();
-        settingsMenu.classList.remove('show');
+        showToast('✅ Contato adicionado');
+        closeAddContactModal();        settingsMenu.classList.remove('show');
     }
     
     function openAddContactModal() { addContactModal.classList.add('active'); settingsMenu.classList.remove('show'); }
@@ -1958,8 +1957,8 @@
                 if (deleteFriendMenuItem) deleteFriendMenuItem.style.display = 'none';
             } else {
                 mainTitle.textContent = 'Conversas';
-                backAdminBtn.style.display = 'none';                const addContactSetting = document.getElementById('settings-add-contact');
-                if (addContactSetting) addContactSetting.style.display = 'flex';
+                backAdminBtn.style.display = 'none';
+                const addContactSetting = document.getElementById('settings-add-contact');                if (addContactSetting) addContactSetting.style.display = 'flex';
                 const newGroupSetting = document.getElementById('settings-new-group');
                 if (newGroupSetting) newGroupSetting.style.display = 'flex';
                 const deleteFriendMenuItem = document.getElementById('menu-delete-friend');
@@ -1968,6 +1967,7 @@
             }
         } else {
             currentUser = null;
+            // Limpa listeners de conversas ao deslogar
             if (window._conversationsUnsubs) {
                 window._conversationsUnsubs.forEach(u => u && u());
                 window._conversationsUnsubs = null;
@@ -1992,6 +1992,7 @@
     registerBtn.onclick = register;
     logoutBtn.onclick = logout;
     addContactBtn.onclick = openAddContactModal;
+    // NOVO: Botão Novo Grupo
     newGroupBtn.onclick = openNewGroupModal;
     cancelSelectContacts.onclick = () => selectContactsModal.classList.remove('active');
     advanceToNameBtn.onclick = advanceToGroupName;
@@ -2006,8 +2007,8 @@
     document.addEventListener('click', (e) => {
         if (!chatMenu.contains(e.target) && !chatMenuBtn.contains(e.target)) chatMenu.classList.remove('show');
         if (!settingsMenu.contains(e.target) && !settingsBtn.contains(e.target)) settingsMenu.classList.remove('show');
-    });
-    imageViewer.onclick = () => imageViewer.classList.remove('active');    document.getElementById('menu-clear-messages').onclick = clearMessages;
+    });    imageViewer.onclick = () => imageViewer.classList.remove('active');
+    document.getElementById('menu-clear-messages').onclick = clearMessages;
     document.getElementById('menu-camera').onclick = (e) => { e.stopPropagation(); document.getElementById('camera-input').click(); };
     document.getElementById('camera-input').addEventListener('change', (e) => { if(e.target.files[0]) sendImage(e.target.files[0], true); e.target.value=''; });
     document.getElementById('menu-gallery').onclick = (e) => { e.stopPropagation(); document.getElementById('gallery-input').click(); };
@@ -2024,13 +2025,14 @@
         removeContact(currentChat.contactEmail, currentChat.displayName);
     });
 
+    // NOVO: Botão Sair do Grupo
     document.getElementById('menu-leave-group').addEventListener('click', (e) => {
         e.stopPropagation();
         if (!currentChat || !currentChat.isGroup) return;
         leaveGroup(currentChat.groupId, currentChat.groupName);
     });
     
-    console.log('✅ iChat com barra superior fixa a 1cm do topo carregado');
+    console.log('✅ iChat com barra superior fixa carregado');
 </script>
 </body>
 </html>
