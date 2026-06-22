@@ -22,32 +22,13 @@
             overflow: hidden;
         }
 
-        /* ========== BARRA SUPERIOR FIXA 5cm ABAIXO DO TOPO ========== */
-        .header,
-        .chat-header {
-            position: fixed;
-            top: 5cm;
-            left: 0;
-            right: 0;
-            z-index: 100;
-        }
-
-        /* Espaço para compensar o header fixo + os 5cm do topo */
-        #main-screen {
-            padding-top: calc(5cm + 62px);
-        }
-
-        #chat-screen {
-            padding-top: calc(5cm + 70px);
-        }
-        /* ================================================================ */
-
         /* Tela de Login */
         #login-screen {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;            height: 100%;
+            width: 100%;
+            height: 100%;
             background: linear-gradient(135deg, #075e54 0%, #128c7e 100%);
             display: flex;
             justify-content: center;
@@ -66,8 +47,7 @@
 
         .login-container h1 {
             color: #075e54;
-            text-align: center;
-            margin-bottom: 10px;
+            text-align: center;            margin-bottom: 10px;
             font-size: 32px;
         }
 
@@ -96,7 +76,8 @@
         .login-container button {
             width: 100%;
             padding: 15px;
-            margin: 10px 0;            border: none;
+            margin: 10px 0;
+            border: none;
             border-radius: 10px;
             background: #075e54;
             color: white;
@@ -115,7 +96,6 @@
             color: #075e54;
             border: 2px solid #075e54;
         }
-
         .login-container .toggle-btn:hover {
             background: #e8f5e9;
         }
@@ -128,7 +108,7 @@
             display: none;
         }
 
-        /* Header Principal */
+        /* Header Principal - FIXO 1cm ABAIXO DO TOPO */
         .header {
             background: #075e54;
             color: white;
@@ -137,6 +117,11 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 1cm;
+            left: 0;
+            width: 100%;
+            z-index: 100;
         }
 
         .header-left {
@@ -145,7 +130,8 @@
             gap: 12px;
         }
 
-        .back-admin-btn {            background: rgba(255,255,255,0.2);
+        .back-admin-btn {
+            background: rgba(255,255,255,0.2);
             width: 36px;
             height: 36px;
             border-radius: 50%;
@@ -160,7 +146,6 @@
         .back-admin-btn:hover {
             background: rgba(255,255,255,0.3);
         }
-
         .header h2 {
             font-size: 20px;
             font-weight: 500;
@@ -194,7 +179,8 @@
         }
 
         .settings-menu {
-            display: none;            position: absolute;
+            display: none;
+            position: absolute;
             right: 0;
             top: 50px;
             background: white;
@@ -209,7 +195,6 @@
             display: block;
             animation: fadeIn 0.2s;
         }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -243,7 +228,8 @@
             background: #ffebee;
         }
 
-        .settings-menu-item input[type="file"] {            display: none;
+        .settings-menu-item input[type="file"] {
+            display: none;
         }
 
         .settings-menu-item .menu-icon {
@@ -257,8 +243,7 @@
         }
 
         .settings-menu-item .menu-status {
-            font-size: 11px;
-            color: #25d366;
+            font-size: 11px;            color: #25d366;
             font-weight: bold;
         }
 
@@ -277,6 +262,8 @@
             flex: 1;
             overflow-y: auto;
             background: white;
+            /* Espaço para o header fixo (1cm + altura aproximada do header) */
+            margin-top: calc(1cm + 66px);
         }
 
         .conversation-item {
@@ -292,6 +279,7 @@
         .conversation-item:hover {
             background: #f5f5f5;
         }
+
         .conversation-avatar {
             width: 50px;
             height: 50px;
@@ -304,8 +292,7 @@
             font-size: 20px;
             font-weight: bold;
             margin-right: 15px;
-            flex-shrink: 0;
-        }
+            flex-shrink: 0;        }
 
         .conversation-avatar.group {
             background: #5b61c3;
@@ -341,7 +328,8 @@
             background: #25d366;
             color: white;
             border-radius: 50%;
-            min-width: 20px;            height: 20px;
+            min-width: 20px;
+            height: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -353,8 +341,7 @@
         .no-conversations {
             text-align: center;
             padding: 60px 20px;
-            color: #999;
-        }
+            color: #999;        }
 
         .no-conversations h3 {
             margin-bottom: 10px;
@@ -382,6 +369,7 @@
             display: flex;
         }
 
+        /* Chat Header - FIXO 1cm ABAIXO DO TOPO */
         .chat-header {
             background: #075e54;
             color: white;
@@ -390,14 +378,19 @@
             align-items: center;
             gap: 15px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 1cm;
+            left: 0;
+            width: 100%;
+            z-index: 100;
         }
+
         .back-button {
             background: rgba(255,255,255,0.2);
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
+            display: flex;            align-items: center;
             justify-content: center;
             cursor: pointer;
             font-size: 18px;
@@ -439,14 +432,14 @@
 
         .chat-menu-btn {
             background: rgba(255,255,255,0.2);
-            width: 40px;            height: 40px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 18px;
-            transition: background 0.3s;
+            font-size: 18px;            transition: background 0.3s;
         }
 
         .chat-menu-btn:hover {
@@ -488,14 +481,14 @@
         }
 
         .chat-menu-item:hover {
-            background: #f0f2f5;        }
+            background: #f0f2f5;
+        }
 
         .chat-menu-item.danger {
             color: #d32f2f;
         }
 
-        .chat-menu-item.danger:hover {
-            background: #ffebee;
+        .chat-menu-item.danger:hover {            background: #ffebee;
         }
 
         .chat-menu-item input[type="file"] {
@@ -526,6 +519,8 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
+            /* Espaço para o chat-header fixo (1cm + altura aproximada do header) */
+            margin-top: calc(1cm + 70px);
         }
 
         .message {
@@ -537,12 +532,12 @@
         }
 
         .message.sent {
-            background: #dcf8c6;            align-self: flex-end;
+            background: #dcf8c6;
+            align-self: flex-end;
             border-bottom-right-radius: 4px;
         }
 
-        .message.received {
-            background: white;
+        .message.received {            background: white;
             align-self: flex-start;
             border-bottom-left-radius: 4px;
         }
@@ -586,12 +581,12 @@
             align-items: center;
         }
 
-        .message-input-area input[type="text"] {            flex: 1;
+        .message-input-area input[type="text"] {
+            flex: 1;
             padding: 12px 20px;
             border: none;
             border-radius: 25px;
-            font-size: 15px;
-            outline: none;
+            font-size: 15px;            outline: none;
             background: white;
         }
 
@@ -635,12 +630,12 @@
             align-items: center;
         }
 
-        .modal.active {            display: flex;
+        .modal.active {
+            display: flex;
         }
 
         .modal-content {
-            background: white;
-            padding: 30px;
+            background: white;            padding: 30px;
             border-radius: 15px;
             width: 90%;
             max-width: 400px;
@@ -684,12 +679,12 @@
             cursor: pointer;
         }
 
-        .btn-confirm {            background: #075e54;
+        .btn-confirm {
+            background: #075e54;
             color: white;
         }
 
-        .btn-confirm:hover {
-            background: #054a3f;
+        .btn-confirm:hover {            background: #054a3f;
         }
 
         .btn-cancel {
@@ -733,12 +728,12 @@
             background: #e8f5e9;
         }
 
-        .contact-select-item input[type="checkbox"] {            width: 20px;
+        .contact-select-item input[type="checkbox"] {
+            width: 20px;
             height: 20px;
             cursor: pointer;
             accent-color: #075e54;
         }
-
         .contact-select-item .mini-avatar {
             width: 36px;
             height: 36px;
@@ -782,12 +777,12 @@
 
         .no-contacts-msg {
             text-align: center;
-            padding: 30px 20px;            color: #999;
+            padding: 30px 20px;
+            color: #999;
             font-size: 14px;
         }
 
-        /* Modal de visualização de imagem */
-        .image-viewer {
+        /* Modal de visualização de imagem */        .image-viewer {
             display: none;
             position: fixed;
             top: 0;
@@ -831,12 +826,12 @@
         }
 
         .toast.show {
-            opacity: 1;        }
+            opacity: 1;
+        }
 
         @media (max-width: 768px) {
             .login-container {
-                padding: 30px 20px;
-            }
+                padding: 30px 20px;            }
 
             .message {
                 max-width: 85%;
@@ -881,17 +876,18 @@
         <button id="register-btn" class="toggle-btn">Criar Conta</button>
     </div>
 </div>
+
 <!-- Tela Principal -->
 <div id="main-screen">
     <div class="header">
-        <div class="header-left">
-            <div class="back-admin-btn" id="back-admin-btn" title="Voltar">←</div>
+        <div class="header-left">            <div class="back-admin-btn" id="back-admin-btn" title="Voltar">←</div>
             <h2 id="main-title">Conversas</h2>
         </div>
         <div class="header-actions">
             <div class="settings-container">
                 <div class="header-btn" id="settings-btn" title="Configurações">⚙️</div>
                 <div class="settings-menu" id="settings-menu">
+                    <!-- NOVO BOTÃO: NOVO GRUPO -->
                     <div class="settings-menu-item" id="settings-new-group">
                         <span class="menu-icon">👥</span>
                         <span class="menu-text">Novo Grupo</span>
@@ -929,11 +925,12 @@
             <div class="chat-contact-status" id="chat-contact-status">online</div>
         </div>
         <div class="chat-menu-container">
-            <div class="chat-menu-btn" id="chat-menu-btn" title="Menu">☰</div>            <div class="chat-menu" id="chat-menu">
+            <div class="chat-menu-btn" id="chat-menu-btn" title="Menu">☰</div>
+            <div class="chat-menu" id="chat-menu">
                 <div class="chat-menu-item" id="menu-clear-messages">
                     <span class="menu-icon">🗑️</span>
-                    <span class="menu-text">Limpar mensagens</span>
-                </div>
+                    <span class="menu-text">Limpar mensagens</span>                </div>
+                <!-- BOTÃO FOTO (CÂMERA) OCULTO -->
                 <div class="chat-menu-item" id="menu-camera" style="display: none;">
                     <span class="menu-icon">📷</span>
                     <span class="menu-text">Foto (Câmera)</span>
@@ -950,10 +947,12 @@
                     <span class="menu-status" id="chat-sound-status"></span>
                     <input type="file" id="sound-input" accept="audio/*">
                 </div>
+                <!-- BOTÃO: REMOVER CONTATO (só aparece em chat individual) -->
                 <div class="chat-menu-item danger" id="menu-delete-friend">
                     <span class="menu-icon">🚫</span>
                     <span class="menu-text">Remover Contato</span>
                 </div>
+                <!-- BOTÃO: SAIR DO GRUPO (só aparece em chat de grupo) -->
                 <div class="chat-menu-item danger" id="menu-leave-group" style="display: none;">
                     <span class="menu-icon">🚪</span>
                     <span class="menu-text">Sair do Grupo</span>
@@ -978,8 +977,8 @@
         <input type="text" id="new-contact-name" placeholder="Nome do contato (opcional)">
         <div class="modal-buttons">
             <button class="btn-cancel" id="cancel-add-contact">Cancelar</button>
-            <button class="btn-confirm" id="confirm-add-contact">Adicionar</button>        </div>
-    </div>
+            <button class="btn-confirm" id="confirm-add-contact">Adicionar</button>
+        </div>    </div>
 </div>
 
 <!-- Modal 1: Seleção de Contatos para Grupo -->
@@ -1027,8 +1026,8 @@
     const firebaseConfig = {
         apiKey: "AIzaSyD6sVu3hsBK0AyH4jxr3lj94Hj7JAj16_g",
         authDomain: "chat-94349.firebaseapp.com",
-        projectId: "chat-94349",        storageBucket: "chat-94349.firebasestorage.app",
-        messagingSenderId: "1058859014174",
+        projectId: "chat-94349",
+        storageBucket: "chat-94349.firebasestorage.app",        messagingSenderId: "1058859014174",
         appId: "1:1058859014174:web:19d7b3ceef6f6dda1e360f"
     };
 
@@ -1043,12 +1042,15 @@
     let notificationSound = null;
     let soundEnabled = false;
     
+    // Admin state
     let isAdmin = false;
     let adminViewMode = 'users';
     let selectedUserForAdmin = null;
 
-    let selectedGroupMembers = [];
+    // Group creation state
+    let selectedGroupMembers = []; // array de { email, displayName }
 
+    // Elementos
     const loginScreen = document.getElementById('login-screen');
     const mainScreen = document.getElementById('main-screen');
     const chatScreen = document.getElementById('chat-screen');
@@ -1074,10 +1076,11 @@
     const imageViewer = document.getElementById('image-viewer');
     const viewerImage = document.getElementById('viewer-image');
     const toast = document.getElementById('toast');
-    const settingsBtn = document.getElementById('settings-btn');
-    const settingsMenu = document.getElementById('settings-menu');
-    const backAdminBtn = document.getElementById('back-admin-btn');    const mainTitle = document.getElementById('main-title');
+    const settingsBtn = document.getElementById('settings-btn');    const settingsMenu = document.getElementById('settings-menu');
+    const backAdminBtn = document.getElementById('back-admin-btn');
+    const mainTitle = document.getElementById('main-title');
 
+    // Modais de grupo
     const selectContactsModal = document.getElementById('select-contacts-modal');
     const contactsSelectList = document.getElementById('contacts-select-list');
     const selectedCountEl = document.getElementById('selected-count');
@@ -1122,10 +1125,10 @@
         if (!file || !file.type.startsWith('audio/')) return showToast('❌ Selecione um áudio válido (max 5MB)');
         if (file.size > 5 * 1024 * 1024) return showToast('❌ Máximo 5MB');
         const reader = new FileReader();
-        reader.onload = (e) => {
-            const audioData = e.target.result;
+        reader.onload = (e) => {            const audioData = e.target.result;
             localStorage.setItem('ichat_notification_sound', audioData);
-            notificationSound = new Audio(audioData);            notificationSound.volume = 0.7;
+            notificationSound = new Audio(audioData);
+            notificationSound.volume = 0.7;
             soundEnabled = true;
             updateSoundStatus(true);
             showToast('🔔 Som ativado!');
@@ -1171,10 +1174,10 @@
     }
 
     function showError(message) {
-        loginError.textContent = message;
-        loginError.style.display = 'block';
+        loginError.textContent = message;        loginError.style.display = 'block';
         setTimeout(() => loginError.style.display = 'none', 3000);
     }
+
     async function logout() {
         await signOut(auth);
         settingsMenu.classList.remove('show');
@@ -1185,6 +1188,7 @@
         return [user1, user2].sort().join('_');
     }
 
+    // ========== REMOVER CONTATO ==========
     async function removeContact(contactEmail, contactDisplayName) {
         if (!confirm(`Deseja realmente remover "${contactDisplayName}" da sua lista de contatos?\nA conversa será mantida, mas o contato sumirá da sua lista.`)) return;
 
@@ -1208,6 +1212,7 @@
         }
     }
 
+    // ========== SAIR DO GRUPO ==========
     async function leaveGroup(groupId, groupName) {
         if (!confirm(`Deseja realmente sair do grupo "${groupName}"?`)) return;
         try {
@@ -1218,12 +1223,13 @@
             chatMenu.classList.remove('show');
             closeChat();
         } catch (error) {
-            console.error("Erro ao sair do grupo:", error);
-            showToast("❌ Erro ao sair do grupo.");
+            console.error("Erro ao sair do grupo:", error);            showToast("❌ Erro ao sair do grupo.");
         }
     }
 
-    function openNewGroupModal() {        settingsMenu.classList.remove('show');
+    // ========== NOVO GRUPO - FLUXO COMPLETO ==========
+    function openNewGroupModal() {
+        settingsMenu.classList.remove('show');
         selectedGroupMembers = [];
         renderContactsForSelection();
         selectContactsModal.classList.add('active');
@@ -1267,12 +1273,12 @@
                 email.textContent = contact.contactEmail;
                 info.appendChild(name);
                 info.appendChild(email);
-
                 item.appendChild(checkbox);
                 item.appendChild(avatar);
                 item.appendChild(info);
 
-                item.onclick = (e) => {                    if (e.target !== checkbox) checkbox.checked = !checkbox.checked;
+                item.onclick = (e) => {
+                    if (e.target !== checkbox) checkbox.checked = !checkbox.checked;
                     if (checkbox.checked) {
                         item.classList.add('selected');
                         if (!selectedGroupMembers.find(m => m.email === contact.contactEmail)) {
@@ -1315,13 +1321,13 @@
     }
 
     async function createGroup() {
-        const groupName = groupNameInput.value.trim();
-        if (!groupName) return showToast('⚠️ Digite o nome do grupo');
+        const groupName = groupNameInput.value.trim();        if (!groupName) return showToast('⚠️ Digite o nome do grupo');
         if (selectedGroupMembers.length < 1) return showToast('⚠️ Selecione pelo menos 1 contato');
 
         try {
             const membersEmails = [currentUser.email, ...selectedGroupMembers.map(m => m.email)];
             const uniqueMembers = [...new Set(membersEmails)];
+
             const groupData = {
                 nome: groupName,
                 membros: uniqueMembers,
@@ -1343,6 +1349,7 @@
         }
     }
 
+    // ========== ADMIN: Carregar todos os usuários ==========
     async function loadAllUsers() {
         conversationsList.innerHTML = '<div class="loading">Carregando usuários...</div>';
         try {
@@ -1363,14 +1370,14 @@
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'conversation-item';
                 itemDiv.setAttribute('data-user-email', user.email);
-                const avatar = document.createElement('div');
-                avatar.className = 'conversation-avatar';
+                const avatar = document.createElement('div');                avatar.className = 'conversation-avatar';
                 avatar.textContent = user.displayName.charAt(0).toUpperCase();
                 const infoDiv = document.createElement('div');
                 infoDiv.className = 'conversation-info';
                 const nameDiv = document.createElement('div');
                 nameDiv.className = 'conversation-name';
-                nameDiv.textContent = user.displayName;                const emailDiv = document.createElement('div');
+                nameDiv.textContent = user.displayName;
+                const emailDiv = document.createElement('div');
                 emailDiv.className = 'conversation-last-message';
                 emailDiv.textContent = user.email;
                 infoDiv.appendChild(nameDiv);
@@ -1386,6 +1393,7 @@
         }
     }
 
+    // ADMIN: Mostrar conversas de um usuário específico
     async function showUserConversations(user) {
         selectedUserForAdmin = user;
         adminViewMode = 'conversations';
@@ -1411,15 +1419,15 @@
             const itemDiv = document.createElement('div');
             itemDiv.className = 'conversation-item';
             const avatar = document.createElement('div');
-            avatar.className = 'conversation-avatar';
-            avatar.textContent = contact.displayName.charAt(0).toUpperCase();
+            avatar.className = 'conversation-avatar';            avatar.textContent = contact.displayName.charAt(0).toUpperCase();
             const infoDiv = document.createElement('div');
             infoDiv.className = 'conversation-info';
             const nameDiv = document.createElement('div');
             nameDiv.className = 'conversation-name';
             nameDiv.textContent = contact.displayName;
             const emailDiv = document.createElement('div');
-            emailDiv.className = 'conversation-last-message';            emailDiv.textContent = contact.contactEmail;
+            emailDiv.className = 'conversation-last-message';
+            emailDiv.textContent = contact.contactEmail;
             infoDiv.appendChild(nameDiv);
             infoDiv.appendChild(emailDiv);
             itemDiv.appendChild(avatar);
@@ -1429,6 +1437,7 @@
         });
     }
 
+    // ADMIN: Abrir chat entre um usuário e seu contato (somente leitura)
     function openAdminChat(ownerUser, contact) {
         currentChat = {
             contactEmail: contact.contactEmail,
@@ -1438,7 +1447,6 @@
             ownerName: ownerUser.displayName
         };
         document.getElementById('chat-avatar').textContent = contact.displayName.charAt(0).toUpperCase();
-        document.getElementById('chat-avatar').classList.remove('group');
         chatContactName.textContent = `${contact.displayName} (conversa de ${ownerUser.displayName})`;
         chatContactName.classList.remove('blinking');
         document.getElementById('chat-contact-status').innerHTML = '<span class="view-mode-badge">👁️ Modo Admin</span>';
@@ -1460,15 +1468,15 @@
         if (clearItem) clearItem.style.display = 'none';
         if (cameraItem) cameraItem.style.display = 'none';
         if (galleryItem) galleryItem.style.display = 'none';
-        if (deleteFriendItem) deleteFriendItem.style.display = 'none';
-        if (leaveGroupItem) leaveGroupItem.style.display = 'none';
+        if (deleteFriendItem) deleteFriendItem.style.display = 'none';        if (leaveGroupItem) leaveGroupItem.style.display = 'none';
         
         loadAdminMessages(ownerUser.email, contact.contactEmail);
         messageInput.focus();
     }
     
     function loadAdminMessages(ownerEmail, contactEmail) {
-        if (messagesListener) messagesListener();        const conversationId = getConversationId(ownerEmail, contactEmail);
+        if (messagesListener) messagesListener();
+        const conversationId = getConversationId(ownerEmail, contactEmail);
         const messagesQuery = query(collection(db, "conversas", conversationId, "mensagens"), orderBy("timestamp", "asc"));
         messagesArea.innerHTML = '';
         messagesListener = onSnapshot(messagesQuery, (snapshot) => {
@@ -1509,20 +1517,29 @@
         adminViewMode = 'users';
         selectedUserForAdmin = null;
         mainTitle.textContent = isAdmin ? 'Todos os usuários' : 'Conversas';
-        backAdminBtn.style.display = 'none';
-        if (isAdmin && currentUser) loadAllUsers();
+        backAdminBtn.style.display = 'none';        if (isAdmin && currentUser) loadAllUsers();
     }
 
+    // ========== CARREGAR CONVERSAS NORMAIS (INDIVIDUAIS + GRUPOS) ==========
     function loadNormalConversations() {
         if (!currentUser) return;
         conversationsList.innerHTML = '<div class="loading">Carregando...</div>';
 
-        const contactsQuery = query(collection(db, "contatos"), where("userEmail", "==", currentUser.email));        const unsubContacts = onSnapshot(contactsQuery, (snapshot) => {
+        // Limpa listeners anteriores
+        if (window._conversationsUnsubs) {
+            window._conversationsUnsubs.forEach(u => u && u());
+            window._conversationsUnsubs = null;
+        }
+
+        // Listener de contatos individuais
+        const contactsQuery = query(collection(db, "contatos"), where("userEmail", "==", currentUser.email));
+        const unsubContacts = onSnapshot(contactsQuery, (snapshot) => {
             contacts = [];
             snapshot.forEach(doc => contacts.push({ id: doc.id, ...doc.data() }));
             renderConversationsList();
         });
 
+        // Listener de grupos
         const groupsQuery = query(collection(db, "grupos"), where("membros", "array-contains", currentUser.email));
         const unsubGroups = onSnapshot(groupsQuery, (snapshot) => {
             window._userGroups = [];
@@ -1544,11 +1561,11 @@
 
         conversationsList.innerHTML = '';
 
+        // Renderiza GRUPOS primeiro
         groupsArr.forEach(group => {
             const itemDiv = document.createElement('div');
             itemDiv.className = 'conversation-item';
             itemDiv.setAttribute('data-group-id', group.id);
-
             const avatar = document.createElement('div');
             avatar.className = 'conversation-avatar group';
             avatar.textContent = '👥';
@@ -1566,12 +1583,14 @@
 
             infoDiv.appendChild(nameDiv);
             infoDiv.appendChild(lastMsgDiv);
+
             itemDiv.appendChild(avatar);
             itemDiv.appendChild(infoDiv);
 
             itemDiv.onclick = () => openGroupChat(group);
             conversationsList.appendChild(itemDiv);
 
+            // Listener das mensagens do grupo
             const messagesQuery = query(
                 collection(db, "grupos", group.id, "mensagens"),
                 orderBy("timestamp", "desc")
@@ -1596,7 +1615,7 @@
                 prevCount = snap.size;
             });
         });
-
+        // Renderiza CONTATOS INDIVIDUAIS
         contactsArr.forEach(contact => {
             const conversationId = getConversationId(currentUser.email, contact.contactEmail);
             const messagesQuery = query(collection(db, "conversas", conversationId, "mensagens"), orderBy("timestamp", "desc"));
@@ -1615,7 +1634,8 @@
             const lastMsgDiv = document.createElement('div');
             lastMsgDiv.className = 'conversation-last-message';
             lastMsgDiv.textContent = 'Carregando...';
-            infoDiv.appendChild(nameDiv);            infoDiv.appendChild(lastMsgDiv);
+            infoDiv.appendChild(nameDiv);
+            infoDiv.appendChild(lastMsgDiv);
             itemDiv.appendChild(avatar);
             itemDiv.appendChild(infoDiv);
             conversationsList.appendChild(itemDiv);
@@ -1644,8 +1664,7 @@
             isAdminView: false,
             isGroup: false
         };
-        document.getElementById('chat-avatar').textContent = contact.displayName.charAt(0).toUpperCase();
-        document.getElementById('chat-avatar').classList.remove('group');
+        document.getElementById('chat-avatar').textContent = contact.displayName.charAt(0).toUpperCase();        document.getElementById('chat-avatar').classList.remove('group');
         chatContactName.textContent = contact.displayName;
         chatContactName.classList.remove('blinking');
         document.getElementById('chat-contact-status').textContent = 'online';
@@ -1664,11 +1683,13 @@
         if (clearItem) clearItem.style.display = 'flex';
         if (cameraItem) cameraItem.style.display = 'none';
         if (galleryItem) galleryItem.style.display = 'flex';
-        if (deleteFriendItem) deleteFriendItem.style.display = 'flex';        if (leaveGroupItem) leaveGroupItem.style.display = 'none';
+        if (deleteFriendItem) deleteFriendItem.style.display = 'flex';
+        if (leaveGroupItem) leaveGroupItem.style.display = 'none';
         loadNormalMessages();
         messageInput.focus();
     }
 
+    // ========== ABRIR CHAT DE GRUPO ==========
     function openGroupChat(group) {
         currentChat = {
             groupId: group.id,
@@ -1692,8 +1713,7 @@
         const clearItem = document.getElementById('menu-clear-messages');
         const cameraItem = document.getElementById('menu-camera');
         const galleryItem = document.getElementById('menu-gallery');
-        const deleteFriendItem = document.getElementById('menu-delete-friend');
-        const leaveGroupItem = document.getElementById('menu-leave-group');
+        const deleteFriendItem = document.getElementById('menu-delete-friend');        const leaveGroupItem = document.getElementById('menu-leave-group');
         if (clearItem) clearItem.style.display = 'none';
         if (cameraItem) cameraItem.style.display = 'none';
         if (galleryItem) galleryItem.style.display = 'flex';
@@ -1713,7 +1733,8 @@
             const isNew = snapshot.size > prevCount && prevCount > 0;
             const lastDoc = snapshot.docs[snapshot.docs.length - 1];
             const isFromOther = lastDoc && lastDoc.data().enviadoPor !== currentUser.email;
-            messagesArea.innerHTML = '';            if (snapshot.empty) { messagesArea.innerHTML = '<div class="no-conversations"><p>Envie uma mensagem!</p></div>'; prevCount = 0; return; }
+            messagesArea.innerHTML = '';
+            if (snapshot.empty) { messagesArea.innerHTML = '<div class="no-conversations"><p>Envie uma mensagem!</p></div>'; prevCount = 0; return; }
             snapshot.forEach(doc => {
                 const msg = doc.data();
                 const div = document.createElement('div');
@@ -1741,12 +1762,12 @@
             if (isNew && isFromOther) {
                 playNotificationSound();
                 chatContactName.classList.add('blinking');
-                setTimeout(() => chatContactName.classList.remove('blinking'), 5000);
-            }
+                setTimeout(() => chatContactName.classList.remove('blinking'), 5000);            }
             prevCount = snapshot.size;
         });
     }
 
+    // ========== CARREGAR MENSAGENS DO GRUPO ==========
     function loadGroupMessages() {
         if (messagesListener) messagesListener();
         const groupId = currentChat.groupId;
@@ -1762,7 +1783,8 @@
             const isFromOther = lastDoc && lastDoc.data().enviadoPor !== currentUser.email;
             messagesArea.innerHTML = '';
             if (snapshot.empty) {
-                messagesArea.innerHTML = '<div class="no-conversations"><p>Envie a primeira mensagem no grupo!</p></div>';                prevCount = 0;
+                messagesArea.innerHTML = '<div class="no-conversations"><p>Envie a primeira mensagem no grupo!</p></div>';
+                prevCount = 0;
                 return;
             }
             snapshot.forEach(doc => {
@@ -1789,8 +1811,7 @@
                 }
                 const timeDiv = document.createElement('div');
                 timeDiv.className = 'message-time';
-                const time = msg.timestamp ? msg.timestamp.toDate() : new Date();
-                timeDiv.textContent = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                const time = msg.timestamp ? msg.timestamp.toDate() : new Date();                timeDiv.textContent = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 div.appendChild(timeDiv);
                 messagesArea.appendChild(div);
             });
@@ -1811,7 +1832,8 @@
 
         if (currentChat.isGroup) {
             await addDoc(collection(db, "grupos", currentChat.groupId, "mensagens"), {
-                texto: text,                tipo: 'texto',
+                texto: text,
+                tipo: 'texto',
                 enviadoPor: currentUser.email,
                 nomeRemetente: currentUser.email.split('@')[0],
                 timestamp: serverTimestamp()
@@ -1838,8 +1860,7 @@
         for (let i = 0; i < snapshot.docs.length; i += 500) {
             const batch = writeBatch(db);
             snapshot.docs.slice(i, i+500).forEach(d => batch.delete(d.ref));
-            await batch.commit();
-        }
+            await batch.commit();        }
         showToast('✅ Conversa apagada');
         chatMenu.classList.remove('show');
     }
@@ -1860,7 +1881,8 @@
                     timestamp: serverTimestamp()
                 });
                 await updateDoc(doc(db, "grupos", currentChat.groupId), {
-                    lastMessage: `${currentUser.email.split('@')[0]}: 📷 Foto`,                    lastMessageTime: serverTimestamp()
+                    lastMessage: `${currentUser.email.split('@')[0]}: 📷 Foto`,
+                    lastMessageTime: serverTimestamp()
                 });
             } else {
                 const conversationId = getConversationId(currentUser.email, currentChat.contactEmail);
@@ -1887,8 +1909,7 @@
         await setDoc(doc(db, "contatos", `${email.replace(/\./g, '_')}_${currentUser.email.replace(/\./g, '_')}`), {
             userEmail: email, contactEmail: currentUser.email, displayName: currentUser.email.split('@')[0], addedAt: serverTimestamp()
         });
-        showToast('✅ Contato adicionado');
-        closeAddContactModal();
+        showToast('✅ Contato adicionado');        closeAddContactModal();
         settingsMenu.classList.remove('show');
     }
     
@@ -1909,7 +1930,8 @@
     
     function refreshMainContent() {
         if (!currentUser) return;
-        if (isAdmin) {            if (adminViewMode === 'users') loadAllUsers();
+        if (isAdmin) {
+            if (adminViewMode === 'users') loadAllUsers();
             else if (adminViewMode === 'conversations' && selectedUserForAdmin) showUserConversations(selectedUserForAdmin);
         } else loadNormalConversations();
     }
@@ -1936,8 +1958,7 @@
                 if (deleteFriendMenuItem) deleteFriendMenuItem.style.display = 'none';
             } else {
                 mainTitle.textContent = 'Conversas';
-                backAdminBtn.style.display = 'none';
-                const addContactSetting = document.getElementById('settings-add-contact');
+                backAdminBtn.style.display = 'none';                const addContactSetting = document.getElementById('settings-add-contact');
                 if (addContactSetting) addContactSetting.style.display = 'flex';
                 const newGroupSetting = document.getElementById('settings-new-group');
                 if (newGroupSetting) newGroupSetting.style.display = 'flex';
@@ -1958,7 +1979,8 @@
         }
     });
     
-    backAdminBtn.onclick = () => {        if (isAdmin) {
+    backAdminBtn.onclick = () => {
+        if (isAdmin) {
             adminViewMode = 'users';
             selectedUserForAdmin = null;
             mainTitle.textContent = 'Todos os usuários';
@@ -1985,8 +2007,7 @@
         if (!chatMenu.contains(e.target) && !chatMenuBtn.contains(e.target)) chatMenu.classList.remove('show');
         if (!settingsMenu.contains(e.target) && !settingsBtn.contains(e.target)) settingsMenu.classList.remove('show');
     });
-    imageViewer.onclick = () => imageViewer.classList.remove('active');
-    document.getElementById('menu-clear-messages').onclick = clearMessages;
+    imageViewer.onclick = () => imageViewer.classList.remove('active');    document.getElementById('menu-clear-messages').onclick = clearMessages;
     document.getElementById('menu-camera').onclick = (e) => { e.stopPropagation(); document.getElementById('camera-input').click(); };
     document.getElementById('camera-input').addEventListener('change', (e) => { if(e.target.files[0]) sendImage(e.target.files[0], true); e.target.value=''; });
     document.getElementById('menu-gallery').onclick = (e) => { e.stopPropagation(); document.getElementById('gallery-input').click(); };
@@ -2007,8 +2028,9 @@
         e.stopPropagation();
         if (!currentChat || !currentChat.isGroup) return;
         leaveGroup(currentChat.groupId, currentChat.groupName);
-    });    
-    console.log('✅ iChat com barra superior fixa a 5cm do topo carregado');
+    });
+    
+    console.log('✅ iChat com barra superior fixa a 1cm do topo carregado');
 </script>
 </body>
 </html>
