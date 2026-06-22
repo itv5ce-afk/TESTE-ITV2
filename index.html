@@ -2,2037 +2,1613 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#075e54">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💬</text></svg>">
-    <title>iChat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <link rel="icon" type="image/png" href="https://github.com/itv5ce-afk/LOGO_ITVPLAYER/raw/refs/heads/main/20211122_192815.ico">
+    <title>ITVClientes.2.0</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
-        * {
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { 
+            background-color: #f5f5f5; 
+            color: #000; 
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif; 
+            padding-bottom: 90px;
             margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            transition: all 0.3s;
         }
-
-        body {
-            background: #e5ddd5;
-            height: 100vh;
-            overflow: hidden;
+        
+        body.tema-escuro {
+            background-color: #000;
+            color: #fff;
         }
-
-        /* Tela de Login */
-        #login-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #075e54 0%, #128c7e 100%);
+        
+        body.tema-escuro .itv-header,
+        body.tema-escuro .nav-tabs-itv {
+            background: linear-gradient(135deg, #FFD700 0%, #FFC400 100%);
+        }
+        
+        body.tema-escuro .card-cliente,
+        body.tema-escuro .modal-content,
+        body.tema-escuro .auth-card,
+        body.tema-escuro .card-financeiro,
+        body.tema-escuro input,
+        body.tema-escuro textarea,
+        body.tema-escuro .form-control,
+        body.tema-escuro .form-select {
+            background-color: #1a1a1a;
+            color: #fff;
+            border-color: #333;
+        }
+        
+        body.tema-escuro .cliente-info .info-label {
+            color: #888;
+        }
+        
+        body.tema-escuro .cliente-info .info-value {
+            color: #fff;
+        }        
+        body.tema-escuro .stat-label {
+            color: #aaa;
+        }
+        
+        body.tema-escuro .stat-val {
+            color: #fff;
+        }
+        
+        body.tema-escuro #search {
+            background-color: #1a1a1a;
+            color: #fff;
+            border-color: #333;
+        }
+        
+        body.tema-escuro .bottom-bar {
+            background-color: #111;
+            border-top-color: #333;
+        }
+        
+        body.tema-escuro .bottom-email {
+            color: #fff;
+        }
+        
+        body.tema-escuro .btn-menu-bottom {
+            color: #fff;
+        }
+        
+        /* Header Amarelo estilo ITV */
+        .itv-header {
+            background: linear-gradient(135deg, #FFD700 0%, #FFC400 100%);
+            padding: 15px 20px;
             display: flex;
-            justify-content: center;
             align-items: center;
+            gap: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
             z-index: 1000;
         }
-
-        .login-container {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            width: 90%;
-            max-width: 400px;
+        
+        .itv-logo {
+            width: 45px;
+            height: 45px;
+            background: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;            overflow: hidden;
         }
-
-        .login-container h1 {
-            color: #075e54;
-            text-align: center;            margin-bottom: 10px;
-            font-size: 32px;
+        
+        .itv-logo::before {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 15px solid #ff0000;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            margin-left: 5px;
         }
-
-        .login-container .subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 14px;
-        }
-
-        .login-container input {
-            width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 16px;
-            outline: none;
-            transition: border 0.3s;
-        }
-
-        .login-container input:focus {
-            border-color: #075e54;
-        }
-
-        .login-container button {
-            width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 10px;
-            background: #075e54;
-            color: white;
-            font-size: 16px;
+        
+        .itv-logo::after {
+            content: 'itv';
+            position: absolute;
+            color: #fff;
             font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
+            font-size: 12px;
+            z-index: 1;
         }
-
-        .login-container button:hover {
-            background: #054a3f;
+        
+        .itv-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #000;
+            letter-spacing: -0.5px;
         }
-
-        .login-container .toggle-btn {
-            background: transparent;
-            color: #075e54;
-            border: 2px solid #075e54;
-        }
-        .login-container .toggle-btn:hover {
-            background: #e8f5e9;
-        }
-
-        .error-msg {
-            color: #d32f2f;
-            font-size: 14px;
-            text-align: center;
-            margin: 10px 0;
-            display: none;
-        }
-
-        /* Header Principal */
-        .header {
-            background: #075e54;
-            color: white;
-            padding: 15px 20px;
+        
+        /* Tabs de Navegação */
+        .nav-tabs-itv {
+            background: linear-gradient(135deg, #FFD700 0%, #FFC400 100%);
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: relative;
-            /* BARRA SUPERIOR FIXA */
+            gap: 2px;
+            padding: 0 10px;
             position: sticky;
-            top: 0;
-            z-index: 100;
-            flex-shrink: 0;
+            top: 75px;
+            z-index: 999;
         }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .back-admin-btn {
-            background: rgba(255,255,255,0.2);
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: none;
-            align-items: center;
-            justify-content: center;
+        
+        .tab-itv {
+            flex: 1;
+            padding: 12px 8px;
+            text-align: center;
+            background: transparent;
+            border: none;
+            font-weight: 600;
+            font-size: 0.9rem;
             cursor: pointer;
-            font-size: 18px;
-            transition: background 0.3s;
+            transition: all 0.3s;            color: #000;
+            border-radius: 8px 8px 0 0;
         }
-
-        .back-admin-btn:hover {
-            background: rgba(255,255,255,0.3);        }
-
-        .header h2 {
-            font-size: 20px;
-            font-weight: 500;
+        
+        .tab-itv.active {
+            background: #f5f5f5;
+            color: #000;
         }
-
-        .header-actions {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .header-btn {
-            background: rgba(255,255,255,0.2);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 18px;
-            transition: background 0.3s;
-        }
-
-        .header-btn:hover {
+        
+        .tab-itv:hover:not(.active) {
             background: rgba(255,255,255,0.3);
         }
-        /* Menu da Engrenagem (Tela Principal) */
-        .settings-container {
-            position: relative;
-        }
-
-        .settings-menu {
+        
+        /* Conteúdo das Tabs */
+        .tab-content-itv {
             display: none;
-            position: absolute;
-            right: 0;
-            top: 50px;
-            background: white;
-            min-width: 220px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            z-index: 500;
-            overflow: hidden;
+            padding: 15px;
+            animation: fadeIn 0.3s;
         }
-
-        .settings-menu.show {
+        
+        .tab-content-itv.active {
             display: block;
-            animation: fadeIn 0.2s;        }
-
+        }
+        
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        .settings-menu-item {
-            padding: 14px 18px;
-            cursor: pointer;
-            color: #333;
-            font-size: 14px;
-            transition: background 0.2s;
-            border-bottom: 1px solid #f0f0f0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .settings-menu-item:last-child {
-            border-bottom: none;
-        }
-
-        .settings-menu-item:hover {
-            background: #f0f2f5;
-        }
-
-        .settings-menu-item.danger {
-            color: #d32f2f;
-        }
-
-        .settings-menu-item.danger:hover {
-            background: #ffebee;
-        }
-
-        .settings-menu-item input[type="file"] {
-            display: none;
-        }
-
-        .settings-menu-item .menu-icon {
-            font-size: 18px;
-            width: 24px;
-            text-align: center;
-        }
-
-        .settings-menu-item .menu-text {
-            flex: 1;
-        }
-
-        .settings-menu-item .menu-status {            font-size: 11px;
-            color: #25d366;
-            font-weight: bold;
-        }
-
-        /* Tela Principal - Lista de Conversas */
-        #main-screen {
-            display: none;
-            height: 100vh;
-            flex-direction: column;
-        }
-
-        #main-screen.active {
-            display: flex;
-        }
-
-        .conversations-list {
-            flex: 1;
-            overflow-y: auto;
-            background: white;
-        }
-
-        .conversation-item {
-            display: flex;
-            align-items: center;
-            padding: 15px 20px;
-            border-bottom: 1px solid #f0f0f0;
-            cursor: pointer;
-            transition: background 0.2s;
-            position: relative;
-        }
-
-        .conversation-item:hover {
-            background: #f5f5f5;
-        }
-
-        .conversation-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: #075e54;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            font-weight: bold;
-            margin-right: 15px;
-            flex-shrink: 0;
-        }
-        .conversation-avatar.group {
-            background: #5b61c3;
-        }
-
-        .conversation-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .conversation-name {
-            font-weight: 500;
-            color: #333;
-            margin-bottom: 5px;
-            font-size: 16px;
-        }
-
-        .conversation-last-message {
-            color: #666;
-            font-size: 14px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .conversation-time {
-            font-size: 12px;
-            color: #999;
-            margin-left: 10px;
-        }
-
-        .unread-badge {
-            background: #25d366;
-            color: white;
-            border-radius: 50%;
-            min-width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            font-weight: bold;
-            margin-left: 10px;
-        }
-
-        .no-conversations {
-            text-align: center;
-            padding: 60px 20px;
-            color: #999;
-        }
-        .no-conversations h3 {
-            margin-bottom: 10px;
-            color: #666;
-        }
-
-        /* Animação de piscar na conversa */
-        @keyframes blinkConversation {
-            0%, 100% { background: white; }
-            50% { background: #fff3cd; }
-        }
-
-        .conversation-item.blinking {
-            animation: blinkConversation 0.6s infinite;
-        }
-
-        /* Tela de Chat */
-        #chat-screen {
-            display: none;
-            height: 100vh;
-            flex-direction: column;
-        }
-
-        #chat-screen.active {
-            display: flex;
-        }
-
-        .chat-header {
-            background: #075e54;
-            color: white;
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: relative;
-            /* BARRA SUPERIOR DO CHAT FIXA */
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            flex-shrink: 0;
-        }
-
-        .back-button {
-            background: rgba(255,255,255,0.2);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;            justify-content: center;
-            cursor: pointer;
-            font-size: 18px;
-            transition: background 0.3s;
-        }
-
-        .back-button:hover {
-            background: rgba(255,255,255,0.3);
-        }
-
-        .chat-contact-info {
-            flex: 1;
-        }
-
-        .chat-contact-name {
-            font-weight: 500;
-            font-size: 18px;
-        }
-
-        .chat-contact-status {
-            font-size: 12px;
-            opacity: 0.9;
-        }
-
-        /* Animação de piscar no nome do chat */
-        @keyframes blinkName {
-            0%, 100% { color: white; text-shadow: none; }
-            50% { color: #ffeb3b; text-shadow: 0 0 10px #ffeb3b; }
-        }
-
-        .chat-contact-name.blinking {
-            animation: blinkName 0.6s infinite;
-        }
-
-        /* Menu do Chat */
-        .chat-menu-container {
-            position: relative;
-        }
-
-        .chat-menu-btn {
-            background: rgba(255,255,255,0.2);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 18px;
-            transition: background 0.3s;        }
-
-        .chat-menu-btn:hover {
-            background: rgba(255,255,255,0.3);
-        }
-
-        .chat-menu {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 50px;
-            background: white;
-            min-width: 220px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            z-index: 500;
-            overflow: hidden;
-        }
-
-        .chat-menu.show {
-            display: block;
-            animation: fadeIn 0.2s;
-        }
-
-        .chat-menu-item {
-            padding: 14px 18px;
-            cursor: pointer;
-            color: #333;
-            font-size: 14px;
-            transition: background 0.2s;
-            border-bottom: 1px solid #f0f0f0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .chat-menu-item:last-child {
-            border-bottom: none;
-        }
-
-        .chat-menu-item:hover {
-            background: #f0f2f5;
-        }
-
-        .chat-menu-item.danger {
-            color: #d32f2f;
-        }
-
-        .chat-menu-item.danger:hover {
-            background: #ffebee;        }
-
-        .chat-menu-item input[type="file"] {
-            display: none;
-        }
-
-        .chat-menu-item .menu-icon {
-            font-size: 18px;
-            width: 24px;
-            text-align: center;
-        }
-
-        .chat-menu-item .menu-text {
-            flex: 1;
-        }
-
-        .chat-menu-item .menu-status {
-            font-size: 11px;
-            color: #25d366;
-            font-weight: bold;
-        }
-
-        .messages-area {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            background: #e5ddd5;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .message {
-            max-width: 70%;
-            padding: 10px 15px;
-            border-radius: 18px;
-            word-wrap: break-word;
-            position: relative;
-        }
-
-        .message.sent {
-            background: #dcf8c6;
-            align-self: flex-end;
-            border-bottom-right-radius: 4px;
-        }
-
-        .message.received {
-            background: white;
-            align-self: flex-start;
-            border-bottom-left-radius: 4px;        }
-
-        .message-sender {
-            font-size: 12px;
-            font-weight: bold;
-            color: #5b61c3;
-            margin-bottom: 3px;
-        }
-
-        .message-text {
-            margin-bottom: 5px;
-            font-size: 15px;
-        }
-
-        .message-image {
-            max-width: 100%;
-            border-radius: 12px;
-            margin-bottom: 5px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .message-image:hover {
-            transform: scale(1.02);
-        }
-
-        .message-time {
-            font-size: 11px;
-            color: #666;
-            text-align: right;
-        }
-
-        .message-input-area {
-            padding: 15px;
-            background: #f0f0f0;
-            display: flex;
-            gap: 10px;
-            border-top: 1px solid #ddd;
-            align-items: center;
-            /* BARRA INFERIOR DO CHAT FIXA */
-            flex-shrink: 0;
-        }
-
-        .message-input-area input[type="text"] {
-            flex: 1;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 25px;
-            font-size: 15px;
-            outline: none;            background: white;
-        }
-
-        .send-button {
-            background: #075e54;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            cursor: pointer;
-            font-size: 20px;
-            transition: background 0.3s;
-        }
-
-        .send-button:hover {
-            background: #054a3f;
-        }
-
-        .view-mode-badge {
-            background: #ff9800;
-            color: white;
-            font-size: 12px;
-            padding: 4px 10px;
-            border-radius: 20px;
-            margin-left: 10px;
-            white-space: nowrap;
-        }
-
-        /* Modal Adicionar Contato */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 30px;            border-radius: 15px;
-            width: 90%;
-            max-width: 400px;
-            max-height: 85vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .modal-content h3 {
-            margin-bottom: 20px;
-            color: #075e54;
-        }
-
-        .modal-content input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 15px;
-            outline: none;
-        }
-
-        .modal-content input:focus {
-            border-color: #075e54;
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .modal-buttons button {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .btn-confirm {
-            background: #075e54;
-            color: white;
-        }
-
-        .btn-confirm:hover {
-            background: #054a3f;        }
-
-        .btn-cancel {
-            background: #e0e0e0;
-            color: #666;
-        }
-
-        .btn-cancel:hover {
-            background: #d0d0d0;
-        }
-
-        /* Modal de seleção de contatos para grupo */
-        .contacts-select-list {
-            flex: 1;
-            overflow-y: auto;
+        
+        /* Cards de Clientes */
+        .card-cliente { 
+            background-color: #fff; 
             border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            margin: 10px 0;
-            max-height: 400px;
-        }
-
-        .contact-select-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 15px;
-            border-bottom: 1px solid #f0f0f0;
+            border-radius: 12px; 
+            margin-bottom: 12px; 
+            padding: 16px; 
+            transition: all 0.2s ease; 
             cursor: pointer;
-            transition: background 0.2s;
-            gap: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
-
-        .contact-select-item:last-child {
-            border-bottom: none;
+        
+        .card-cliente:active { 
+            transform: scale(0.98);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
         }
-
-        .contact-select-item:hover {
-            background: #f5f5f5;
+        
+        .card-cliente h5 {
+            color: #000;
+            font-weight: 600;
+            margin-bottom: 8px;        }
+        
+        /* Cards Financeiros */
+        .card-financeiro { 
+            background: #fff; 
+            border-left: 4px solid #9933ff; 
+            border-radius: 12px; 
+            padding: 16px; 
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
-
-        .contact-select-item.selected {
-            background: #e8f5e9;
+        
+        .stat-val { 
+            font-size: 1.5rem; 
+            font-weight: bold; 
+            color: #000;
         }
-
-        .contact-select-item input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-            accent-color: #075e54;
+        
+        .stat-label { 
+            font-size: 0.75rem; 
+            color: #666; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px;
+            font-weight: 600;
         }
-        .contact-select-item .mini-avatar {
-            width: 36px;
-            height: 36px;
+        
+        /* Botão Flutuante + */
+        .btn-add-fixo {
+            background: linear-gradient(135deg, #FFD700 0%, #FFC400 100%);
+            color: #000;
+            border: none;
             border-radius: 50%;
-            background: #075e54;
-            color: white;
+            width: 60px;
+            height: 60px;
+            font-size: 2rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-
-        .contact-select-item .contact-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .contact-select-item .contact-name {
-            font-weight: 500;
-            color: #333;
-            font-size: 14px;
-        }
-
-        .contact-select-item .contact-email {
-            color: #999;
-            font-size: 12px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .selected-count {
-            text-align: center;
-            color: #075e54;
-            font-size: 13px;
-            font-weight: bold;
-            margin: 8px 0;
-        }
-
-        .no-contacts-msg {
-            text-align: center;
-            padding: 30px 20px;
-            color: #999;
-            font-size: 14px;
-        }
-
-        /* Modal de visualização de imagem */
-        .image-viewer {            display: none;
+            box-shadow: 0 4px 15px rgba(255, 196, 0, 0.4);
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 3000;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        .image-viewer.active {
-            display: flex;
-        }
-
-        .image-viewer img {
-            max-width: 95%;
-            max-height: 95%;
-            object-fit: contain;
-        }
-
-        /* Toast de notificação */
-        .toast {
-            position: fixed;
-            bottom: 30px;
+            bottom: 90px;
             left: 50%;
             transform: translateX(-50%);
-            background: #333;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-size: 14px;
-            z-index: 5000;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-            max-width: 90%;
-            text-align: center;
+            z-index: 1001;
+            transition: all 0.3s;
         }
-
-        .toast.show {
-            opacity: 1;
+        
+        .btn-add-fixo:active { 
+            transform: translateX(-50%) scale(0.95);
+        }        
+        /* Barra Inferior */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-top: 1px solid #e0e0e0;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
         }
-
-        @media (max-width: 768px) {
-            .login-container {
-                padding: 30px 20px;
-            }
-            .message {
-                max-width: 85%;
-            }
+        
+        .bottom-email {
+            font-size: 0.85rem;
+            color: #000;
+            font-weight: 500;
         }
-
-        ::-webkit-scrollbar {
-            width: 8px;
+        
+        .btn-menu-bottom {
+            background: transparent;
+            border: none;
+            color: #000;
+            font-size: 1.5rem;
+            padding: 8px;
         }
-
-        ::-webkit-scrollbar-track {
-            background: #f0f0f0;
+        
+        /* Menu Lateral */
+        .menu-lateral { 
+            height: 100%; 
+            width: 0; 
+            position: fixed; 
+            z-index: 2000; 
+            top: 0; 
+            left: 0; 
+            background: linear-gradient(180deg, #FFD700 0%, #FFC400 100%);
+            overflow-x: hidden; 
+            transition: 0.3s; 
+            padding-top: 80px;
+            box-shadow: 2px 0 12px rgba(0,0,0,0.3);
         }
-
-        ::-webkit-scrollbar-thumb {
-            background: #075e54;
-            border-radius: 4px;
+        
+        .menu-lateral a, .menu-lateral label { 
+            padding: 12px 24px; 
+            text-decoration: none; 
+            font-size: 16px;             color: #000; 
+            display: block;
+            font-weight: 500;
         }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #054a3f;
+        
+        .menu-lateral .closebtn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
         }
-
-        .loading {
+        
+        /* Botões do Menu */
+        .menu-btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 0 20px 20px;
+        }
+        
+        .menu-btn {
+            background: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 15px;
+            font-weight: 600;
+            color: #000;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .menu-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .menu-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Seções do Menu */
+        .menu-section {
+            display: none;
+            padding: 20px;
+            background: #fff;            margin: 0 20px 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .menu-section.active {
+            display: block;
+        }
+        
+        .menu-section h5 {
+            margin-bottom: 15px;
+            color: #000;
+            font-weight: 700;
+        }
+        
+        .menu-section label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        
+        .menu-section textarea,
+        .menu-section input {
+            width: 100%;
+            margin-bottom: 12px;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .menu-section textarea:focus,
+        .menu-section input:focus {
+            outline: none;
+            border-color: #FFD700;
+        }
+        
+        .btn-salvar-menu {
+            background: #000;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 25px;
+            width: 100%;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        
+        /* Tema Toggle */        .tema-toggle {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .tema-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            background: #fff;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .tema-btn.active {
+            background: #000;
+            color: #fff;
+            border-color: #000;
+        }
+        
+        /* Inputs e Form */
+        input, textarea, .form-control, .form-select { 
+            background-color: #fff !important; 
+            color: #000 !important; 
+            border: 2px solid #e0e0e0 !important; 
+            border-radius: 10px !important;
+            font-weight: 500;
+        }
+        
+        input:focus, textarea:focus { 
+            border-color: #FFD700 !important; 
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2) !important;
+        }
+        
+        /* Botões */
+        .btn-small { 
+            font-size: 0.75rem; 
+            padding: 8px 12px; 
+            flex: 1; 
+            margin: 2px; 
+            border: none; 
+            color: #000; 
+            border-radius: 25px; 
+            font-weight: 600;
+            background: #e0e0e0;
+        }
+                .btn-small.bg-primary { background: #007bff; color: #fff; }
+        .btn-small.bg-danger { background: #dc3545; color: #fff; }
+        .btn-small.bg-info { background: #17a2b8; color: #fff; }
+        .btn-small.bg-secondary { background: #6c757d; color: #fff; }
+        
+        .filter-buttons { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 8px; 
+            margin-bottom: 16px; 
+        }
+        
+        /* Modal */
+        .modal-content { 
+            background: #fff; 
+            border-radius: 20px; 
+            border: none;
+        }
+        
+        .modal-header {
+            border-bottom: 2px solid #FFD700;
+        }
+        
+        .modal-title {
+            color: #000;
+            font-weight: 700;
+        }
+        
+        /* Badge */
+        .badge { 
+            font-size: 0.75rem; 
+            padding: 6px 12px; 
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        
+        /* Info do Cliente */
+        .cliente-info { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 6px 12px; 
+            font-size: 0.85rem; 
+            color: #555; 
+            margin-top: 8px;
+        }
+        
+        .cliente-info .info-item { 
+            display: flex; 
+            gap: 6px; 
+        }        
+        .cliente-info .info-label { 
+            color: #888; 
+            font-weight: 600; 
+        }
+        
+        .cliente-info .info-value { 
+            color: #000; 
+            font-weight: 500;
+            word-break: break-all;
+        }
+        
+        .cliente-info .info-full { 
+            grid-column: 1 / -1; 
+        }
+        
+        /* Grid de Ações */
+        .modal-acoes-grid { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 12px; 
+        }
+        
+        .modal-acoes-row { 
+            display: flex; 
+            gap: 10px; 
+        }
+        
+        .modal-acoes-row .btn { 
+            flex: 1; 
+            font-size: 0.85rem; 
+            font-weight: 600; 
+            padding: 12px 8px; 
+            border-radius: 12px; 
+            border: none; 
+            color: #fff;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 6px;
+        }
+        
+        /* Auth Overlay */
+        #authOverlay { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: linear-gradient(135deg, #FFD700 0%, #FFC400 100%);            z-index: 10000; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+        }
+        
+        .auth-card { 
+            background: #fff; 
+            border-radius: 24px; 
+            padding: 32px 24px; 
+            width: 90%; 
+            max-width: 400px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        .auth-card h3 {
+            color: #000;
+            font-weight: 700;
+        }
+        
+        /* Admin Lock */
+        #adminLock { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: linear-gradient(135deg, #FFD700 0%, #FFC400 100%);
+            z-index: 9999; 
+            display: none; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
             text-align: center;
             padding: 20px;
-            color: #666;
+        }
+        
+        /* Painel Buttons */
+        .nav-buttons-painel { 
+            display: flex; 
+            gap: 10px; 
+            margin-bottom: 20px; 
+        }
+        
+        .nav-buttons-painel .btn {
+            flex: 1;
+            background: #fff;
+            border: 2px solid #FFD700;
+            color: #000;
+            font-weight: 600;            border-radius: 10px;
+        }
+        
+        .nav-buttons-painel .btn:hover {
+            background: #FFD700;
+        }
+        
+        /* Search */
+        #search {
+            background: #fff;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+        
+        /* Cards de Servidores no Financeiro */
+        .card-servidor {
+            background: #fff;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-left: 4px solid #FFD700;
+        }
+        
+        .card-servidor h6 {
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .servidor-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        
+        .servidor-stat {
+            text-align: center;
+        }
+        
+        .servidor-stat-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #000;
+        }
+        
+        .servidor-stat-label {
+            font-size: 0.75rem;
+            color: #666;        }
+        
+        /* Créditos dos Servidores */
+        .creditos-box {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            text-align: center;
+        }
+        
+        .creditos-valor {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #28a745;
+        }
+        
+        @media (max-width: 576px) {
+            .card-cliente h5 { font-size: 1rem; }
+            .stat-val { font-size: 1.3rem; }
+            .itv-title { font-size: 1.2rem; }
+            .modal-acoes-row .btn { font-size: 0.8rem; padding: 10px 4px; }
         }
     </style>
 </head>
 <body>
 
-<!-- Tela de Login -->
-<div id="login-screen">
-    <div class="login-container">
-        <h1>💬 iChat</h1>
-        <p class="subtitle">Conecte-se com seus amigos</p>
-        <input type="email" id="login-email" placeholder="E-mail" autocomplete="email">
-        <input type="password" id="login-password" placeholder="Senha" autocomplete="current-password">
-        <div id="login-error" class="error-msg"></div>
-        <button id="login-btn">Entrar</button>
-        <button id="register-btn" class="toggle-btn">Criar Conta</button>
+<div id="authOverlay">
+    <div class="auth-card">
+        <div class="text-center mb-4">
+            <div class="itv-logo mx-auto mb-3" style="width: 60px; height: 60px;"></div>
+            <h3 class="text-dark">ITVPlayer</h3>
+            <p class="text-secondary small">Credenciais para acessar o sistema</p>
+        </div>
+        <div id="formLogin">
+            <div class="mb-3">
+                <label class="form-label small text-secondary">E-mail</label>
+                <input type="email" id="loginEmail" class="form-control" placeholder="seu@email.com">
+            </div>
+            <div class="mb-3">
+                <label class="form-label small text-secondary">Senha</label>
+                <input type="password" id="loginSenha" class="form-control" placeholder="******">
+            </div>
+            <button class="btn btn-dark w-100 py-3 rounded-pill" style="background: #000 !important;" onclick="handleLogin()">Entrar no Sistema</button>
+        </div>
     </div>
 </div>
 
-<!-- Tela Principal -->
-<div id="main-screen">
-    <div class="header">
-        <div class="header-left">
-            <div class="back-admin-btn" id="back-admin-btn" title="Voltar">←</div>            <h2 id="main-title">Conversas</h2>
+<div id="adminLock">
+    <h2>🔒 Contato com ADM</h2>    <p>Acesso temporariamente bloqueado</p>
+    <button class="btn btn-dark mb-3" onclick="window.open('https://wa.me/5585996498573')"><i class="bi bi-whatsapp"></i> WhatsApp ADM</button>
+    <input type="password" id="adminPass" class="form-control w-75 mb-2" placeholder="Senha mestre">
+    <button class="btn btn-primary" onclick="unlockApp()">Desbloquear</button>
+</div>
+
+<div id="mySidenav" class="menu-lateral">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    
+    <!-- Botões Principais do Menu -->
+    <div class="menu-btn-group" id="menuPrincipal">
+        <button class="menu-btn" onclick="showMenuSection('confCobranca')">
+            <i class="bi bi-chat-text"></i> Conf Cobrança
+        </button>
+        <button class="menu-btn" onclick="showMenuSection('confPainel')">
+            <i class="bi bi-display"></i> Conf Painel
+        </button>
+        <button class="menu-btn" onclick="showMenuSection('tema')">
+            <i class="bi bi-palette"></i> Tema
+        </button>
+        <button class="menu-btn" onclick="handleLogout()" style="background: #dc3545; color: #fff;">
+            <i class="bi bi-box-arrow-right"></i> Sair
+        </button>
+    </div>
+    
+    <!-- Seção Conf Cobrança -->
+    <div class="menu-section" id="confCobranca">
+        <h5>📱 Configuração de Cobrança</h5>
+        <label>Mensagem de Cobrança:</label>
+        <textarea id="msgCobranca" rows="3" placeholder="Digite a mensagem de cobrança..."></textarea>
+        
+        <label>Mensagem Renovado A RECEBER:</label>
+        <textarea id="msgRenovadoReceber" rows="3" placeholder="Digite a mensagem para renovado a receber..."></textarea>
+        
+        <label>Mensagem de RENOVAR:</label>
+        <textarea id="msgRenovar" rows="3" placeholder="Digite a mensagem de renovar..."></textarea>
+        
+        <button class="btn-salvar-menu" onclick="saveConfigCobranca()">Salvar Configurações</button>
+        <button class="btn btn-secondary w-100 mt-2" onclick="backToMenu()">Voltar</button>
+    </div>
+    
+    <!-- Seção Conf Painel -->
+    <div class="menu-section" id="confPainel">
+        <h5>🔗 Configuração dos Painéis</h5>
+        
+        <label>Link Painel CENTRAL:</label>
+        <input type="text" id="linkCentral" placeholder="https://...">
+        
+        <label>Créditos Painel CENTRAL:</label>
+        <input type="number" id="creditosCentral" placeholder="0">        
+        <label>Link Painel WAREZ:</label>
+        <input type="text" id="linkWarez" placeholder="https://...">
+        
+        <label>Créditos Painel WAREZ:</label>
+        <input type="number" id="creditosWarez" placeholder="0">
+        
+        <label>Link Painel ZEUS:</label>
+        <input type="text" id="linkZeus" placeholder="https://...">
+        
+        <label>Créditos Painel ZEUS:</label>
+        <input type="number" id="creditosZeus" placeholder="0">
+        
+        <button class="btn-salvar-menu" onclick="saveConfigPainel()">Salvar Configurações</button>
+        <button class="btn btn-secondary w-100 mt-2" onclick="backToMenu()">Voltar</button>
+    </div>
+    
+    <!-- Seção Tema -->
+    <div class="menu-section" id="tema">
+        <h5>🎨 Seleção de Tema</h5>
+        <div class="tema-toggle">
+            <button class="tema-btn active" id="btnTemaClaro" onclick="setTema('claro')">
+                <i class="bi bi-sun"></i> Tema Claro
+            </button>
+            <button class="tema-btn" id="btnTemaEscuro" onclick="setTema('escuro')">
+                <i class="bi bi-moon"></i> Tema Escuro
+            </button>
         </div>
-        <div class="header-actions">
-            <div class="settings-container">
-                <div class="header-btn" id="settings-btn" title="Configurações">⚙️</div>
-                <div class="settings-menu" id="settings-menu">
-                    <!-- NOVO BOTÃO: NOVO GRUPO -->
-                    <div class="settings-menu-item" id="settings-new-group">
-                        <span class="menu-icon">👥</span>
-                        <span class="menu-text">Novo Grupo</span>
+        <button class="btn btn-secondary w-100 mt-3" onclick="backToMenu()">Voltar</button>
+    </div>
+</div>
+
+<!-- Header ITV -->
+<div class="itv-header">
+    <div class="itv-logo"></div>
+    <div class="itv-title">ITVPlayer</div>
+</div>
+
+<!-- Tabs de Navegação -->
+<div class="nav-tabs-itv">
+    <button class="tab-itv active" onclick="switchTab('clientes')">Clientes</button>
+    <button class="tab-itv" onclick="switchTab('painel')">Painel</button>
+    <button class="tab-itv" onclick="switchTab('financeiro')">Financeiro</button>
+</div>
+
+<!-- Tab Clientes -->
+<div id="tab-clientes" class="tab-content-itv active">
+    <div class="container mt-2" style="padding: 0 15px;">
+        <input type="text" id="search" class="form-control mb-3" placeholder="🔍 Buscar cliente por nome..." onkeyup="renderClientes()">
+        <div class="filter-buttons">
+            <button class="btn-small bg-primary" onclick="filterData('ativos')">ATIVOS <span id="countAtivos">0</span></button>
+            <button class="btn-small" style="background-color: orange; color: #000;" onclick="filterData('vencer')">A VENCER <span id="countVencer">0</span></button>
+            <button class="btn-small bg-danger" onclick="filterData('expirados')">EXPIRADOS <span id="countExp">0</span></button>
+            <button class="btn-small bg-info" onclick="filterData('apagar')">A RECEBER <span id="countPagar">0</span></button>
+            <button class="btn-small bg-secondary" onclick="filterData('deletados')">LIXO <span id="countDel">0</span></button>
+        </div>
+
+        <div id="listaClientes"></div>
+    </div>
+</div>
+
+<!-- Tab Painel -->
+<div id="tab-painel" class="tab-content-itv">
+    <div class="container mt-3" style="padding: 0 15px;">
+        <div class="nav-buttons-painel">
+            <button class="btn btn-outline-dark" onclick="accessPanel('central')">
+                📡 CENTRAL<br>
+                <small id="creditoCentralDisplay" style="font-size: 0.75rem;">Créditos: 0</small>
+            </button>
+            <button class="btn btn-outline-dark" onclick="accessPanel('warez')">
+                ⚡ WAREZ<br>
+                <small id="creditoWarezDisplay" style="font-size: 0.75rem;">Créditos: 0</small>
+            </button>
+            <button class="btn btn-outline-dark" onclick="accessPanel('zeus')">
+                🔥 ZEUS<br>
+                <small id="creditoZeusDisplay" style="font-size: 0.75rem;">Créditos: 0</small>
+            </button>
+        </div>
+        <div class="text-center mt-5">
+            <p class="text-secondary">Selecione um painel acima para acessar</p>
+        </div>
+    </div>
+</div>
+
+<!-- Tab Financeiro -->
+<div id="tab-financeiro" class="tab-content-itv">
+    <div class="container mt-3" style="padding: 0 15px;">
+        <div class="mb-4 p-3">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <h5 class="m-0"><i class="bi bi-cash-stack"></i> Financeiro Geral</h5>
+                <input type="month" id="filterMes" class="form-control w-auto" style="max-width: 170px;">
+            </div>
+            <div class="row g-2">
+                <div class="col-6 col-md-3">
+                    <div class="card-financeiro">
+                        <div class="stat-label">Recebido (Mês)</div>
+                        <div class="stat-val" id="finRecebido">R$ 0,00</div>
                     </div>
-                    <div class="settings-menu-item" id="settings-add-contact">
-                        <span class="menu-icon">➕</span>
-                        <span class="menu-text">Adicionar Contato</span>
+                </div>                <div class="col-6 col-md-3">
+                    <div class="card-financeiro" style="border-left-color: #ffc107;">
+                        <div class="stat-label">A Receber</div>
+                        <div class="stat-val text-warning" id="finPendente">R$ 0,00</div>
                     </div>
-                    <div class="settings-menu-item" id="settings-sound">
-                        <span class="menu-icon">🔔</span>
-                        <span class="menu-text">Som de Notificação</span>
-                        <span class="menu-status" id="sound-status"></span>
-                        <input type="file" id="settings-sound-input" accept="audio/*">
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="card-financeiro" style="border-left-color: #0dcaf0;">
+                        <div class="stat-label">Total Clientes</div>
+                        <div class="stat-val text-info" id="finTotalClientes">0</div>
                     </div>
-                    <div class="settings-menu-item danger" id="settings-logout">
-                        <span class="menu-icon">🚪</span>
-                        <span class="menu-text">Sair</span>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="card-financeiro" style="border-left-color: #28a745;">
+                        <div class="stat-label">Lucro Geral</div>
+                        <div class="stat-val" id="finGeral" style="color: #28a745;">R$ 0,00</div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="conversations-list" id="conversations-list">
-        <div class="loading">Carregando...</div>
-    </div>
-</div>
-
-<!-- Tela de Chat -->
-<div id="chat-screen">
-    <div class="chat-header">
-        <div class="back-button" id="back-btn">⬅️</div>
-        <div class="conversation-avatar" id="chat-avatar">U</div>
-        <div class="chat-contact-info">
-            <div class="chat-contact-name" id="chat-contact-name">Contato</div>
-            <div class="chat-contact-status" id="chat-contact-status">online</div>
+        
+        <h6 class="mb-3">📊 Faturamento por Servidor</h6>
+        
+        <!-- Painel Central -->
+        <div class="card-servidor">
+            <h6>📡 Servidor CENTRAL</h6>
+            <div class="servidor-stats">
+                <div class="servidor-stat">
+                    <div class="servidor-stat-value" id="finCentralClientes">0</div>
+                    <div class="servidor-stat-label">Clientes</div>
+                </div>
+                <div class="servidor-stat">
+                    <div class="servidor-stat-value" id="finCentralFaturamento">R$ 0,00</div>
+                    <div class="servidor-stat-label">Faturamento/Mês</div>
+                </div>
+            </div>
+            <div class="creditos-box">
+                <div class="stat-label">Créditos Disponíveis</div>
+                <div class="creditos-valor" id="finCentralCreditos">0</div>
+            </div>
         </div>
-        <div class="chat-menu-container">
-            <div class="chat-menu-btn" id="chat-menu-btn" title="Menu">☰</div>
-            <div class="chat-menu" id="chat-menu">
-                <div class="chat-menu-item" id="menu-clear-messages">
-                    <span class="menu-icon">🗑️</span>
-                    <span class="menu-text">Limpar mensagens</span>
-                </div>                <!-- BOTÃO FOTO (CÂMERA) OCULTO -->
-                <div class="chat-menu-item" id="menu-camera" style="display: none;">
-                    <span class="menu-icon">📷</span>
-                    <span class="menu-text">Foto (Câmera)</span>
-                    <input type="file" id="camera-input" accept="image/*" capture="environment">
+        
+        <!-- Painel Warez -->
+        <div class="card-servidor" style="border-left-color: #0dcaf0;">
+            <h6>⚡ Servidor WAREZ</h6>
+            <div class="servidor-stats">
+                <div class="servidor-stat">
+                    <div class="servidor-stat-value" id="finWarezClientes">0</div>
+                    <div class="servidor-stat-label">Clientes</div>
+                </div>                <div class="servidor-stat">
+                    <div class="servidor-stat-value" id="finWarezFaturamento">R$ 0,00</div>
+                    <div class="servidor-stat-label">Faturamento/Mês</div>
                 </div>
-                <div class="chat-menu-item" id="menu-gallery">
-                    <span class="menu-icon">🖼️</span>
-                    <span class="menu-text">Anexos (Galeria)</span>
-                    <input type="file" id="gallery-input" accept="image/*">
+            </div>
+            <div class="creditos-box">
+                <div class="stat-label">Créditos Disponíveis</div>
+                <div class="creditos-valor" id="finWarezCreditos">0</div>
+            </div>
+        </div>
+        
+        <!-- Painel Zeus -->
+        <div class="card-servidor" style="border-left-color: #dc3545;">
+            <h6>🔥 Servidor ZEUS</h6>
+            <div class="servidor-stats">
+                <div class="servidor-stat">
+                    <div class="servidor-stat-value" id="finZeusClientes">0</div>
+                    <div class="servidor-stat-label">Clientes</div>
                 </div>
-                <div class="chat-menu-item" id="menu-sound">
-                    <span class="menu-icon">🔔</span>
-                    <span class="menu-text">Som de Notificação</span>
-                    <span class="menu-status" id="chat-sound-status"></span>
-                    <input type="file" id="sound-input" accept="audio/*">
+                <div class="servidor-stat">
+                    <div class="servidor-stat-value" id="finZeusFaturamento">R$ 0,00</div>
+                    <div class="servidor-stat-label">Faturamento/Mês</div>
                 </div>
-                <!-- BOTÃO: REMOVER CONTATO (só aparece em chat individual) -->
-                <div class="chat-menu-item danger" id="menu-delete-friend">
-                    <span class="menu-icon">🚫</span>
-                    <span class="menu-text">Remover Contato</span>
-                </div>
-                <!-- BOTÃO: SAIR DO GRUPO (só aparece em chat de grupo) -->
-                <div class="chat-menu-item danger" id="menu-leave-group" style="display: none;">
-                    <span class="menu-icon">🚪</span>
-                    <span class="menu-text">Sair do Grupo</span>
-                </div>
+            </div>
+            <div class="creditos-box">
+                <div class="stat-label">Créditos Disponíveis</div>
+                <div class="creditos-valor" id="finZeusCreditos">0</div>
             </div>
         </div>
     </div>
-    <div class="messages-area" id="messages-area">
-        <div class="loading">Carregando mensagens...</div>
-    </div>
-    <div class="message-input-area">
-        <input type="text" id="message-input" placeholder="Digite uma mensagem..." autocomplete="off">
-        <button class="send-button" id="send-btn">➤</button>
+</div>
+
+<!-- Botão Flutuante + -->
+<button class="btn btn-add-fixo" onclick="showModalCadastro()">
+    <i class="bi bi-plus-lg"></i>
+</button>
+
+<!-- Barra Inferior -->
+<div class="bottom-bar">
+    <div class="bottom-email" id="userEmailDisplay">Lojaitv@itv.com</div>
+    <button class="btn-menu-bottom" onclick="openNav()">
+        <i class="bi bi-list"></i>
+    </button>
+</div>
+
+<!-- Modal Cadastro/Edição -->
+<div class="modal fade" id="modalCadastro" tabindex="-1" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">                <h5 class="modal-title">📋 Cliente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editId">
+                <label class="small">Nome:</label>
+                <input type="text" id="cNome" class="form-control mb-2">
+                
+                <label class="small">Servidor:</label>
+                <select id="cServidor" class="form-control mb-2">
+                    <option value="central">📡 CENTRAL</option>
+                    <option value="warez">⚡ WAREZ</option>
+                    <option value="zeus">🔥 ZEUS</option>
+                </select>
+                
+                <label class="small">Usuário:</label>
+                <input type="text" id="cUser" class="form-control mb-2">
+                <label class="small">Senha:</label>
+                <input type="text" id="cPass" class="form-control mb-2">
+                <label class="small">Valor (R$):</label>
+                <input type="number" id="cValor" class="form-control mb-2" step="0.01">
+                <label class="small">Data Vencimento:</label>
+                <input type="date" id="cData" class="form-control mb-2">
+                <label class="small">URL Playlist:</label>
+                <input type="text" id="cUrl" class="form-control mb-2">
+                <label class="small">WhatsApp (com DDD):</label>
+                <input type="tel" id="cTel" class="form-control mb-2" placeholder="55999999999">
+                <label class="small">Observações:</label>
+                <textarea id="cObs" class="form-control mb-2" rows="2"></textarea>
+                <button class="btn btn-dark w-100 mt-2 rounded-pill" onclick="saveCliente()">Salvar Cliente</button>
+            </div>
+        </div>
     </div>
 </div>
 
-<!-- Modal Adicionar Contato -->
-<div class="modal" id="add-contact-modal">
-    <div class="modal-content">
-        <h3>Adicionar Novo Contato</h3>
-        <input type="email" id="new-contact-email" placeholder="E-mail do contato">
-        <input type="text" id="new-contact-name" placeholder="Nome do contato (opcional)">
-        <div class="modal-buttons">
-            <button class="btn-cancel" id="cancel-add-contact">Cancelar</button>
-            <button class="btn-confirm" id="confirm-add-contact">Adicionar</button>
-        </div>
-    </div></div>
-
-<!-- Modal 1: Seleção de Contatos para Grupo -->
-<div class="modal" id="select-contacts-modal">
-    <div class="modal-content">
-        <h3>👥 Novo Grupo - Selecione os Participantes</h3>
-        <div class="selected-count" id="selected-count">0 selecionados</div>
-        <div class="contacts-select-list" id="contacts-select-list">
-            <div class="loading">Carregando contatos...</div>
-        </div>
-        <div class="modal-buttons">
-            <button class="btn-cancel" id="cancel-select-contacts">Cancelar</button>
-            <button class="btn-confirm" id="advance-to-name">Avançar</button>
+<!-- Modal de Ações do Cliente -->
+<div class="modal fade" id="modalAcoes" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h5 class="modal-title" id="acoesTitulo">👤 Cliente</h5>
+                    <small class="text-secondary" id="acoesSubtitulo"></small>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="cliente-info mb-3" id="acoesInfoResumo"></div>
+                <hr>
+                <div class="modal-acoes-grid" id="acoesGrid"></div>            </div>
         </div>
     </div>
 </div>
 
-<!-- Modal 2: Nome do Grupo -->
-<div class="modal" id="group-name-modal">
-    <div class="modal-content">
-        <h3>👥 Nome do Grupo</h3>
-        <input type="text" id="group-name-input" placeholder="Digite o nome do grupo" maxlength="40">
-        <div id="group-members-preview" style="font-size: 13px; color: #666; margin: 10px 0; padding: 10px; background: #f5f5f5; border-radius: 8px;"></div>
-        <div class="modal-buttons">
-            <button class="btn-cancel" id="back-to-select">Voltar</button>
-            <button class="btn-confirm" id="confirm-create-group">Ok</button>
-        </div>
-    </div>
-</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
-<!-- Visualizador de Imagem -->
-<div class="image-viewer" id="image-viewer">
-    <img id="viewer-image" src="" alt="Imagem">
-</div>
-
-<!-- Toast -->
-<div class="toast" id="toast"></div>
-
-<!-- Firebase SDKs -->
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp, doc, setDoc, getDoc, getDocs, updateDoc, deleteDoc, writeBatch, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-
+<script>
     const firebaseConfig = {
-        apiKey: "AIzaSyD6sVu3hsBK0AyH4jxr3lj94Hj7JAj16_g",
-        authDomain: "chat-94349.firebaseapp.com",
-        projectId: "chat-94349",
-        storageBucket: "chat-94349.firebasestorage.app",
-        messagingSenderId: "1058859014174",        appId: "1:1058859014174:web:19d7b3ceef6f6dda1e360f"
+      apiKey: "AIzaSyDd_rtYsto9_0zp8pxYwXRs4XRRip7k3uc",
+      authDomain: "itvcontrol.firebaseapp.com",
+      projectId: "itvcontrol",
+      storageBucket: "itvcontrol.firebasestorage.app",
+      messagingSenderId: "291731890067",
+      appId: "1:291731890067:web:e75e79766765d861db5266"
     };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+    let clientes = [];
+    let config = { 
+        msg: "", 
+        p1: "", 
+        p2: "", 
+        p3: "",
+        msgCobranca: "",
+        msgRenovadoReceber: "",
+        msgRenovar: "",
+        linkCentral: "",
+        linkWarez: "",
+        linkZeus: "",
+        creditosCentral: 0,
+        creditosWarez: 0,
+        creditosZeus: 0
+    };
+    let currentFilter = 'ativos';
+    let usuarioLogadoUid = null;
+    let temaAtual = 'claro';
 
-    let currentUser = null;
-    let currentChat = null;
-    let contacts = [];
-    let messagesListener = null;
-    let notificationSound = null;
-    let soundEnabled = false;
-    
-    // Admin state
-    let isAdmin = false;
-    let adminViewMode = 'users';
-    let selectedUserForAdmin = null;
+    document.getElementById('filterMes').value = new Date().toISOString().slice(0, 7);
 
-    // Group creation state
-    let selectedGroupMembers = []; // array de { email, displayName }
-
-    // Elementos
-    const loginScreen = document.getElementById('login-screen');
-    const mainScreen = document.getElementById('main-screen');
-    const chatScreen = document.getElementById('chat-screen');
-    const loginEmail = document.getElementById('login-email');
-    const loginPassword = document.getElementById('login-password');
-    const loginError = document.getElementById('login-error');
-    const loginBtn = document.getElementById('login-btn');
-    const registerBtn = document.getElementById('register-btn');
-    const logoutBtn = document.getElementById('settings-logout');
-    const addContactBtn = document.getElementById('settings-add-contact');
-    const newGroupBtn = document.getElementById('settings-new-group');
-    const backBtn = document.getElementById('back-btn');
-    const sendBtn = document.getElementById('send-btn');
-    const messageInput = document.getElementById('message-input');
-    const messagesArea = document.getElementById('messages-area');
-    const conversationsList = document.getElementById('conversations-list');
-    const addContactModal = document.getElementById('add-contact-modal');
-    const cancelAddContact = document.getElementById('cancel-add-contact');
-    const confirmAddContact = document.getElementById('confirm-add-contact');
-    const chatMenuBtn = document.getElementById('chat-menu-btn');
-    const chatMenu = document.getElementById('chat-menu');
-    const chatContactName = document.getElementById('chat-contact-name');
-    const imageViewer = document.getElementById('image-viewer');
-    const viewerImage = document.getElementById('viewer-image');
-    const toast = document.getElementById('toast');
-    const settingsBtn = document.getElementById('settings-btn');
-    const settingsMenu = document.getElementById('settings-menu');    const backAdminBtn = document.getElementById('back-admin-btn');
-    const mainTitle = document.getElementById('main-title');
-
-    // Modais de grupo
-    const selectContactsModal = document.getElementById('select-contacts-modal');
-    const contactsSelectList = document.getElementById('contacts-select-list');
-    const selectedCountEl = document.getElementById('selected-count');
-    const cancelSelectContacts = document.getElementById('cancel-select-contacts');
-    const advanceToNameBtn = document.getElementById('advance-to-name');
-    const groupNameModal = document.getElementById('group-name-modal');
-    const groupNameInput = document.getElementById('group-name-input');
-    const groupMembersPreview = document.getElementById('group-members-preview');
-    const backToSelectBtn = document.getElementById('back-to-select');
-    const confirmCreateGroupBtn = document.getElementById('confirm-create-group');
-
-    function showToast(message, duration = 3000) {
-        toast.textContent = message;
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), duration);
-    }
-
-    function loadSavedSound() {
-        const savedSound = localStorage.getItem('ichat_notification_sound');
-        if (savedSound) {
-            notificationSound = new Audio(savedSound);
-            notificationSound.volume = 0.7;
-            soundEnabled = true;
-            updateSoundStatus(true);
-        }
-    }
-
-    function updateSoundStatus(enabled) {
-        const statusEl = document.getElementById('sound-status');
-        const chatStatusEl = document.getElementById('chat-sound-status');
-        if (statusEl) statusEl.textContent = enabled ? '✓ Ativo' : '';
-        if (chatStatusEl) chatStatusEl.textContent = enabled ? '✓ Ativo' : '';
-    }
-
-    function playNotificationSound() {
-        if (!notificationSound || !soundEnabled) return;
-        notificationSound.currentTime = 0;
-        notificationSound.play().catch(() => {});
-    }
-
-    function handleSoundFile(file) {
-        if (!file || !file.type.startsWith('audio/')) return showToast('❌ Selecione um áudio válido (max 5MB)');
-        if (file.size > 5 * 1024 * 1024) return showToast('❌ Máximo 5MB');
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const audioData = e.target.result;            localStorage.setItem('ichat_notification_sound', audioData);
-            notificationSound = new Audio(audioData);
-            notificationSound.volume = 0.7;
-            soundEnabled = true;
-            updateSoundStatus(true);
-            showToast('🔔 Som ativado!');
-            settingsMenu.classList.remove('show');
-            chatMenu.classList.remove('show');
-        };
-        reader.readAsDataURL(file);
-    }
-
-    async function login() {
-        const email = loginEmail.value.trim();
-        const password = loginPassword.value.trim();
-        if (!email || !password) return showError('Preencha todos os campos');
-        try {
-            await signInWithEmailAndPassword(auth, email, password);
-        } catch (error) {
-            let message = 'Erro ao fazer login';
-            if (error.code === 'auth/user-not-found') message = 'Usuário não encontrado';
-            else if (error.code === 'auth/wrong-password') message = 'Senha incorreta';
-            else if (error.code === 'auth/invalid-email') message = 'E-mail inválido';
-            showError(message);
-        }
-    }
-
-    async function register() {
-        const email = loginEmail.value.trim();
-        const password = loginPassword.value.trim();
-        if (!email || !password) return showError('Preencha todos os campos');
-        if (password.length < 6) return showError('Senha mínima 6 caracteres');
-        try {
-            await createUserWithEmailAndPassword(auth, email, password);
-            await setDoc(doc(db, "usuarios", email.replace(/\./g, '_')), {
-                email: email,
-                displayName: email.split('@')[0],
-                createdAt: serverTimestamp(),
-                contacts: []
-            });
-        } catch (error) {
-            let message = 'Erro ao criar conta';
-            if (error.code === 'auth/email-already-in-use') message = 'E-mail já cadastrado';
-            showError(message);
-        }
-    }
-
-    function showError(message) {
-        loginError.textContent = message;
-        loginError.style.display = 'block';        setTimeout(() => loginError.style.display = 'none', 3000);
-    }
-
-    async function logout() {
-        await signOut(auth);
-        settingsMenu.classList.remove('show');
-        resetAdminUI();
-    }
-
-    function getConversationId(user1, user2) {
-        return [user1, user2].sort().join('_');
-    }
-
-    // ========== REMOVER CONTATO ==========
-    async function removeContact(contactEmail, contactDisplayName) {
-        if (!confirm(`Deseja realmente remover "${contactDisplayName}" da sua lista de contatos?\nA conversa será mantida, mas o contato sumirá da sua lista.`)) return;
-
-        try {
-            const myId = `${currentUser.email.replace(/\./g, '_')}_${contactEmail.replace(/\./g, '_')}`;
-            const friendId = `${contactEmail.replace(/\./g, '_')}_${currentUser.email.replace(/\./g, '_')}`;
-            
-            await deleteDoc(doc(db, "contatos", myId));
-            await deleteDoc(doc(db, "contatos", friendId));
-            
-            showToast(`✅ Contato ${contactDisplayName} removido!`);
-            
-            if (currentChat && (currentChat.contactEmail === contactEmail || (currentChat.isAdminView && currentChat.ownerEmail === contactEmail))) {
-                closeChat();
-            }
-            refreshMainContent();
-            chatMenu.classList.remove('show');
-        } catch (error) {
-            console.error("Erro ao remover contato:", error);
-            showToast("❌ Erro ao remover contato. Tente novamente.");
-        }
-    }
-
-    // ========== SAIR DO GRUPO ==========
-    async function leaveGroup(groupId, groupName) {
-        if (!confirm(`Deseja realmente sair do grupo "${groupName}"?`)) return;
-        try {
-            await updateDoc(doc(db, "grupos", groupId), {
-                membros: arrayRemove(currentUser.email)
-            });
-            showToast(`✅ Você saiu do grupo ${groupName}`);
-            chatMenu.classList.remove('show');
-            closeChat();
-        } catch (error) {
-            console.error("Erro ao sair do grupo:", error);
-            showToast("❌ Erro ao sair do grupo.");        }
-    }
-
-    // ========== NOVO GRUPO - FLUXO COMPLETO ==========
-    function openNewGroupModal() {
-        settingsMenu.classList.remove('show');
-        selectedGroupMembers = [];
-        renderContactsForSelection();
-        selectContactsModal.classList.add('active');
-    }
-
-    function renderContactsForSelection() {
-        contactsSelectList.innerHTML = '<div class="loading">Carregando contatos...</div>';
-        updateSelectedCount();
-
-        const contactsQuery = query(collection(db, "contatos"), where("userEmail", "==", currentUser.email));
-        getDocs(contactsQuery).then(snapshot => {
-            const userContacts = [];
-            snapshot.forEach(doc => userContacts.push(doc.data()));
-
-            if (userContacts.length === 0) {
-                contactsSelectList.innerHTML = '<div class="no-contacts-msg">Você ainda não tem contatos.<br>Adicione contatos primeiro para criar um grupo.</div>';
-                return;
-            }
-
-            contactsSelectList.innerHTML = '';
-            userContacts.forEach(contact => {
-                const item = document.createElement('div');
-                item.className = 'contact-select-item';
-                item.setAttribute('data-email', contact.contactEmail);
-
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.id = `chk_${contact.contactEmail}`;
-
-                const avatar = document.createElement('div');
-                avatar.className = 'mini-avatar';
-                avatar.textContent = (contact.displayName || '?').charAt(0).toUpperCase();
-
-                const info = document.createElement('div');
-                info.className = 'contact-info';
-                const name = document.createElement('div');
-                name.className = 'contact-name';
-                name.textContent = contact.displayName;
-                const email = document.createElement('div');
-                email.className = 'contact-email';
-                email.textContent = contact.contactEmail;
-                info.appendChild(name);
-                info.appendChild(email);
-                item.appendChild(checkbox);
-                item.appendChild(avatar);
-                item.appendChild(info);
-
-                item.onclick = (e) => {
-                    if (e.target !== checkbox) checkbox.checked = !checkbox.checked;
-                    if (checkbox.checked) {
-                        item.classList.add('selected');
-                        if (!selectedGroupMembers.find(m => m.email === contact.contactEmail)) {
-                            selectedGroupMembers.push({ email: contact.contactEmail, displayName: contact.displayName });
-                        }
-                    } else {
-                        item.classList.remove('selected');
-                        selectedGroupMembers = selectedGroupMembers.filter(m => m.email !== contact.contactEmail);
-                    }
-                    updateSelectedCount();
-                };
-
-                contactsSelectList.appendChild(item);
-            });
-        }).catch(err => {
-            console.error(err);
-            contactsSelectList.innerHTML = '<div class="no-contacts-msg">Erro ao carregar contatos.</div>';
-        });
-    }
-
-    function updateSelectedCount() {
-        selectedCountEl.textContent = `${selectedGroupMembers.length} selecionado(s)`;
-    }
-
-    function advanceToGroupName() {
-        if (selectedGroupMembers.length < 1) {
-            return showToast('⚠️ Selecione pelo menos 1 contato');
-        }
-        selectContactsModal.classList.remove('active');
-        groupNameInput.value = '';
-        const names = selectedGroupMembers.map(m => m.displayName).join(', ');
-        groupMembersPreview.innerHTML = `<strong>Participantes (${selectedGroupMembers.length}+você):</strong><br>${names}`;
-        groupNameModal.classList.add('active');
-        setTimeout(() => groupNameInput.focus(), 100);
-    }
-
-    function backToSelectContacts() {
-        groupNameModal.classList.remove('active');
-        selectContactsModal.classList.add('active');
-    }
-
-    async function createGroup() {
-        const groupName = groupNameInput.value.trim();
-        if (!groupName) return showToast('⚠️ Digite o nome do grupo');        if (selectedGroupMembers.length < 1) return showToast('⚠️ Selecione pelo menos 1 contato');
-
-        try {
-            const membersEmails = [currentUser.email, ...selectedGroupMembers.map(m => m.email)];
-            // Remove duplicatas (caso o usuário já esteja na lista)
-            const uniqueMembers = [...new Set(membersEmails)];
-
-            const groupData = {
-                nome: groupName,
-                membros: uniqueMembers,
-                createdBy: currentUser.email,
-                createdByName: currentUser.email.split('@')[0],
-                createdAt: serverTimestamp(),
-                lastMessage: 'Grupo criado',
-                lastMessageTime: serverTimestamp()
-            };
-
-            const groupRef = await addDoc(collection(db, "grupos"), groupData);
-            showToast(`✅ Grupo "${groupName}" criado!`);
-            groupNameModal.classList.remove('active');
-            selectedGroupMembers = [];
-            refreshMainContent();
-        } catch (error) {
-            console.error("Erro ao criar grupo:", error);
-            showToast("❌ Erro ao criar grupo.");
-        }
-    }
-
-    // ========== ADMIN: Carregar todos os usuários ==========
-    async function loadAllUsers() {
-        conversationsList.innerHTML = '<div class="loading">Carregando usuários...</div>';
-        try {
-            const usersSnap = await getDocs(collection(db, "usuarios"));
-            const users = [];
-            usersSnap.forEach(doc => {
-                const data = doc.data();
-                if (data.email !== currentUser.email) {
-                    users.push({ email: data.email, displayName: data.displayName || data.email.split('@')[0] });
-                }
-            });
-            if (users.length === 0) {
-                conversationsList.innerHTML = '<div class="no-conversations"><h3>Nenhum outro usuário cadastrado</h3></div>';
-                return;
-            }
-            conversationsList.innerHTML = '';
-            users.forEach(user => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'conversation-item';
-                itemDiv.setAttribute('data-user-email', user.email);
-                const avatar = document.createElement('div');                avatar.className = 'conversation-avatar';
-                avatar.textContent = user.displayName.charAt(0).toUpperCase();
-                const infoDiv = document.createElement('div');
-                infoDiv.className = 'conversation-info';
-                const nameDiv = document.createElement('div');
-                nameDiv.className = 'conversation-name';
-                nameDiv.textContent = user.displayName;
-                const emailDiv = document.createElement('div');
-                emailDiv.className = 'conversation-last-message';
-                emailDiv.textContent = user.email;
-                infoDiv.appendChild(nameDiv);
-                infoDiv.appendChild(emailDiv);
-                itemDiv.appendChild(avatar);
-                itemDiv.appendChild(infoDiv);
-                itemDiv.onclick = () => showUserConversations(user);
-                conversationsList.appendChild(itemDiv);
-            });
-        } catch (error) {
-            console.error(error);
-            conversationsList.innerHTML = '<div class="no-conversations"><h3>Erro ao carregar usuários</h3></div>';
-        }
-    }
-
-    // ADMIN: Mostrar conversas de um usuário específico
-    async function showUserConversations(user) {
-        selectedUserForAdmin = user;
-        adminViewMode = 'conversations';
-        mainTitle.textContent = `Conversas de ${user.displayName}`;
-        backAdminBtn.style.display = 'flex';
-        conversationsList.innerHTML = '<div class="loading">Carregando conversas...</div>';
-        
-        const contactsQuery = query(collection(db, "contatos"), where("userEmail", "==", user.email));
-        const snapshot = await getDocs(contactsQuery);
-        const userContacts = [];
-        snapshot.forEach(doc => {
-            const data = doc.data();
-            userContacts.push({ contactEmail: data.contactEmail, displayName: data.displayName });
-        });
-        
-        if (userContacts.length === 0) {
-            conversationsList.innerHTML = '<div class="no-conversations"><h3>Este usuário ainda não tem conversas</h3><p>Nenhum contato adicionado.</p></div>';
-            return;
-        }
-        
-        conversationsList.innerHTML = '';
-        userContacts.forEach(contact => {
-            const itemDiv = document.createElement('div');
-            itemDiv.className = 'conversation-item';
-            const avatar = document.createElement('div');
-            avatar.className = 'conversation-avatar';            avatar.textContent = contact.displayName.charAt(0).toUpperCase();
-            const infoDiv = document.createElement('div');
-            infoDiv.className = 'conversation-info';
-            const nameDiv = document.createElement('div');
-            nameDiv.className = 'conversation-name';
-            nameDiv.textContent = contact.displayName;
-            const emailDiv = document.createElement('div');
-            emailDiv.className = 'conversation-last-message';
-            emailDiv.textContent = contact.contactEmail;
-            infoDiv.appendChild(nameDiv);
-            infoDiv.appendChild(emailDiv);
-            itemDiv.appendChild(avatar);
-            itemDiv.appendChild(infoDiv);
-            itemDiv.onclick = () => openAdminChat(user, contact);
-            conversationsList.appendChild(itemDiv);
-        });
-    }
-
-    // ADMIN: Abrir chat entre um usuário e seu contato (somente leitura)
-    function openAdminChat(ownerUser, contact) {
-        currentChat = {
-            contactEmail: contact.contactEmail,
-            displayName: contact.displayName,
-            isAdminView: true,
-            ownerEmail: ownerUser.email,
-            ownerName: ownerUser.displayName
-        };
-        document.getElementById('chat-avatar').textContent = contact.displayName.charAt(0).toUpperCase();
-        chatContactName.textContent = `${contact.displayName} (conversa de ${ownerUser.displayName})`;
-        chatContactName.classList.remove('blinking');
-        document.getElementById('chat-contact-status').innerHTML = '<span class="view-mode-badge">👁️ Modo Admin</span>';
-        
-        mainScreen.classList.remove('active');
-        chatScreen.classList.add('active');
-        
-        messageInput.disabled = true;
-        sendBtn.disabled = true;
-        messageInput.placeholder = "Modo de visualização - não é possível enviar mensagens";
-        sendBtn.style.opacity = '0.5';
-        messageInput.style.background = '#f5f5f5';
-        
-        const clearItem = document.getElementById('menu-clear-messages');
-        const cameraItem = document.getElementById('menu-camera');
-        const galleryItem = document.getElementById('menu-gallery');
-        const deleteFriendItem = document.getElementById('menu-delete-friend');
-        const leaveGroupItem = document.getElementById('menu-leave-group');
-        if (clearItem) clearItem.style.display = 'none';
-        if (cameraItem) cameraItem.style.display = 'none';
-        if (galleryItem) galleryItem.style.display = 'none';
-        if (deleteFriendItem) deleteFriendItem.style.display = 'none';        if (leaveGroupItem) leaveGroupItem.style.display = 'none';
-        
-        loadAdminMessages(ownerUser.email, contact.contactEmail);
-        messageInput.focus();
-    }
-    
-    function loadAdminMessages(ownerEmail, contactEmail) {
-        if (messagesListener) messagesListener();
-        const conversationId = getConversationId(ownerEmail, contactEmail);
-        const messagesQuery = query(collection(db, "conversas", conversationId, "mensagens"), orderBy("timestamp", "asc"));
-        messagesArea.innerHTML = '';
-        messagesListener = onSnapshot(messagesQuery, (snapshot) => {
-            messagesArea.innerHTML = '';
-            if (snapshot.empty) {
-                messagesArea.innerHTML = '<div class="no-conversations"><p>Nenhuma mensagem trocada entre eles.</p></div>';
-                return;
-            }
-            snapshot.forEach(doc => {
-                const message = doc.data();
-                const messageDiv = document.createElement('div');
-                const isSentByOwner = message.enviadoPor === ownerEmail;
-                messageDiv.className = `message ${isSentByOwner ? 'sent' : 'received'}`;
-                if (message.tipo === 'imagem' && message.imagem) {
-                    const img = document.createElement('img');
-                    img.className = 'message-image';
-                    img.src = message.imagem;
-                    img.onclick = () => { viewerImage.src = message.imagem; imageViewer.classList.add('active'); };
-                    messageDiv.appendChild(img);
-                } else if (message.texto) {
-                    const textDiv = document.createElement('div');
-                    textDiv.className = 'message-text';
-                    textDiv.textContent = message.texto;
-                    messageDiv.appendChild(textDiv);
-                }
-                const timeDiv = document.createElement('div');
-                timeDiv.className = 'message-time';
-                const time = message.timestamp ? message.timestamp.toDate() : new Date();
-                timeDiv.textContent = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                messageDiv.appendChild(timeDiv);
-                messagesArea.appendChild(messageDiv);
-            });
-            messagesArea.scrollTop = messagesArea.scrollHeight;
-        });
-    }
-    
-    function resetAdminUI() {
-        adminViewMode = 'users';
-        selectedUserForAdmin = null;
-        mainTitle.textContent = isAdmin ? 'Todos os usuários' : 'Conversas';
-        backAdminBtn.style.display = 'none';        if (isAdmin && currentUser) loadAllUsers();
-    }
-
-    // ========== CARREGAR CONVERSAS NORMAIS (INDIVIDUAIS + GRUPOS) ==========
-    function loadNormalConversations() {
-        if (!currentUser) return;
-        conversationsList.innerHTML = '<div class="loading">Carregando...</div>';
-
-        // Listener de contatos individuais
-        const contactsQuery = query(collection(db, "contatos"), where("userEmail", "==", currentUser.email));
-        const unsubContacts = onSnapshot(contactsQuery, (snapshot) => {
-            contacts = [];
-            snapshot.forEach(doc => contacts.push({ id: doc.id, ...doc.data() }));
-            renderConversationsList();
-        });
-
-        // Listener de grupos
-        const groupsQuery = query(collection(db, "grupos"), where("membros", "array-contains", currentUser.email));
-        const unsubGroups = onSnapshot(groupsQuery, (snapshot) => {
-            window._userGroups = [];
-            snapshot.forEach(doc => window._userGroups.push({ id: doc.id, ...doc.data() }));
-            renderConversationsList();
-        });
-
-        // Guarda os unsubscribes para limpar ao deslogar
-        window._conversationsUnsubs = [unsubContacts, unsubGroups];
-    }
-
-    function renderConversationsList() {
-        const contactsArr = contacts || [];
-        const groupsArr = window._userGroups || [];
-
-        if (contactsArr.length === 0 && groupsArr.length === 0) {
-            conversationsList.innerHTML = '<div class="no-conversations"><h3>Nenhuma conversa ainda</h3><p>Adicione contatos ou crie um grupo para começar!</p></div>';
-            return;
-        }
-
-        conversationsList.innerHTML = '';
-
-        // Renderiza GRUPOS primeiro
-        groupsArr.forEach(group => {
-            const itemDiv = document.createElement('div');
-            itemDiv.className = 'conversation-item';
-            itemDiv.setAttribute('data-group-id', group.id);
-
-            const avatar = document.createElement('div');
-            avatar.className = 'conversation-avatar group';
-            avatar.textContent = '👥';
-
-            const infoDiv = document.createElement('div');            infoDiv.className = 'conversation-info';
-
-            const nameDiv = document.createElement('div');
-            nameDiv.className = 'conversation-name';
-            nameDiv.textContent = group.nome || 'Grupo';
-
-            const lastMsgDiv = document.createElement('div');
-            lastMsgDiv.className = 'conversation-last-message';
-            lastMsgDiv.textContent = group.lastMessage || 'Nenhuma mensagem';
-
-            infoDiv.appendChild(nameDiv);
-            infoDiv.appendChild(lastMsgDiv);
-
-            itemDiv.appendChild(avatar);
-            itemDiv.appendChild(infoDiv);
-
-            itemDiv.onclick = () => openGroupChat(group);
-            conversationsList.appendChild(itemDiv);
-
-            // Listener das mensagens do grupo para atualizar última mensagem
-            const messagesQuery = query(
-                collection(db, "grupos", group.id, "mensagens"),
-                orderBy("timestamp", "desc")
-            );
-            let prevCount = 0;
-            onSnapshot(messagesQuery, (snap) => {
-                const isNew = snap.size > prevCount && prevCount > 0;
-                const last = snap.docs[0];
-                if (last) {
-                    const data = last.data();
-                    let preview = '';
-                    if (data.tipo === 'imagem') preview = '📷 Foto';
-                    else preview = `${data.nomeRemetente || '?'}: ${data.texto || ''}`;
-                    lastMsgDiv.textContent = preview;
-
-                    if (isNew && data.enviadoPor !== currentUser.email) {
-                        playNotificationSound();
-                        itemDiv.classList.add('blinking');
-                        setTimeout(() => itemDiv.classList.remove('blinking'), 5000);
-                    }
-                }
-                prevCount = snap.size;
-            });
-        });
-
-        // Renderiza CONTATOS INDIVIDUAIS
-        contactsArr.forEach(contact => {
-            const conversationId = getConversationId(currentUser.email, contact.contactEmail);
-            const messagesQuery = query(collection(db, "conversas", conversationId, "mensagens"), orderBy("timestamp", "desc"));
-            const itemDiv = document.createElement('div');            itemDiv.className = 'conversation-item';
-            itemDiv.setAttribute('data-email', contact.contactEmail);
-            itemDiv.onclick = () => openNormalChat(contact);
-            const avatar = document.createElement('div');
-            avatar.className = 'conversation-avatar';
-            avatar.textContent = contact.displayName.charAt(0).toUpperCase();
-            const infoDiv = document.createElement('div');
-            infoDiv.className = 'conversation-info';
-            const nameDiv = document.createElement('div');
-            nameDiv.className = 'conversation-name';
-            nameDiv.textContent = contact.displayName;
-            const lastMsgDiv = document.createElement('div');
-            lastMsgDiv.className = 'conversation-last-message';
-            lastMsgDiv.textContent = 'Carregando...';
-            infoDiv.appendChild(nameDiv);
-            infoDiv.appendChild(lastMsgDiv);
-            itemDiv.appendChild(avatar);
-            itemDiv.appendChild(infoDiv);
-            conversationsList.appendChild(itemDiv);
-            let prevCount = 0;
-            onSnapshot(messagesQuery, (snap) => {
-                const isNew = snap.size > prevCount && prevCount > 0;
-                const last = snap.docs[0];
-                if (last) {
-                    const data = last.data();
-                    lastMsgDiv.textContent = data.tipo === 'imagem' ? '📷 Foto' : data.texto;
-                    if (isNew && data.enviadoPor !== currentUser.email) {
-                        playNotificationSound();
-                        itemDiv.classList.add('blinking');
-                        setTimeout(() => itemDiv.classList.remove('blinking'), 5000);
-                    }
-                } else lastMsgDiv.textContent = 'Nenhuma mensagem';
-                prevCount = snap.size;
-            });
-        });
-    }
-    
-    function openNormalChat(contact) {
-        currentChat = { 
-            contactEmail: contact.contactEmail, 
-            displayName: contact.displayName, 
-            isAdminView: false,
-            isGroup: false
-        };
-        document.getElementById('chat-avatar').textContent = contact.displayName.charAt(0).toUpperCase();
-        document.getElementById('chat-avatar').classList.remove('group');
-        chatContactName.textContent = contact.displayName;
-        chatContactName.classList.remove('blinking');
-        document.getElementById('chat-contact-status').textContent = 'online';
-        mainScreen.classList.remove('active');        chatScreen.classList.add('active');
-        messageInput.disabled = false;
-        sendBtn.disabled = false;
-        messageInput.placeholder = "Digite uma mensagem...";
-        sendBtn.style.opacity = '1';
-        messageInput.style.background = 'white';
-        const clearItem = document.getElementById('menu-clear-messages');
-        const cameraItem = document.getElementById('menu-camera');
-        const galleryItem = document.getElementById('menu-gallery');
-        const deleteFriendItem = document.getElementById('menu-delete-friend');
-        const leaveGroupItem = document.getElementById('menu-leave-group');
-        if (clearItem) clearItem.style.display = 'flex';
-        if (cameraItem) cameraItem.style.display = 'none';
-        if (galleryItem) galleryItem.style.display = 'flex';
-        if (deleteFriendItem) deleteFriendItem.style.display = 'flex';
-        if (leaveGroupItem) leaveGroupItem.style.display = 'none';
-        loadNormalMessages();
-        messageInput.focus();
-    }
-
-    // ========== ABRIR CHAT DE GRUPO ==========
-    function openGroupChat(group) {
-        currentChat = {
-            groupId: group.id,
-            groupName: group.nome,
-            groupMembers: group.membros,
-            isAdminView: false,
-            isGroup: true
-        };
-        document.getElementById('chat-avatar').textContent = '👥';
-        document.getElementById('chat-avatar').classList.add('group');
-        chatContactName.textContent = group.nome;
-        chatContactName.classList.remove('blinking');
-        document.getElementById('chat-contact-status').textContent = `${group.membros.length} participante(s)`;
-        mainScreen.classList.remove('active');
-        chatScreen.classList.add('active');
-        messageInput.disabled = false;
-        sendBtn.disabled = false;
-        messageInput.placeholder = "Digite uma mensagem no grupo...";
-        sendBtn.style.opacity = '1';
-        messageInput.style.background = 'white';
-        const clearItem = document.getElementById('menu-clear-messages');
-        const cameraItem = document.getElementById('menu-camera');
-        const galleryItem = document.getElementById('menu-gallery');
-        const deleteFriendItem = document.getElementById('menu-delete-friend');
-        const leaveGroupItem = document.getElementById('menu-leave-group');
-        if (clearItem) clearItem.style.display = 'none'; // Não permite limpar mensagens do grupo
-        if (cameraItem) cameraItem.style.display = 'none';
-        if (galleryItem) galleryItem.style.display = 'flex';
-        if (deleteFriendItem) deleteFriendItem.style.display = 'none';        if (leaveGroupItem) leaveGroupItem.style.display = 'flex';
-        loadGroupMessages();
-        messageInput.focus();
-    }
-    
-    function loadNormalMessages() {
-        if (messagesListener) messagesListener();
-        const conversationId = getConversationId(currentUser.email, currentChat.contactEmail);
-        const messagesQuery = query(collection(db, "conversas", conversationId, "mensagens"), orderBy("timestamp", "asc"));
-        messagesArea.innerHTML = '';
-        let prevCount = 0;
-        messagesListener = onSnapshot(messagesQuery, (snapshot) => {
-            const isNew = snapshot.size > prevCount && prevCount > 0;
-            const lastDoc = snapshot.docs[snapshot.docs.length - 1];
-            const isFromOther = lastDoc && lastDoc.data().enviadoPor !== currentUser.email;
-            messagesArea.innerHTML = '';
-            if (snapshot.empty) { messagesArea.innerHTML = '<div class="no-conversations"><p>Envie uma mensagem!</p></div>'; prevCount = 0; return; }
-            snapshot.forEach(doc => {
-                const msg = doc.data();
-                const div = document.createElement('div');
-                div.className = `message ${msg.enviadoPor === currentUser.email ? 'sent' : 'received'}`;
-                if (msg.tipo === 'imagem' && msg.imagem) {
-                    const img = document.createElement('img');
-                    img.className = 'message-image';
-                    img.src = msg.imagem;
-                    img.onclick = () => { viewerImage.src = msg.imagem; imageViewer.classList.add('active'); };
-                    div.appendChild(img);
-                } else if (msg.texto) {
-                    const textDiv = document.createElement('div');
-                    textDiv.className = 'message-text';
-                    textDiv.textContent = msg.texto;
-                    div.appendChild(textDiv);
-                }
-                const timeDiv = document.createElement('div');
-                timeDiv.className = 'message-time';
-                const time = msg.timestamp ? msg.timestamp.toDate() : new Date();
-                timeDiv.textContent = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                div.appendChild(timeDiv);
-                messagesArea.appendChild(div);
-            });
-            messagesArea.scrollTop = messagesArea.scrollHeight;
-            if (isNew && isFromOther) {
-                playNotificationSound();
-                chatContactName.classList.add('blinking');
-                setTimeout(() => chatContactName.classList.remove('blinking'), 5000);
-            }
-            prevCount = snapshot.size;
-        });
-    }
-    // ========== CARREGAR MENSAGENS DO GRUPO ==========
-    function loadGroupMessages() {
-        if (messagesListener) messagesListener();
-        const groupId = currentChat.groupId;
-        const messagesQuery = query(
-            collection(db, "grupos", groupId, "mensagens"),
-            orderBy("timestamp", "asc")
-        );
-        messagesArea.innerHTML = '';
-        let prevCount = 0;
-        messagesListener = onSnapshot(messagesQuery, (snapshot) => {
-            const isNew = snapshot.size > prevCount && prevCount > 0;
-            const lastDoc = snapshot.docs[snapshot.docs.length - 1];
-            const isFromOther = lastDoc && lastDoc.data().enviadoPor !== currentUser.email;
-            messagesArea.innerHTML = '';
-            if (snapshot.empty) {
-                messagesArea.innerHTML = '<div class="no-conversations"><p>Envie a primeira mensagem no grupo!</p></div>';
-                prevCount = 0;
-                return;
-            }
-            snapshot.forEach(doc => {
-                const msg = doc.data();
-                const div = document.createElement('div');
-                div.className = `message ${msg.enviadoPor === currentUser.email ? 'sent' : 'received'}`;
-                // Mostra nome do remetente em grupos (exceto nas próprias mensagens)
-                if (msg.enviadoPor !== currentUser.email && msg.nomeRemetente) {
-                    const senderDiv = document.createElement('div');
-                    senderDiv.className = 'message-sender';
-                    senderDiv.textContent = msg.nomeRemetente;
-                    div.appendChild(senderDiv);
-                }
-                if (msg.tipo === 'imagem' && msg.imagem) {
-                    const img = document.createElement('img');
-                    img.className = 'message-image';
-                    img.src = msg.imagem;
-                    img.onclick = () => { viewerImage.src = msg.imagem; imageViewer.classList.add('active'); };
-                    div.appendChild(img);
-                } else if (msg.texto) {
-                    const textDiv = document.createElement('div');
-                    textDiv.className = 'message-text';
-                    textDiv.textContent = msg.texto;
-                    div.appendChild(textDiv);
-                }
-                const timeDiv = document.createElement('div');
-                timeDiv.className = 'message-time';
-                const time = msg.timestamp ? msg.timestamp.toDate() : new Date();
-                timeDiv.textContent = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                div.appendChild(timeDiv);
-                messagesArea.appendChild(div);
-            });            messagesArea.scrollTop = messagesArea.scrollHeight;
-            if (isNew && isFromOther) {
-                playNotificationSound();
-                chatContactName.classList.add('blinking');
-                setTimeout(() => chatContactName.classList.remove('blinking'), 5000);
-            }
-            prevCount = snapshot.size;
-        });
-    }
-    
-    async function sendMessage() {
-        if (!currentChat || currentChat.isAdminView) return showToast('Modo admin: não é possível enviar');
-        const text = messageInput.value.trim();
-        if (!text) return;
-
-        if (currentChat.isGroup) {
-            // Envia para grupo
-            await addDoc(collection(db, "grupos", currentChat.groupId, "mensagens"), {
-                texto: text,
-                tipo: 'texto',
-                enviadoPor: currentUser.email,
-                nomeRemetente: currentUser.email.split('@')[0],
-                timestamp: serverTimestamp()
-            });
-            // Atualiza última mensagem do grupo
-            await updateDoc(doc(db, "grupos", currentChat.groupId), {
-                lastMessage: `${currentUser.email.split('@')[0]}: ${text}`,
-                lastMessageTime: serverTimestamp()
-            });
-        } else {
-            // Envia para conversa individual
-            const conversationId = getConversationId(currentUser.email, currentChat.contactEmail);
-            await addDoc(collection(db, "conversas", conversationId, "mensagens"), {
-                texto: text, tipo: 'texto', enviadoPor: currentUser.email, timestamp: serverTimestamp()
-            });
-        }
-        messageInput.value = '';
-    }
-    
-    async function clearMessages() {
-        if (currentChat?.isAdminView) return showToast('Ação não permitida no modo visualização');
-        if (currentChat?.isGroup) return showToast('Use "Sair do Grupo" em vez disso');
-        if (!confirm('Apagar TODAS as mensagens?')) return;
-        const conversationId = getConversationId(currentUser.email, currentChat.contactEmail);
-        const snapshot = await getDocs(collection(db, "conversas", conversationId, "mensagens"));
-        for (let i = 0; i < snapshot.docs.length; i += 500) {
-            const batch = writeBatch(db);
-            snapshot.docs.slice(i, i+500).forEach(d => batch.delete(d.ref));
-            await batch.commit();
-        }        showToast('✅ Conversa apagada');
-        chatMenu.classList.remove('show');
-    }
-    
-    async function sendImage(file, isCamera) {
-        if (currentChat?.isAdminView) return showToast('Modo admin: não pode enviar');
-        if (!file || !file.type.startsWith('image/')) return showToast('Selecione uma imagem');
-        if (file.size > 2 * 1024 * 1024) return showToast('Máximo 2MB');
-        showToast('📤 Enviando...');
-        const reader = new FileReader();
-        reader.onload = async (e) => {
-            if (currentChat.isGroup) {
-                await addDoc(collection(db, "grupos", currentChat.groupId, "mensagens"), {
-                    tipo: 'imagem',
-                    imagem: e.target.result,
-                    enviadoPor: currentUser.email,
-                    nomeRemetente: currentUser.email.split('@')[0],
-                    timestamp: serverTimestamp()
-                });
-                await updateDoc(doc(db, "grupos", currentChat.groupId), {
-                    lastMessage: `${currentUser.email.split('@')[0]}: 📷 Foto`,
-                    lastMessageTime: serverTimestamp()
-                });
-            } else {
-                const conversationId = getConversationId(currentUser.email, currentChat.contactEmail);
-                await addDoc(collection(db, "conversas", conversationId, "mensagens"), {
-                    tipo: 'imagem', imagem: e.target.result, enviadoPor: currentUser.email, timestamp: serverTimestamp()
-                });
-            }
-            showToast('✅ Foto enviada');
-            chatMenu.classList.remove('show');
-        };
-        reader.readAsDataURL(file);
-    }
-    
-    async function addContact() {
-        const email = document.getElementById('new-contact-email').value.trim();
-        const name = document.getElementById('new-contact-name').value.trim();
-        if (!email) return alert('Digite o e-mail');
-        if (email === currentUser.email) return alert('Não pode adicionar a si mesmo');
-        const userDoc = await getDoc(doc(db, "usuarios", email.replace(/\./g, '_')));
-        if (!userDoc.exists()) return alert('Usuário não encontrado');
-        await setDoc(doc(db, "contatos", `${currentUser.email.replace(/\./g, '_')}_${email.replace(/\./g, '_')}`), {
-            userEmail: currentUser.email, contactEmail: email, displayName: name || email.split('@')[0], addedAt: serverTimestamp()
-        });
-        await setDoc(doc(db, "contatos", `${email.replace(/\./g, '_')}_${currentUser.email.replace(/\./g, '_')}`), {
-            userEmail: email, contactEmail: currentUser.email, displayName: currentUser.email.split('@')[0], addedAt: serverTimestamp()
-        });
-        showToast('✅ Contato adicionado');
-        closeAddContactModal();        settingsMenu.classList.remove('show');
-    }
-    
-    function openAddContactModal() { addContactModal.classList.add('active'); settingsMenu.classList.remove('show'); }
-    function closeAddContactModal() { addContactModal.classList.remove('active'); document.getElementById('new-contact-email').value = ''; document.getElementById('new-contact-name').value = ''; }
-    function closeChat() { 
-        if (messagesListener) messagesListener(); 
-        chatScreen.classList.remove('active'); 
-        mainScreen.classList.add('active'); 
-        chatMenu.classList.remove('show'); 
-        if (isAdmin) {
-            if (adminViewMode === 'users') loadAllUsers();
-            else if (adminViewMode === 'conversations' && selectedUserForAdmin) showUserConversations(selectedUserForAdmin);
-        } else {
-            loadNormalConversations();
-        }
-    }
-    
-    function refreshMainContent() {
-        if (!currentUser) return;
-        if (isAdmin) {
-            if (adminViewMode === 'users') loadAllUsers();
-            else if (adminViewMode === 'conversations' && selectedUserForAdmin) showUserConversations(selectedUserForAdmin);
-        } else loadNormalConversations();
-    }
-    
-    onAuthStateChanged(auth, (user) => {
+    auth.onAuthStateChanged(user => {
         if (user) {
-            currentUser = user;
-            isAdmin = (user.email === "adm@luz.com");
-            loginScreen.style.display = 'none';
-            mainScreen.classList.add('active');
-            chatScreen.classList.remove('active');
-            loadSavedSound();
-            if (isAdmin) {
-                mainTitle.textContent = 'Todos os usuários';
-                backAdminBtn.style.display = 'none';
-                adminViewMode = 'users';
-                selectedUserForAdmin = null;
-                loadAllUsers();
-                const addContactSetting = document.getElementById('settings-add-contact');
-                if (addContactSetting) addContactSetting.style.display = 'none';
-                const newGroupSetting = document.getElementById('settings-new-group');
-                if (newGroupSetting) newGroupSetting.style.display = 'none';
-                const deleteFriendMenuItem = document.getElementById('menu-delete-friend');
-                if (deleteFriendMenuItem) deleteFriendMenuItem.style.display = 'none';
-            } else {
-                mainTitle.textContent = 'Conversas';
-                backAdminBtn.style.display = 'none';
-                const addContactSetting = document.getElementById('settings-add-contact');                if (addContactSetting) addContactSetting.style.display = 'flex';
-                const newGroupSetting = document.getElementById('settings-new-group');
-                if (newGroupSetting) newGroupSetting.style.display = 'flex';
-                const deleteFriendMenuItem = document.getElementById('menu-delete-friend');
-                if (deleteFriendMenuItem) deleteFriendMenuItem.style.display = 'flex';
-                loadNormalConversations();
-            }
+            usuarioLogadoUid = user.uid;
+            document.getElementById('userEmailDisplay').innerText = user.email || "Lojaitv@itv.com";
+            document.getElementById('authOverlay').style.display = 'none';            syncConfigAndClients();
         } else {
-            currentUser = null;
-            // Limpa listeners de conversas ao deslogar
-            if (window._conversationsUnsubs) {
-                window._conversationsUnsubs.forEach(u => u && u());
-                window._conversationsUnsubs = null;
-            }
-            window._userGroups = [];
-            loginScreen.style.display = 'flex';
-            mainScreen.classList.remove('active');
-            chatScreen.classList.remove('active');
+            usuarioLogadoUid = null;
+            document.getElementById('userEmailDisplay').innerText = "Lojaitv@itv.com";
+            document.getElementById('authOverlay').style.display = 'flex';
+            document.getElementById('adminLock').style.display = 'none';
         }
-    });
-    
-    backAdminBtn.onclick = () => {
-        if (isAdmin) {
-            adminViewMode = 'users';
-            selectedUserForAdmin = null;
-            mainTitle.textContent = 'Todos os usuários';
-            backAdminBtn.style.display = 'none';
-            loadAllUsers();
-        }
-    };
-    loginBtn.onclick = login;
-    registerBtn.onclick = register;
-    logoutBtn.onclick = logout;
-    addContactBtn.onclick = openAddContactModal;
-    // NOVO: Botão Novo Grupo
-    newGroupBtn.onclick = openNewGroupModal;
-    cancelSelectContacts.onclick = () => selectContactsModal.classList.remove('active');
-    advanceToNameBtn.onclick = advanceToGroupName;
-    backToSelectBtn.onclick = backToSelectContacts;
-    confirmCreateGroupBtn.onclick = createGroup;
-    backBtn.onclick = closeChat;
-    sendBtn.onclick = sendMessage;
-    cancelAddContact.onclick = closeAddContactModal;
-    confirmAddContact.onclick = addContact;
-    chatMenuBtn.onclick = (e) => { e.stopPropagation(); chatMenu.classList.toggle('show'); };
-    settingsBtn.onclick = (e) => { e.stopPropagation(); settingsMenu.classList.toggle('show'); };
-    document.addEventListener('click', (e) => {
-        if (!chatMenu.contains(e.target) && !chatMenuBtn.contains(e.target)) chatMenu.classList.remove('show');
-        if (!settingsMenu.contains(e.target) && !settingsBtn.contains(e.target)) settingsMenu.classList.remove('show');
-    });    imageViewer.onclick = () => imageViewer.classList.remove('active');
-    document.getElementById('menu-clear-messages').onclick = clearMessages;
-    document.getElementById('menu-camera').onclick = (e) => { e.stopPropagation(); document.getElementById('camera-input').click(); };
-    document.getElementById('camera-input').addEventListener('change', (e) => { if(e.target.files[0]) sendImage(e.target.files[0], true); e.target.value=''; });
-    document.getElementById('menu-gallery').onclick = (e) => { e.stopPropagation(); document.getElementById('gallery-input').click(); };
-    document.getElementById('gallery-input').addEventListener('change', (e) => { if(e.target.files[0]) sendImage(e.target.files[0], false); e.target.value=''; });
-    document.getElementById('menu-sound').onclick = (e) => { e.stopPropagation(); document.getElementById('sound-input').click(); };
-    document.getElementById('sound-input').addEventListener('change', (e) => { if(e.target.files[0]) handleSoundFile(e.target.files[0]); e.target.value=''; });
-    document.getElementById('settings-sound').onclick = (e) => { e.stopPropagation(); document.getElementById('settings-sound-input').click(); };
-    document.getElementById('settings-sound-input').addEventListener('change', (e) => { if(e.target.files[0]) handleSoundFile(e.target.files[0]); e.target.value=''; });
-    messageInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
-    
-    document.getElementById('menu-delete-friend').addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (!currentChat || currentChat.isAdminView || currentChat.isGroup) return;
-        removeContact(currentChat.contactEmail, currentChat.displayName);
     });
 
-    // NOVO: Botão Sair do Grupo
-    document.getElementById('menu-leave-group').addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (!currentChat || !currentChat.isGroup) return;
-        leaveGroup(currentChat.groupId, currentChat.groupName);
-    });
+    function handleLogin() {
+        const email = document.getElementById('loginEmail').value.trim();
+        const senha = document.getElementById('loginSenha').value.trim();
+        if(!email || !senha) return alert("Preencha e-mail e senha.");
+        auth.signInWithEmailAndPassword(email, senha).catch(err => alert("Erro: " + err.message));
+    }
     
-    console.log('✅ iChat com barra superior fixa carregado');
+    function handleLogout() { 
+        auth.signOut().then(() => closeNav()); 
+    }
+    
+    function openNav() { 
+        document.getElementById("mySidenav").style.width = "320px";
+        showMenuPrincipal();
+    }
+    
+    function closeNav() { 
+        document.getElementById("mySidenav").style.width = "0"; 
+    }
+    
+    function unlockApp() { 
+        document.getElementById('adminLock').style.display = 'none'; 
+    }
+    
+    function switchTab(tabName) {
+        document.querySelectorAll('.tab-itv').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.tab-content-itv').forEach(content => content.classList.remove('active'));
+        
+        event.target.classList.add('active');
+        document.getElementById('tab-' + tabName).classList.add('active');
+        
+        if(tabName === 'financeiro') {
+            renderFinanceiro();
+        }
+    }
+    
+    // Funções do Menu
+    function showMenuSection(section) {
+        document.getElementById('menuPrincipal').style.display = 'none';
+        document.querySelectorAll('.menu-section').forEach(sec => sec.classList.remove('active'));
+        document.getElementById(section).classList.add('active');        
+        // Carregar dados atuais
+        if(section === 'confCobranca') {
+            document.getElementById('msgCobranca').value = config.msgCobranca || "";
+            document.getElementById('msgRenovadoReceber').value = config.msgRenovadoReceber || "";
+            document.getElementById('msgRenovar').value = config.msgRenovar || "";
+        } else if(section === 'confPainel') {
+            document.getElementById('linkCentral').value = config.linkCentral || "";
+            document.getElementById('linkWarez').value = config.linkWarez || "";
+            document.getElementById('linkZeus').value = config.linkZeus || "";
+            document.getElementById('creditosCentral').value = config.creditosCentral || 0;
+            document.getElementById('creditosWarez').value = config.creditosWarez || 0;
+            document.getElementById('creditosZeus').value = config.creditosZeus || 0;
+        } else if(section === 'tema') {
+            updateTemaButtons();
+        }
+    }
+    
+    function backToMenu() {
+        document.getElementById('menuPrincipal').style.display = 'flex';
+        document.querySelectorAll('.menu-section').forEach(sec => sec.classList.remove('active'));
+    }
+    
+    function showMenuPrincipal() {
+        document.getElementById('menuPrincipal').style.display = 'flex';
+        document.querySelectorAll('.menu-section').forEach(sec => sec.classList.remove('active'));
+    }
+    
+    function saveConfigCobranca() {
+        if(!usuarioLogadoUid) return;
+        config.msgCobranca = document.getElementById('msgCobranca').value;
+        config.msgRenovadoReceber = document.getElementById('msgRenovadoReceber').value;
+        config.msgRenovar = document.getElementById('msgRenovar').value;
+        
+        db.collection("usuarios").doc(usuarioLogadoUid).collection("config").doc("geral").set(config)
+            .then(() => {
+                alert("Configurações de cobrança salvas!");
+                backToMenu();
+            })
+            .catch(err => alert("Erro: "+err.message));
+    }
+    
+    function saveConfigPainel() {
+        if(!usuarioLogadoUid) return;
+        config.linkCentral = document.getElementById('linkCentral').value;
+        config.linkWarez = document.getElementById('linkWarez').value;
+        config.linkZeus = document.getElementById('linkZeus').value;
+        config.creditosCentral = parseInt(document.getElementById('creditosCentral').value) || 0;
+        config.creditosWarez = parseInt(document.getElementById('creditosWarez').value) || 0;
+        config.creditosZeus = parseInt(document.getElementById('creditosZeus').value) || 0;        
+        db.collection("usuarios").doc(usuarioLogadoUid).collection("config").doc("geral").set(config)
+            .then(() => {
+                alert("Configurações dos painéis salvas!");
+                updateCreditosDisplay();
+                backToMenu();
+            })
+            .catch(err => alert("Erro: "+err.message));
+    }
+    
+    function setTema(tema) {
+        temaAtual = tema;
+        if(tema === 'escuro') {
+            document.body.classList.add('tema-escuro');
+        } else {
+            document.body.classList.remove('tema-escuro');
+        }
+        updateTemaButtons();
+        
+        // Salvar preferência
+        if(usuarioLogadoUid) {
+            db.collection("usuarios").doc(usuarioLogadoUid).update({ tema: tema });
+        }
+    }
+    
+    function updateTemaButtons() {
+        if(temaAtual === 'escuro') {
+            document.getElementById('btnTemaClaro').classList.remove('active');
+            document.getElementById('btnTemaEscuro').classList.add('active');
+        } else {
+            document.getElementById('btnTemaClaro').classList.add('active');
+            document.getElementById('btnTemaEscuro').classList.remove('active');
+        }
+    }
+    
+    function updateCreditosDisplay() {
+        document.getElementById('creditoCentralDisplay').innerText = `Créditos: ${config.creditosCentral}`;
+        document.getElementById('creditoWarezDisplay').innerText = `Créditos: ${config.creditosWarez}`;
+        document.getElementById('creditoZeusDisplay').innerText = `Créditos: ${config.creditosZeus}`;
+        
+        document.getElementById('finCentralCreditos').innerText = config.creditosCentral;
+        document.getElementById('finWarezCreditos').innerText = config.creditosWarez;
+        document.getElementById('finZeusCreditos').innerText = config.creditosZeus;
+    }
+    
+    function decrementarCredito(servidor) {
+        if(servidor === 'central' && config.creditosCentral > 0) {
+            config.creditosCentral--;
+        } else if(servidor === 'warez' && config.creditosWarez > 0) {
+            config.creditosWarez--;        } else if(servidor === 'zeus' && config.creditosZeus > 0) {
+            config.creditosZeus--;
+        }
+        
+        db.collection("usuarios").doc(usuarioLogadoUid).collection("config").doc("geral").set(config);
+        updateCreditosDisplay();
+    }
+    
+    function syncConfigAndClients() {
+        if(!usuarioLogadoUid) return;
+        
+        // Carregar tema salvo
+        db.collection("usuarios").doc(usuarioLogadoUid).onSnapshot(doc => {
+            if(doc.exists && doc.data().tema) {
+                setTema(doc.data().tema);
+            }
+        });
+        
+        db.collection("usuarios").doc(usuarioLogadoUid).collection("config").doc("geral").onSnapshot(doc => {
+            if(doc.exists) { 
+                config = { ...config, ...doc.data() };
+                updateCreditosDisplay();
+            }
+        });
+        
+        db.collection("usuarios").doc(usuarioLogadoUid).collection("clientes").onSnapshot(snapshot => {
+            clientes = [];
+            snapshot.forEach(doc => { clientes.push({ id: doc.id, ...doc.data() }); });
+            renderClientes();
+        });
+    }
+
+    function showModalCadastro(id = "") {
+        if(id === "") {
+            document.getElementById('editId').value = "";
+            document.getElementById('cNome').value = ""; 
+            document.getElementById('cUser').value = ""; 
+            document.getElementById('cPass').value = "";
+            document.getElementById('cValor').value = ""; 
+            document.getElementById('cData').value = ""; 
+            document.getElementById('cServidor').value = "central";
+            document.getElementById('cUrl').value = ""; 
+            document.getElementById('cTel').value = ""; 
+            document.getElementById('cObs').value = "";
+        }
+        new bootstrap.Modal(document.getElementById('modalCadastro')).show();
+    }
+
+    function saveCliente() {
+        if(!usuarioLogadoUid) return;        const id = document.getElementById('editId').value;
+        const clienteData = {
+            nome: document.getElementById('cNome').value,
+            user: document.getElementById('cUser').value,
+            pass: document.getElementById('cPass').value,
+            valor: parseFloat(document.getElementById('cValor').value) || 0,
+            data: document.getElementById('cData').value,
+            serv: document.getElementById('cServidor').value,
+            url: document.getElementById('cUrl').value,
+            tel: document.getElementById('cTel').value,
+            obs: document.getElementById('cObs').value,
+            status: 'ativo'
+        };
+        const modalEl = document.getElementById('modalCadastro');
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        
+        if(id === "") {
+            db.collection("usuarios").doc(usuarioLogadoUid).collection("clientes").add(clienteData).then(() => modal.hide());
+        } else {
+            const original = clientes.find(c => c.id === id);
+            if(original) {
+                clienteData.status = original.status;
+                if(original.ultimoPagamento) clienteData.ultimoPagamento = original.ultimoPagamento;
+            }
+            db.collection("usuarios").doc(usuarioLogadoUid).collection("clientes").doc(id).set(clienteData).then(() => modal.hide());
+        }
+    }
+    
+    function addOneMonthFromToday() {
+        let hoje = new Date();
+        hoje.setMonth(hoje.getMonth() + 1);
+        return hoje.toISOString().split('T')[0];
+    }
+    
+    function formatarDataBR(dataISO) {
+        if(!dataISO) return "";
+        let partes = dataISO.split('-');
+        if(partes.length===3) return `${partes[2]}/${partes[1]}/${partes[0]}`;
+        return dataISO;
+    }
+    
+    function renovarCliente(id) {
+        const cliente = clientes.find(c => c.id === id);
+        if(!cliente) return;
+        
+        // Verificar créditos do servidor
+        const servidor = cliente.serv || 'central';
+        if(servidor === 'central' && config.creditosCentral <= 0) {
+            alert("Sem créditos no Painel Central!");
+            return;        } else if(servidor === 'warez' && config.creditosWarez <= 0) {
+            alert("Sem créditos no Painel Warez!");
+            return;
+        } else if(servidor === 'zeus' && config.creditosZeus <= 0) {
+            alert("Sem créditos no Painel Zeus!");
+            return;
+        }
+        
+        const novaDataISO = addOneMonthFromToday();
+        const novaDataBR = formatarDataBR(novaDataISO);
+        const valorFormat = `R$ ${cliente.valor.toFixed(2)}`;
+        
+        let msg = config.msgRenovar || `✅𝕊𝔼𝕌 ℙ𝔸𝔾𝔸𝔼𝕋𝕆 𝕆 ℂ𝕆ℕ𝔽ℝ𝕄𝔸𝕆𝕊!!\n\nNome: ${cliente.nome}\nPlano Familia: ${valorFormat}\nProvedor: ${cliente.serv || 'ITV'}\nUsuário: ${cliente.user}\nSenha: ${cliente.pass}\nUrl: ${cliente.url}\nVence: ${novaDataBR}\n\nDivirta-se!!`;
+        
+        if(cliente.tel) {
+            window.open(`https://wa.me/${cliente.tel.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`);
+        } else alert("Número não cadastrado!");
+        
+        // Decrementar crédito
+        decrementarCredito(servidor);
+        
+        db.collection("usuarios").doc(usuarioLogadoUid).collection("clientes").doc(id).update({
+            data: novaDataISO,
+            status: 'ativo',
+            ultimoPagamento: new Date().toISOString()
+        }).catch(e => alert("Erro ao renovar: "+e.message));
+    }
+    
+    function marcarAReceber(id) {
+        const cliente = clientes.find(c => c.id === id);
+        if(!cliente) return;
+        
+        const servidor = cliente.serv || 'central';
+        if(servidor === 'central' && config.creditosCentral <= 0) {
+            alert("Sem créditos no Painel Central!");
+            return;
+        } else if(servidor === 'warez' && config.creditosWarez <= 0) {
+            alert("Sem créditos no Painel Warez!");
+            return;
+        } else if(servidor === 'zeus' && config.creditosZeus <= 0) {
+            alert("Sem créditos no Painel Zeus!");
+            return;
+        }
+        
+        const novaDataISO = addOneMonthFromToday();
+        const novaDataBR = formatarDataBR(novaDataISO);
+        const valorFormat = `R$ ${cliente.valor.toFixed(2)}`;
+        
+        let msg = config.msgRenovadoReceber || `⛔️𝕊𝔼𝕌 ℙ𝔸𝔾𝔸𝔼ℕ𝕆 ℕ𝕆 𝔽𝕆 ℂ𝕆ℕ𝔽ℝ𝕄𝔸𝔻𝕆𝕊!!\n\nNome: ${cliente.nome}\nPlano Familia: ${valorFormat}\nProvedor: ${cliente.serv || 'ITV'}\nUsuário: ${cliente.user}\nSenha: ${cliente.pass}\nUrl: ${cliente.url}\nVence: ${novaDataBR}\n\nDivirta-se!!`;
+                if(cliente.tel) window.open(`https://wa.me/${cliente.tel.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`);
+        else alert("Número não cadastrado!");
+        
+        // Decrementar crédito
+        decrementarCredito(servidor);
+        
+        db.collection("usuarios").doc(usuarioLogadoUid).collection("clientes").doc(id).update({
+            data: novaDataISO,
+            status: 'apagar'
+        });
+    }
+    
+    function pagarCliente(id) {
+        const cliente = clientes.find(c => c.id === id);
+        if(!cliente) return;
+        const dataAtualBR = formatarDataBR(cliente.data);
+        const valorFormat = `R$ ${cliente.valor.toFixed(2)}`;
+        const msg = `✅𝕊𝔼𝕌 ℙ𝔸𝔾𝔸𝔼ℕ𝕆 𝕆 ℂ𝕆ℕ𝔽ℝ𝕄𝔸𝔻𝕆𝕊!!\n\nNome: ${cliente.nome}\nPlano Familia: ${valorFormat}\nProvedor: ${cliente.serv || 'ITV'}\nUsuário: ${cliente.user}\nSenha: ${cliente.pass}\nUrl: ${cliente.url}\nVence: ${dataAtualBR}\n\nDivirta-se!!`;
+        if(cliente.tel) window.open(`https://wa.me/${cliente.tel.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`);
+        else alert("Número não cadastrado!");
+        db.collection("usuarios").doc(usuarioLogadoUid).collection("clientes").doc(id).update({
+            status: 'ativo',
+            ultimoPagamento: new Date().toISOString()
+        });
+    }
+
+    function compartilharCliente(id) {
+        const c = clientes.find(i => i.id === id);
+        if(!c) return;
+        if(!c.tel) return alert("Telefone não cadastrado!");
+        const msg = `📺 *Dados de Acesso ITV*\n\n👤 Usuário: ${c.user || '-'}\n🔑 Senha: ${c.pass || '-'}\n🔗 Url: ${c.url || '-'}`;
+        window.open(`https://wa.me/${c.tel.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`);
+    }
+    
+    function abrirAcoesCliente(id) {
+        const c = clientes.find(i => i.id === id);
+        if(!c) return;
+        
+        document.getElementById('acoesTitulo').innerText = `👤 ${c.nome}`;
+        document.getElementById('acoesSubtitulo').innerText = c.status === 'apagar' ? '⏳ Status: A RECEBER' : '';
+        
+        let infoHtml = `
+            <div class="info-item info-full"><span class="info-label">Nome:</span><span class="info-value">${c.nome}</span></div>
+            <div class="info-item"><span class="info-label">Servidor:</span><span class="info-value">${getNomeServidor(c.serv)}</span></div>
+            <div class="info-item"><span class="info-label">Usuário:</span><span class="info-value">${c.user || '-'}</span></div>
+            <div class="info-item"><span class="info-label">Senha:</span><span class="info-value">${c.pass || '-'}</span></div>
+            <div class="info-item"><span class="info-label">Valor:</span><span class="info-value">R$ ${c.valor.toFixed(2)}</span></div>
+            <div class="info-item info-full"><span class="info-label">Vencimento:</span><span class="info-value">${formatarDataBR(c.data)}</span></div>
+        `;
+        document.getElementById('acoesInfoResumo').innerHTML = infoHtml;        
+        const grid = document.getElementById('acoesGrid');
+        
+        if(c.status === 'deletado') {
+            grid.innerHTML = `
+                <div class="modal-acoes-row">
+                    <button class="btn btn-info" onclick="restore('${c.id}'); bootstrap.Modal.getInstance(document.getElementById('modalAcoes')).hide();">♻️ RESTAURAR</button>
+                    <button class="btn btn-danger" onclick="hardDelete('${c.id}'); bootstrap.Modal.getInstance(document.getElementById('modalAcoes')).hide();">🗑️ EXCLUIR PERM</button>
+                </div>
+            `;
+        } else if(c.status === 'apagar') {
+            grid.innerHTML = `
+                <div class="modal-acoes-row">
+                    <button class="btn btn-success" onclick="pagarCliente('${c.id}'); bootstrap.Modal.getInstance(document.getElementById('modalAcoes')).hide();">✅ PAGAR</button>
+                    <button class="btn btn-dark" onclick="editCliente('${c.id}'); bootstrap.Modal.getInstance(document.getElementById('modalAcoes')).hide();">✏️ EDITAR</button>
+                </div>
+            `;
+        } else {
+            grid.innerHTML = `
+                <div class="modal-acoes-row">
+                    <button class="btn" style="background-color:#25D366; color: #fff;" onclick="openWhatsApp('${c.id}'); bootstrap.Modal.getInstance(document.getElementById('modalAcoes')).hide();"><i class="bi bi-whatsapp"></i> ZAP</button>
+                    <button class="btn btn-success" onclick="sendCobrancaZap('${c.id}'); bootstrap.Modal.getInstance(document.getElementById('modalAcoes')).hide();">💰 COBRAR</button>
+                    <button class="btn btn-warning text-dark" onclick="renovarCliente('${c.id}'); bootstrap.Modal.getInstance(document.getElementById('modalAcoes')).hide();">🔄 RENOVAR</button>
+                    <button class="btn btn-secondary" onclick="marcarAReceber('${c.id}'); bootstrap.Modal.getInstance(document.getElementById('modalAcoes')).hide();">⏳ A RECEBER</button>
+                </div>
+                <div class="modal-acoes-row">
+                    <button class="btn btn-info" onclick="compartilharCliente('${c.id}'); bootstrap.Modal.getInstance(document.getElementById('modalAcoes')).hide();">📤 COMPARTILHAR</button>
+                    <button class="btn btn-dark" onclick="editCliente('${c.id}'); bootstrap.Modal.getInstance(document.getElementById('modalAcoes')).hide();">✏️ EDITAR</button>
+                    <button class="btn btn-danger" onclick="softDelete('${c.id}'); bootstrap.Modal.getInstance(document.getElementById('modalAcoes')).hide();">🗑️ DELETAR</button>
+                </div>
+            `;
+        }
+        
+        new bootstrap.Modal(document.getElementById('modalAcoes')).show();
+    }
+    
+    function getNomeServidor(serv) {
+        if(serv === 'central') return '📡 CENTRAL';
+        if(serv === 'warez') return '⚡ WAREZ';
+        if(serv === 'zeus') return '🔥 ZEUS';
+        return serv || '-';
+    }
+    
+    function renderClientes() {
+        const listaDiv = document.getElementById('listaClientes');
+        const searchTerm = document.getElementById('search').value.toLowerCase();
+        listaDiv.innerHTML = "";
+        let counts = { ativos:0, vencer:0, exp:0, apagar:0, del:0 };
+        const hoje = new Date();
+                clientes.forEach(c => {
+            let dataVenc = new Date(c.data);
+            let diffDays = Math.ceil((dataVenc - hoje) / (1000*3600*24));
+            let statusReal = c.status;
+            if(c.status !== 'deletado' && c.status !== 'apagar') {
+                if(diffDays < 0) statusReal = 'expirado';
+                else if(diffDays <= 3) statusReal = 'vencer';
+                else statusReal = 'ativo';
+            }
+            if(statusReal === 'ativo') counts.ativos++;
+            if(statusReal === 'vencer') counts.vencer++;
+            if(statusReal === 'expirado') counts.exp++;
+            if(c.status === 'apagar') counts.apagar++;
+            if(c.status === 'deletado') counts.del++;
+            
+            if(currentFilter === 'ativos' && !(statusReal === 'ativo')) return;
+            if(currentFilter === 'vencer' && statusReal !== 'vencer') return;
+            if(currentFilter === 'expirados' && statusReal !== 'expirado') return;
+            if(currentFilter === 'apagar' && c.status !== 'apagar') return;
+            if(currentFilter === 'deletados' && c.status !== 'deletado') return;
+            if(!c.nome.toLowerCase().includes(searchTerm)) return;
+            
+            let badgeClass = 'bg-success';
+            if(statusReal === 'expirado') badgeClass = 'bg-danger';
+            else if(statusReal === 'vencer') badgeClass = 'bg-warning text-dark';
+            let dataExib = c.data.split('-').reverse().join('/');
+            
+            listaDiv.innerHTML += `
+                <div class="card-cliente" onclick="abrirAcoesCliente('${c.id}')">
+                    <div class="d-flex justify-content-between align-items-start flex-wrap">
+                        <h5 class="mb-1">${c.nome}</h5>
+                        <span class="badge ${badgeClass}">${dataExib}</span>
+                    </div>
+                    <div class="cliente-info">
+                        <div class="info-item"><span class="info-label">Servidor:</span><span class="info-value">${getNomeServidor(c.serv)}</span></div>
+                        <div class="info-item"><span class="info-label">Usuário:</span><span class="info-value">${c.user || '-'}</span></div>
+                        <div class="info-item"><span class="info-label">Senha:</span><span class="info-value">${c.pass || '-'}</span></div>
+                        <div class="info-item"><span class="info-label">Valor:</span><span class="info-value">R$ ${c.valor.toFixed(2)}</span></div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        document.getElementById('countAtivos').innerText = counts.ativos;
+        document.getElementById('countVencer').innerText = counts.vencer;
+        document.getElementById('countExp').innerText = counts.exp;
+        document.getElementById('countPagar').innerText = counts.apagar;
+        document.getElementById('countDel').innerText = counts.del;
+        renderFinanceiro();
+    }    
+    function sendCobrancaZap(id) {
+        const c = clientes.find(i => i.id === id);
+        if(!c) return;
+        let msgCobranca = config.msgCobranca || `📩 𝕞𝕤𝕘-𝕒𝕦𝕥𝕠𝕞á𝕥𝕚𝕔𝕒📩\n🚨🚨🚨\nOlá ${c.nome}!!\nSua lista de TV expirou em ${c.data.split('-').reverse().join('/')}\nPara renovar, faça um Pix 💠\nPlano: R$ ${c.valor.toFixed(2)}`;
+        if(c.tel) window.open(`https://wa.me/${c.tel.replace(/\D/g,'')}?text=${encodeURIComponent(msgCobranca)}`);
+        else alert("Número não cadastrado!");
+    }
+    
+    function openWhatsApp(id) {
+        const c = clientes.find(i => i.id === id);
+        if(c && c.tel) window.open(`https://wa.me/${c.tel.replace(/\D/g,'')}`);
+        else alert("Telefone não informado.");
+    }
+    
+    function renderFinanceiro() {
+        const mes = document.getElementById('filterMes').value;
+        let aReceber = 0;
+        let totalGeral = 0;
+        let totalActive = 0;
+        
+        // Contadores por servidor
+        let centralClientes = 0, centralFaturamento = 0;
+        let warezClientes = 0, warezFaturamento = 0;
+        let zeusClientes = 0, zeusFaturamento = 0;
+        
+        clientes.forEach(c => {
+            if(c.status !== 'deletado') {
+                let val = parseFloat(c.valor) || 0;
+                totalGeral += val;
+                totalActive++;
+                
+                // Contar por servidor
+                if(c.serv === 'central') {
+                    centralClientes++;
+                    if(c.data && c.data.startsWith(mes)) {
+                        const temPagamentoNoMes = c.ultimoPagamento && c.ultimoPagamento.startsWith(mes);
+                        if(!temPagamentoNoMes) centralFaturamento += val;
+                    }
+                } else if(c.serv === 'warez') {
+                    warezClientes++;
+                    if(c.data && c.data.startsWith(mes)) {
+                        const temPagamentoNoMes = c.ultimoPagamento && c.ultimoPagamento.startsWith(mes);
+                        if(!temPagamentoNoMes) warezFaturamento += val;
+                    }
+                } else if(c.serv === 'zeus') {
+                    zeusClientes++;
+                    if(c.data && c.data.startsWith(mes)) {
+                        const temPagamentoNoMes = c.ultimoPagamento && c.ultimoPagamento.startsWith(mes);
+                        if(!temPagamentoNoMes) zeusFaturamento += val;                    }
+                }
+                
+                if(c.data && c.data.startsWith(mes)) {
+                    const temPagamentoNoMes = c.ultimoPagamento && c.ultimoPagamento.startsWith(mes);
+                    if(!temPagamentoNoMes) {
+                        aReceber += val;
+                    }
+                }
+            }
+        });
+        
+        const recebido = totalGeral - aReceber;
+        
+        document.getElementById('finRecebido').innerText = `R$ ${recebido.toFixed(2)}`;
+        document.getElementById('finPendente').innerText = `R$ ${aReceber.toFixed(2)}`;
+        document.getElementById('finTotalClientes').innerText = totalActive;
+        document.getElementById('finGeral').innerText = `R$ ${totalGeral.toFixed(2)}`;
+        
+        // Atualizar cards dos servidores
+        document.getElementById('finCentralClientes').innerText = centralClientes;
+        document.getElementById('finCentralFaturamento').innerText = `R$ ${centralFaturamento.toFixed(2)}`;
+        document.getElementById('finCentralCreditos').innerText = config.creditosCentral;
+        
+        document.getElementById('finWarezClientes').innerText = warezClientes;
+        document.getElementById('finWarezFaturamento').innerText = `R$ ${warezFaturamento.toFixed(2)}`;
+        document.getElementById('finWarezCreditos').innerText = config.creditosWarez;
+        
+        document.getElementById('finZeusClientes').innerText = zeusClientes;
+        document.getElementById('finZeusFaturamento').innerText = `R$ ${zeusFaturamento.toFixed(2)}`;
+        document.getElementById('finZeusCreditos').innerText = config.creditosZeus;
+    }
+    
+    function filterData(f) { 
+        currentFilter = f; 
+        renderClientes(); 
+    }
+    
+    function softDelete(id) { 
+        if(usuarioLogadoUid) db.collection("usuarios").doc(usuarioLogadoUid).collection("clientes").doc(id).update({ status: 'deletado' }); 
+    }
+    
+    function restore(id) { 
+        if(usuarioLogadoUid) db.collection("usuarios").doc(usuarioLogadoUid).collection("clientes").doc(id).update({ status: 'ativo' }); 
+    }
+    
+    function hardDelete(id) { 
+        if(confirm("Excluir permanentemente?")) db.collection("usuarios").doc(usuarioLogadoUid).collection("clientes").doc(id).delete(); 
+    }
+        function accessPanel(servidor) {
+        let url = "";
+        if(servidor === 'central') url = config.linkCentral;
+        else if(servidor === 'warez') url = config.linkWarez;
+        else if(servidor === 'zeus') url = config.linkZeus;
+        
+        if(url) window.open(url);
+        else alert("Configure a URL no menu lateral.");
+    }
+    
+    function editCliente(id) {
+        let c = clientes.find(i => i.id === id);
+        if(c) {
+            document.getElementById('editId').value = c.id;
+            document.getElementById('cNome').value = c.nome;
+            document.getElementById('cServidor').value = c.serv || 'central';
+            document.getElementById('cUser').value = c.user; 
+            document.getElementById('cPass').value = c.pass;
+            document.getElementById('cValor').value = c.valor; 
+            document.getElementById('cData').value = c.data; 
+            document.getElementById('cUrl').value = c.url; 
+            document.getElementById('cTel').value = c.tel; 
+            document.getElementById('cObs').value = c.obs;
+            new bootstrap.Modal(document.getElementById('modalCadastro')).show();
+        }
+    }    
+    
+    window.renovarCliente = renovarCliente;
+    window.marcarAReceber = marcarAReceber;
+    window.pagarCliente = pagarCliente;
+    window.compartilharCliente = compartilharCliente;
+    window.abrirAcoesCliente = abrirAcoesCliente;
+    window.sendCobrancaZap = sendCobrancaZap;
+    window.openWhatsApp = openWhatsApp;
+    window.editCliente = editCliente;
+    window.softDelete = softDelete;
+    window.restore = restore;
+    window.hardDelete = hardDelete;
+    window.filterData = filterData;
+    window.accessPanel = accessPanel;
+    window.showModalCadastro = showModalCadastro;
+    window.switchTab = switchTab;
+    window.saveCliente = saveCliente;
 </script>
 </body>
 </html>
