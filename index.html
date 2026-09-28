@@ -1,383 +1,798 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<meta name="theme-color" content="#262b3f"/>
-<meta name="mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<link rel="icon" type="image/png" href="favicon.png"><link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🩺</text></svg>">
-    <title>Minha Saúde Digital</title>
-<title>Minha Saúde — Registros</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0a0a1f">
+<title>iPACE - Calculadora de Pace</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#262b3f;--card:#3a4159;--card2:#4a5170;--blue:#4d7cf3;--muted:#9aa3c0;--radius:22px}
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
-input,select{user-select:text}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:#fff}
-#app{max-width:520px;margin:0 auto;padding:24px 16px 120px}
-.page-title{font-size:26px;font-weight:800;letter-spacing:.5px;margin:6px 4px 18px}
-.screen{display:none}.screen.active{display:block;animation:fade .25s ease}
-@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 6px 18px rgba(0,0,0,.18)}
-.hero-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:20px}
-.heart{font-size:62px;line-height:1;animation:beat 1.6s infinite}
-@keyframes beat{0%,100%{transform:scale(1)}12%{transform:scale(1.12)}24%{transform:scale(1)}36%{transform:scale(1.08)}48%{transform:scale(1)}}
-.btn{border:none;border-radius:16px;padding:14px 20px;font-size:16px;font-weight:700;color:#fff;cursor:pointer;transition:transform .12s,filter .15s;touch-action:manipulation}
-.btn:active{transform:scale(.97)}
-.btn.primary{background:var(--blue)}
-.btn.big{font-size:19px;padding:18px 26px;border-radius:18px}
-.btn.block{width:100%}
-.btn.ghost{background:var(--card2)}
-.btn.danger{background:rgba(248,113,113,.15);color:#f87171}
-.btn.sm{padding:11px 14px;font-size:14px;border-radius:12px}
-.chev{font-weight:800}
-.last-bar{background:var(--card2);border-radius:16px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;font-weight:700}
-.muted{color:var(--muted)}
-.link{background:none;border:none;color:#fff;font-size:16px;font-weight:700;cursor:pointer}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.metric{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:20px 14px}
-.m-icon{width:58px;height:58px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:30px}
-.m-title{font-weight:700;font-size:15px}
-.m-value{font-size:26px;font-weight:800}
-.m-value small{font-size:13px;color:var(--muted);font-weight:700;margin-left:4px}
-.badge-row{min-height:22px;display:flex;align-items:center}
-.badge{font-size:11px;font-weight:800;padding:4px 10px;border-radius:999px;white-space:nowrap}
-.tabs{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 12px;-webkit-overflow-scrolling:touch}
-.tabs button{flex:0 0 auto;border:none;border-radius:999px;padding:10px 16px;font-size:13px;font-weight:800;background:var(--card);color:var(--muted);cursor:pointer}
-.tabs button.active{background:var(--blue);color:#fff}
-.chart-card{padding:12px;margin-bottom:12px}
-#chart{width:100%;height:170px;display:block}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
-.stat{background:var(--card);border-radius:14px;padding:10px 6px;text-align:center}
-.stat b{display:block;font-size:15px;margin-bottom:2px}
-.stat span{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.4px}
-.h-item{background:var(--card);border-radius:16px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.h-val{font-size:18px;font-weight:800}
-.h-val small{color:var(--muted);font-size:12px;font-weight:700}
-.h-date{color:var(--muted);font-size:12px;margin-top:2px;font-weight:600}
-.h-right{display:flex;align-items:center;gap:10px}
-.del{background:rgba(248,113,113,.12);border:none;border-radius:10px;width:36px;height:36px;font-size:15px;cursor:pointer}
-.empty{text-align:center;color:var(--muted);padding:30px 0;font-weight:600}
-.actions-row{display:flex;gap:10px;justify-content:center;margin-top:16px}
-#bottomnav{position:fixed;left:0;right:0;bottom:0;background:#1f2437;border-top:1px solid rgba(255,255,255,.06);padding:10px 12px calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:center;gap:26px;z-index:40}
-.nav-btn{background:none;border:none;color:var(--muted);font-size:11px;font-weight:800;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;width:70px}
-.nav-btn .ico{font-size:20px}
-.nav-btn.active{color:#fff}
-.fab{width:58px;height:58px;border-radius:50%;background:var(--blue);border:none;color:#fff;font-size:28px;font-weight:800;margin-top:-34px;box-shadow:0 8px 20px rgba(77,124,243,.45);cursor:pointer}
-#overlay{position:fixed;inset:0;background:rgba(10,12,24,.6);display:none;align-items:flex-end;justify-content:center;z-index:50;backdrop-filter:blur(2px)}
-#overlay.show{display:flex}
-.modal{background:var(--card);width:100%;max-width:520px;border-radius:26px 26px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom));animation:up .28s ease}
-@keyframes up{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
-.m-head{display:flex;align-items:center;gap:10px;margin-bottom:16px}
-.m-head h2{font-size:19px;flex:1}
-.m-ico{font-size:26px}
-.x{background:var(--card2);border:none;color:#fff;width:34px;height:34px;border-radius:12px;font-size:15px;cursor:pointer}
-.field{margin-bottom:14px}
-.field label{display:block;font-size:12px;font-weight:800;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px}
-.field input,.field select{width:100%;background:var(--card2);border:none;border-radius:14px;padding:13px 14px;color:#fff;font-size:16px;font-weight:700;outline:none}
-.field input:focus{box-shadow:0 0 0 2px var(--blue)}
-.form-row{display:flex;gap:10px}.form-row .field{flex:1}
-.m-foot{display:flex;gap:10px;margin-top:6px}.m-foot .btn{flex:1}
-.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.quick-btn{background:var(--card2);border:none;border-radius:18px;padding:18px 10px;color:#fff;font-weight:800;font-size:14px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer}
-.quick-btn .qi{font-size:30px}
-#toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);background:#171a28;color:#fff;padding:12px 20px;border-radius:999px;font-weight:700;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:60;box-shadow:0 8px 24px rgba(0,0,0,.4)}
-#toast.show{opacity:1;transform:translateX(-50%)}
-.disclaimer{text-align:center;color:var(--muted);font-size:11px;margin-top:22px;font-weight:600}
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
 
-/* ============ NOVO: ALTURA (card largo) ============ */
-.metric.wide{grid-column:1/-1;flex-direction:row;justify-content:space-between;align-items:center;text-align:left;padding:16px 18px;flex-wrap:wrap;gap:12px}
-.w-mid{display:flex;flex-direction:column;align-items:flex-start;gap:2px;flex:1;min-width:110px}
+  :root {
+    --neon-cyan: #00f0ff;
+    --neon-magenta: #ff00e5;
+    --neon-purple: #b347ff;
+    --dark-bg: #05051a;
+    --card-bg: rgba(15, 15, 45, 0.6);
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0c0;
+  }
 
-/* ============ NOVO: CARD IMC & PESO IDEAL ============ */
-.imc-card{margin-top:14px}
-.imc-head{font-size:17px;font-weight:800;margin-bottom:14px;display:flex;gap:8px;align-items:center}
-.imc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;text-align:center;margin-bottom:6px}
-.imc-box{background:var(--card2);border-radius:14px;padding:12px 6px}
-.imc-label{font-size:10px;color:var(--muted);font-weight:800;letter-spacing:.4px;text-transform:uppercase;display:block;margin-bottom:4px}
-.imc-val{font-size:22px;font-weight:800}
-.imc-val.green{color:#4ade80}
-.imc-val small{font-size:12px;color:var(--muted);font-weight:700}
-.pi-range{font-size:11px;color:var(--muted);font-weight:700;text-align:center;margin-top:4px}
-.badge-center{justify-content:center}
-.gauge{position:relative;height:16px;border-radius:999px;margin:26px 4px 6px;
-background:linear-gradient(90deg,#f87171 0%,#f87171 7.1%,#fb923c 7.1%,#fb923c 16.1%,#4ade80 16.1%,#4ade80 39.3%,#fde047 39.3%,#fde047 57.1%,#fb923c 57.1%,#fb923c 75%,#f87171 75%,#f87171 92.9%,#dc2626 92.9%,#dc2626 100%)}
-.gauge-mark{position:absolute;top:-17px;transform:translateX(-50%);font-size:14px;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.6);transition:left .3s;display:none}
-.gauge-scale{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);font-weight:700;margin:0 4px}
-.imc-table{margin-top:14px;display:flex;flex-direction:column;gap:6px}
-.imc-row{display:flex;justify-content:space-between;gap:10px;border-radius:12px;padding:9px 12px;font-size:13px;font-weight:700;background:var(--card2)}
-.imc-row.active{outline:2px solid var(--blue);color:#fff !important}
-.imc-hint{text-align:center;font-size:12px;margin-top:12px;font-weight:600}
+  html, body {
+    height: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    font-family: 'Rajdhani', sans-serif;
+    background: var(--dark-bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Fundo animado com gradiente */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: 
+      radial-gradient(circle at 20% 30%, rgba(0, 240, 255, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(255, 0, 229, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(179, 71, 255, 0.1) 0%, transparent 60%);
+    z-index: -2;
+    animation: bgShift 15s ease-in-out infinite alternate;
+  }
+
+  /* Grid futurista de fundo */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image: 
+      linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: -1;
+    transform: perspective(500px) rotateX(60deg);
+    transform-origin: center top;
+    opacity: 0.4;
+  }
+
+  @keyframes bgShift {
+    0% { transform: scale(1) rotate(0deg); }
+    100% { transform: scale(1.1) rotate(3deg); }
+  }
+
+  .container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 20px 16px 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 30px 0 20px;
+    position: relative;
+  }
+
+  .logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: 4px;
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta), var(--neon-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.5));
+    animation: logoGlow 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes logoGlow {
+    from { filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.4)); }
+    to { filter: drop-shadow(0 0 30px rgba(255, 0, 229, 0.6)); }
+  }
+
+  .tagline {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 6px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  .tagline::before, .tagline::after {
+    content: '—';
+    margin: 0 8px;
+    color: var(--neon-cyan);
+  }
+
+  /* CARD PRINCIPAL */
+  .card {
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    border-radius: 24px;
+    padding: 28px 22px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+    animation: scanline 4s linear infinite;
+  }
+
+  @keyframes scanline {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  .card-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    color: var(--neon-cyan);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .card-title::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: var(--neon-cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--neon-cyan);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  /* INPUTS */
+  .input-group {
+    margin-bottom: 18px;
+  }
+
+  .input-label {
+    display: block;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .input-field {
+    width: 100%;
+    padding: 14px 18px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+
+  .input-field:focus {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.15), 0 0 20px rgba(0, 240, 255, 0.2);
+    background: rgba(0, 240, 255, 0.05);
+  }
+
+  .input-field::placeholder {
+    color: rgba(160, 160, 192, 0.4);
+    font-weight: 400;
+  }
+
+  .time-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+
+  .time-input-wrapper {
+    position: relative;
+  }
+
+  .time-input-wrapper .input-field {
+    text-align: center;
+    padding: 14px 8px;
+  }
+
+  .time-input-wrapper::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* BOTÃO CALCULAR */
+  .btn-calculate {
+    width: 100%;
+    padding: 18px;
+    margin-top: 10px;
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta));
+    border: none;
+    border-radius: 14px;
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.4);
+  }
+
+  .btn-calculate::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.6s ease;
+  }
+
+  .btn-calculate:hover::before {
+    left: 100%;
+  }
+
+  .btn-calculate:active {
+    transform: scale(0.97);
+    box-shadow: 0 0 15px rgba(255, 0, 229, 0.6);
+  }
+
+  /* RESULTADO */
+  .result-card {
+    display: none;
+    animation: slideIn 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .result-card.show {
+    display: block;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .pace-display {
+    text-align: center;
+    padding: 20px 0;
+    position: relative;
+  }
+
+  .pace-label {
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .pace-value {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.5));
+  }
+
+  .pace-unit {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    color: var(--neon-cyan);
+    letter-spacing: 2px;
+    margin-top: 8px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .stat-box {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 240, 255, 0.15);
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+  }
+
+  .stat-value {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--neon-cyan);
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+  }
+
+  /* PROJEÇÕES */
+  .projections {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .projection-item {
+    background: rgba(0, 0, 0, 0.3);
+    border-left: 3px solid var(--neon-magenta);
+    padding: 12px 14px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .projection-item:hover {
+    background: rgba(255, 0, 229, 0.08);
+    transform: translateX(3px);
+  }
+
+  .projection-name {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .projection-time {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--neon-magenta);
+  }
+
+  /* HISTÓRICO */
+  .history-item {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 240, 255, 0.1);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+  }
+
+  .history-item:hover {
+    border-color: var(--neon-cyan);
+    background: rgba(0, 240, 255, 0.05);
+  }
+
+  .history-info {
+    flex: 1;
+  }
+
+  .history-pace {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--neon-cyan);
+  }
+
+  .history-details {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+
+  .history-delete {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 6px;
+    font-size: 1.2rem;
+    transition: all 0.2s ease;
+  }
+
+  .history-delete:hover {
+    color: var(--neon-magenta);
+    transform: scale(1.2);
+  }
+
+  .empty-history {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+  }
+
+  .btn-clear {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: transparent;
+    border: 1px solid rgba(255, 0, 229, 0.3);
+    border-radius: 10px;
+    color: var(--neon-magenta);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-clear:hover {
+    background: rgba(255, 0, 229, 0.1);
+    border-color: var(--neon-magenta);
+  }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 20px 0;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+  }
+
+  .footer span {
+    color: var(--neon-cyan);
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: rgba(15, 15, 45, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--neon-cyan);
+    color: var(--text-primary);
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 1000;
+  }
+
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Responsivo */
+  @media (max-width: 360px) {
+    .logo { font-size: 2.4rem; }
+    .pace-value { font-size: 2.8rem; }
+    .card { padding: 22px 16px; }
+  }
+
+  @media (min-width: 768px) {
+    .container { padding: 30px 20px 50px; }
+    .logo { font-size: 3.5rem; }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--neon-cyan); border-radius: 3px; }
 </style>
 </head>
 <body>
-<div id="app">
 
-  <!-- ============ PÁGINA INICIAL ============ -->
-  <section id="screen-home" class="screen active">
-    <h1 class="page-title">PÁGINA INICIAL</h1>
-    <div class="card">
-      <div class="hero-top">
-        <div class="heart">❤️</div>
-        <button class="btn primary big" onclick="openQuick()">Medir agora <span class="chev">›</span></button>
-      </div>
-      <div class="last-bar">
-        <span>Último Registro: <b id="lastTime" class="muted">--:--</b></span>
-        <button class="link" onclick="goHist()">Histórico <span class="chev">›</span></button>
-      </div>
+<div class="container">
+
+  <!-- HEADER -->
+  <header class="header">
+    <h1 class="logo">iPACE</h1>
+    <p class="tagline">Run Beyond Limits</p>
+  </header>
+
+  <!-- CARD DE ENTRADA -->
+  <div class="card">
+    <h2 class="card-title">Dados da Corrida</h2>
+
+    <div class="input-group">
+      <label class="input-label" for="distance">Distância Percorrida</label>
+      <input type="number" id="distance" class="input-field" placeholder="Ex: 5.0" step="0.01" min="0.01" inputmode="decimal">
     </div>
-    <br/>
-    <div class="grid">
-      <div class="card metric">
-        <div class="m-icon" style="background:rgba(96,165,250,.18)">⚖️</div>
-        <div class="m-title">Peso</div>
-        <div class="m-value"><span id="v-peso">--</span><small>kg</small></div>
-        <div class="badge-row" id="b-peso"></div>
-        <button class="btn primary block" onclick="openForm('peso')">Registro</button>
-      </div>
-      <div class="card metric">
-        <div class="m-icon" style="background:rgba(248,113,113,.15)">🩺</div>
-        <div class="m-title">Pressão arterial</div>
-        <div class="m-value"><span id="v-pressao">--</span><small>mmHg</small></div>
-        <div class="badge-row" id="b-pressao"></div>
-        <button class="btn primary block" onclick="openForm('pressao')">Registro</button>
-      </div>
-      <div class="card metric">
-        <div class="m-icon" style="background:rgba(251,146,60,.15)">🩸</div>
-        <div class="m-title">Açúcar no sangue</div>
-        <div class="m-value"><span id="v-acucar">--</span><small>mg/dL</small></div>
-        <div class="badge-row" id="b-acucar"></div>
-        <button class="btn primary block" onclick="openForm('acucar')">Registro</button>
-      </div>
-      <div class="card metric">
-        <div class="m-icon" style="background:rgba(244,114,182,.15)">💓</div>
-        <div class="m-title">Frequência cardíaca</div>
-        <div class="m-value"><span id="v-fc">--</span><small>bpm</small></div>
-        <div class="badge-row" id="b-fc"></div>
-        <button class="btn primary block" onclick="openForm('fc')">Registro</button>
-      </div>
 
-      <!-- ============ NOVO: MEDIDOR DE ALTURA ============ -->
-      <div class="card metric wide">
-        <div class="m-icon" style="background:rgba(74,222,128,.15)">📏</div>
-        <div class="w-mid">
-          <div class="m-title">Altura</div>
-          <div class="m-value"><span id="v-altura">--</span><small>cm</small></div>
+    <div class="input-group">
+      <label class="input-label">Tempo Gasto</label>
+      <div class="time-inputs">
+        <div class="time-input-wrapper" data-label="Horas">
+          <input type="number" id="hours" class="input-field" placeholder="00" min="0" max="23" inputmode="numeric">
         </div>
-        <button class="btn primary" onclick="openForm('altura')">Registro</button>
+        <div class="time-input-wrapper" data-label="Minutos">
+          <input type="number" id="minutes" class="input-field" placeholder="00" min="0" max="59" inputmode="numeric">
+        </div>
+        <div class="time-input-wrapper" data-label="Segundos">
+          <input type="number" id="seconds" class="input-field" placeholder="00" min="0" max="59" inputmode="numeric">
+        </div>
       </div>
     </div>
 
-    <!-- ============ NOVO: IMC & PESO IDEAL ============ -->
-    <div class="card imc-card">
-      <div class="imc-head">📐 IMC & Peso Ideal</div>
-      <div class="imc-grid">
-        <div class="imc-box"><span class="imc-label">IMC</span><div class="imc-val" id="v-imc">--</div></div>
-        <div class="imc-box"><span class="imc-label">Peso ideal</span><div class="imc-val green" id="v-pesoideal">--</div></div>
+    <button class="btn-calculate" onclick="calculatePace()">
+      ⚡ Calcular Pace
+    </button>
+  </div>
+
+  <!-- CARD DE RESULTADO -->
+  <div class="card result-card" id="resultCard">
+    <h2 class="card-title">Resultado</h2>
+
+    <div class="pace-display">
+      <div class="pace-label">Seu Pace</div>
+      <div class="pace-value" id="paceValue">0:00</div>
+      <div class="pace-unit">MIN / KM</div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="stat-value" id="speedValue">0.0</div>
+        <div class="stat-label">KM/H</div>
       </div>
-      <div class="badge-row badge-center" id="b-imc"></div>
-      <div class="pi-range" id="pi-range"></div>
-      <div class="gauge"><div id="gaugeMark" class="gauge-mark">▼</div></div>
-      <div class="gauge-scale"><span>14</span><span>IMC</span><span>42</span></div>
-      <div class="imc-table" id="imcTable"></div>
-      <div class="muted imc-hint" id="imcHint">Registre seu <b>peso</b> e sua <b>altura</b> para calcular o IMC e o peso ideal.</div>
+      <div class="stat-box">
+        <div class="stat-value" id="metersPerSec">0.0</div>
+        <div class="stat-label">M/S</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value" id="totalSeconds">0</div>
+        <div class="stat-label">Segundos Total</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value" id="kmPerMin">0.00</div>
+        <div class="stat-label">KM/MIN</div>
+      </div>
     </div>
 
-    <div class="disclaimer">⚠️ App para registro pessoal — não substitui orientação médica.</div>
-  </section>
-
-  <!-- ============ HISTÓRICO ============ -->
-  <section id="screen-hist" class="screen">
-    <h1 class="page-title">HISTÓRICO</h1>
-    <div class="tabs" id="tabs"></div>
-    <div class="card chart-card"><canvas id="chart"></canvas></div>
-    <div class="stats" id="stats"></div>
-    <div id="list"></div>
-    <div class="actions-row">
-      <button class="btn ghost sm" onclick="exportCSV()">⬇ Exportar CSV</button>
-      <button class="btn danger sm" onclick="clearAll()">🗑 Limpar tudo</button>
+    <h2 class="card-title" style="margin-top: 24px;">Projeções</h2>
+    <div class="projections">
+      <div class="projection-item">
+        <div class="projection-name">5 KM</div>
+        <div class="projection-time" id="proj5k">--:--</div>
+      </div>
+      <div class="projection-item">
+        <div class="projection-name">10 KM</div>
+        <div class="projection-time" id="proj10k">--:--</div>
+      </div>
+      <div class="projection-item">
+        <div class="projection-name">21 KM</div>
+        <div class="projection-time" id="proj21k">--:--</div>
+      </div>
+      <div class="projection-item">
+        <div class="projection-name">42 KM</div>
+        <div class="projection-time" id="proj42k">--:--</div>
+      </div>
     </div>
-  </section>
+  </div>
+
+  <!-- CARD DE HISTÓRICO -->
+  <div class="card">
+    <h2 class="card-title">Histórico</h2>
+    <div id="historyList">
+      <div class="empty-history">Nenhum cálculo registrado</div>
+    </div>
+    <button class="btn-clear" id="btnClear" onclick="clearHistory()" style="display:none;">
+      🗑 Limpar Histórico
+    </button>
+  </div>
+
+  <div class="footer">
+    <span>iPACE</span> © 2026 • Futuro do Running
+  </div>
+
 </div>
 
-<!-- ============ NAVEGAÇÃO INFERIOR ============ -->
-<nav id="bottomnav">
-  <button id="nav-home" class="nav-btn active" onclick="goHome()"><span class="ico">🏠</span>Início</button>
-  <button class="fab" onclick="openQuick()">+</button>
-  <button id="nav-hist" class="nav-btn" onclick="goHist()"><span class="ico">📊</span>Histórico</button>
-</nav>
-
-<div id="overlay" onclick="if(event.target===this)closeModal()"><div id="modalBox" class="modal"></div></div>
-<div id="toast"></div>
+<div class="toast" id="toast"></div>
 
 <script>
-/* ================= DADOS ================= */
-const KEY='minhaSaudeDB_v1';
-let db=loadDB();
-function loadDB(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d){d.peso=d.peso||[];d.pressao=d.pressao||[];d.acucar=d.acucar||[];d.fc=d.fc||[];d.altura=d.altura||[];return d;}}catch(e){}return{peso:[],pressao:[],acucar:[],fc:[],altura:[]};}
-function saveDB(){localStorage.setItem(KEY,JSON.stringify(db));}
-const uid=()=>Date.now().toString(36)+Math.floor(Math.random()*1e6).toString(36);
-const q=id=>document.getElementById(id);
-const last=t=>db[t].length?[...db[t]].sort((a,b)=>b.d-a.d)[0]:null;
-const fmt1=v=>(Math.round(v*10)/10).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1});
-const fmtTime=t=>{const d=new Date(t);return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');};
-const fmtDate=t=>{const d=new Date(t);return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear()+' '+fmtTime(t);};
+  // ============ CÁLCULO DE PACE ============
+  function calculatePace() {
+    const distance = parseFloat(document.getElementById('distance').value);
+    const hours = parseInt(document.getElementById('hours').value) || 0;
+    const minutes = parseInt(document.getElementById('minutes').value) || 0;
+    const seconds = parseInt(document.getElementById('seconds').value) || 0;
 
-/* ============ CLASSIFICAÇÕES ============ */
-const COR={green:['#4ade80','rgba(74,222,128,.16)'],yellow:['#fde047','rgba(253,224,71,.16)'],orange:['#fb923c','rgba(251,146,60,.16)'],red:['#f87171','rgba(248,113,113,.16)'],blue:['#60a5fa','rgba(96,165,250,.16)'],gray:['#9aa3c0','rgba(154,163,192,.16)']};
-const badgeHTML=(t,c)=>`<span class="badge" style="color:${(COR[c]||COR.gray)[0]};background:${(COR[c]||COR.gray)[1]}">${t}</span>`;
-function classPressao(s,d){if(s>=180||d>=120)return['Crise hipertensiva','red'];if(s>=140||d>=90)return['Hipertensão 2','red'];if(s>=130||d>=80)return['Hipertensão 1','orange'];if(s>=120)return['Elevada','yellow'];if(s<90||d<60)return['Pressão baixa','blue'];return['Normal','green'];}
-function classAcucar(v,ctx){if(v<70)return['Hipoglicemia','red'];if(ctx==='Jejum'){if(v<100)return['Normal','green'];if(v<126)return['Pré-diabetes','yellow'];return['Alto','red'];}if(v<140)return['Normal','green'];if(v<200)return['Elevado','yellow'];return['Alto','red'];}
-function classFC(v){if(v<50)return['Bradicardia','blue'];if(v<=100)return['Normal','green'];if(v<=120)return['Elevada','yellow'];return['Taquicardia','red'];}
+    // Validações
+    if (!distance || distance <= 0) {
+      showToast('⚠ Informe a distância em KM');
+      return;
+    }
 
-/* ============ NOVO: CLASSIFICAÇÃO DO IMC ============ */
-function classIMC(v){if(v<16)return['Baixo peso extremo','red'];if(v<17)return['Baixo peso grave','red'];if(v<18.5)return['Baixo peso','orange'];if(v<25)return['Normal','green'];if(v<30)return['Sobrepeso','yellow'];if(v<35)return['Obesidade grau I','orange'];if(v<40)return['Obesidade grau II','red'];return['Obesidade grau III','red'];}
-const IMC_ROWS=[['Baixo peso extremo','< 16','red'],['Baixo peso grave','16 – 17','red'],['Baixo peso','17 – 18,5','orange'],['Normal','18,5 – 25','green'],['Sobrepeso','25 – 30','yellow'],['Obesidade grau I','30 – 35','orange'],['Obesidade grau II','35 – 40','red'],['Obesidade grau III','> 40','red']];
-function imcRowIndex(v){if(v<16)return 0;if(v<17)return 1;if(v<18.5)return 2;if(v<25)return 3;if(v<30)return 4;if(v<35)return 5;if(v<40)return 6;return 7;}
-function renderImcTable(imc){const act=(imc==null||isNaN(imc))?-1:imcRowIndex(imc);
-  q('imcTable').innerHTML=IMC_ROWS.map((r,i)=>`<div class="imc-row${i===act?' active':''}" style="color:${COR[r[2]][0]}">${r[0]}<span>${r[1]}</span></div>`).join('');}
+    const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+    if (totalSeconds <= 0) {
+      showToast('⚠ Informe o tempo gasto');
+      return;
+    }
 
-/* ================= HOME ================= */
-function renderHome(){
-  const p=last('peso'),pr=last('pressao'),a=last('acucar'),f=last('fc'),h=last('altura');
-  q('v-peso').textContent=p?fmt1(p.v):'--';
-  q('v-pressao').textContent=pr?pr.sys+'/'+pr.dia:'--';
-  q('v-acucar').textContent=a?fmt1(a.v):'--';
-  q('v-fc').textContent=f?f.v:'--';
-  q('v-altura').textContent=h?fmt1(h.v):'--';
-  let bp='';
-  if(p&&db.peso.length>1){const asc=[...db.peso].sort((x,y)=>x.d-y.d);const diff=p.v-asc[asc.length-2].v;const d1=fmt1(Math.abs(diff));
-    bp=Math.abs(diff)<0.05?badgeHTML('estável','gray'):(diff<0?badgeHTML('▼ '+d1+' kg','green'):badgeHTML('▲ '+d1+' kg','yellow'));}
-  q('b-peso').innerHTML=bp;
-  q('b-pressao').innerHTML=pr?badgeHTML(...classPressao(pr.sys,pr.dia)):'';
-  q('b-acucar').innerHTML=a?badgeHTML(...classAcucar(a.v,a.ctx)):'';
-  q('b-fc').innerHTML=f?badgeHTML(...classFC(f.v)):'';
+    // Cálculos
+    const totalMinutes = totalSeconds / 60;
+    const paceMinPerKm = totalMinutes / distance; // min/km
+    const paceMinutes = Math.floor(paceMinPerKm);
+    const paceSeconds = Math.round((paceMinPerKm - paceMinutes) * 60);
 
-  /* ---- NOVO: cálculo IMC + Peso Ideal ---- */
-  if(p&&h){
-    const hm=h.v/100, imc=p.v/(hm*hm);
-    q('v-imc').textContent=fmt1(imc);
-    const [t,c]=classIMC(imc);
-    q('b-imc').innerHTML=badgeHTML(t,c);
-    const pi=22*hm*hm, pmin=18.5*hm*hm, pmax=25*hm*hm;
-    q('v-pesoideal').innerHTML=fmt1(pi)+'<small>kg</small>';
-    q('pi-range').textContent='Faixa saudável: '+fmt1(pmin)+' – '+fmt1(pmax)+' kg';
-    const pct=Math.min(100,Math.max(0,(imc-14)/(42-14)*100));
-    const mk=q('gaugeMark'); mk.style.display='block'; mk.style.left=pct+'%';
-    renderImcTable(imc);
-    q('imcHint').style.display='none';
-  }else{
-    q('v-imc').textContent='--';
-    q('v-pesoideal').textContent='--';
-    q('b-imc').innerHTML='';
-    q('pi-range').textContent='';
-    q('gaugeMark').style.display='none';
-    renderImcTable(null);
-    q('imcHint').style.display='block';
+    const speedKmh = distance / (totalSeconds / 3600);
+    const speedMs = (distance * 1000) / totalSeconds;
+    const kmPerMin = distance / totalMinutes;
+
+    // Atualiza a UI
+    document.getElementById('paceValue').textContent = 
+      `${paceMinutes}:${paceSeconds.toString().padStart(2, '0')}`;
+    document.getElementById('speedValue').textContent = speedKmh.toFixed(1);
+    document.getElementById('metersPerSec').textContent = speedMs.toFixed(2);
+    document.getElementById('totalSeconds').textContent = totalSeconds;
+    document.getElementById('kmPerMin').textContent = kmPerMin.toFixed(2);
+
+    // Projeções
+    document.getElementById('proj5k').textContent = formatTime(paceMinPerKm * 5);
+    document.getElementById('proj10k').textContent = formatTime(paceMinPerKm * 10);
+    document.getElementById('proj21k').textContent = formatTime(paceMinPerKm * 21.0975);
+    document.getElementById('proj42k').textContent = formatTime(paceMinPerKm * 42.195);
+
+    // Mostra card de resultado
+    const resultCard = document.getElementById('resultCard');
+    resultCard.classList.add('show');
+    resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Salva no histórico
+    saveToHistory({
+      distance: distance,
+      time: formatTime(totalMinutes),
+      pace: `${paceMinutes}:${paceSeconds.toString().padStart(2, '0')}`,
+      speed: speedKmh.toFixed(1),
+      timestamp: Date.now()
+    });
+
+    showToast('✓ Pace calculado com sucesso!');
   }
 
-  const all=[...db.peso,...db.pressao,...db.acucar,...db.fc,...db.altura];
-  q('lastTime').textContent=all.length?fmtTime(Math.max(...all.map(r=>r.d))):'--:--';
-}
+  // ============ FORMATADORES ============
+  function formatTime(totalMinutes) {
+    const h = Math.floor(totalMinutes / 60);
+    const m = Math.floor(totalMinutes % 60);
+    const s = Math.round((totalMinutes * 60) % 60);
+    if (h > 0) {
+      return `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+    return `${m}:${s.toString().padStart(2, '0')}`;
+  }
 
-/* ================ HISTÓRICO ================ */
-const TABS=[{id:'peso',name:'Peso',icon:'⚖️'},{id:'pressao',name:'Pressão',icon:'🩺'},{id:'acucar',name:'Açúcar',icon:'🩸'},{id:'fc',name:'Coração',icon:'❤️'},{id:'altura',name:'Altura',icon:'📏'}];
-let curTab='peso';
-function setTab(t){curTab=t;renderHistory();}
-function renderHistory(){
-  q('tabs').innerHTML=TABS.map(t=>`<button class="${t.id===curTab?'active':''}" onclick="setTab('${t.id}')">${t.icon} ${t.name}</button>`).join('');
-  const recs=[...db[curTab]].sort((a,b)=>b.d-a.d);
-  const fmtV=v=>(curTab==='peso'||curTab==='acucar'||curTab==='altura')?fmt1(v):Math.round(v);
-  if(recs.length){
-    const vals=curTab==='pressao'?recs.map(r=>r.sys):recs.map(r=>r.v);
-    const min=Math.min(...vals),max=Math.max(...vals),med=vals.reduce((s,v)=>s+v,0)/vals.length;
-    const lastTxt=curTab==='pressao'?recs[0].sys+'/'+recs[0].dia:(curTab==='fc'?recs[0].v:fmt1(recs[0].v));
-    q('stats').innerHTML=`<div class="stat"><b>${recs.length}</b><span>Registros</span></div><div class="stat"><b>${lastTxt}</b><span>Último</span></div><div class="stat"><b>${fmtV(med)}</b><span>Média</span></div><div class="stat"><b>${fmtV(min)}–${fmtV(max)}</b><span>Faixa</span></div>`;
-  }else q('stats').innerHTML='';
-  drawChart(recs);
-  q('list').innerHTML=recs.length?recs.map(itemHTML).join(''):`<div class="empty">Nenhum registro ainda.<br>Toque em <b>+</b> para adicionar.</div>`;
-}
-function itemHTML(r){
-  let val='',bad='';
-  if(curTab==='peso')val=`${fmt1(r.v)} <small>kg</small>`;
-  if(curTab==='pressao'){val=`${r.sys}/${r.dia} <small>mmHg</small>${r.pul?` · ${r.pul} bpm`:''}`;bad=badgeHTML(...classPressao(r.sys,r.dia));}
-  if(curTab==='acucar'){val=`${fmt1(r.v)} <small>mg/dL</small>`;bad=badgeHTML(...classAcucar(r.v,r.ctx));}
-  if(curTab==='fc'){val=`${r.v} <small>bpm</small>`;bad=badgeHTML(...classFC(r.v));}
-  if(curTab==='altura')val=`${fmt1(r.v)} <small>cm</small>`;
-  return `<div class="h-item"><div><div class="h-val">${val}</div><div class="h-date">${fmtDate(r.d)}${r.ctx?' · '+r.ctx:''}</div></div><div class="h-right">${bad}<button class="del" onclick="delRec('${r.id}')">🗑️</button></div></div>`;
-}
-function delRec(id){if(!confirm('Excluir este registro?'))return;db[curTab]=db[curTab].filter(r=>r.id!==id);saveDB();renderAll();toast('Registro excluído');}
-function clearAll(){if(!confirm('Apagar TODOS os registros de '+TABS.find(t=>t.id===curTab).name+'?'))return;db[curTab]=[];saveDB();renderAll();toast('Histórico limpo');}
+  // ============ HISTÓRICO ============
+  function saveToHistory(entry) {
+    let history = JSON.parse(localStorage.getItem('ipace_history') || '[]');
+    history.unshift(entry);
+    if (history.length > 20) history = history.slice(0, 20);
+    localStorage.setItem('ipace_history', JSON.stringify(history));
+    renderHistory();
+  }
 
-/* ================= GRÁFICO ================= */
-function drawChart(recs){
-  const cv=q('chart'),ctx=cv.getContext('2d'),dpr=window.devicePixelRatio||1,W=cv.clientWidth,H=cv.clientHeight;
-  cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
-  const asc=[...recs].sort((a,b)=>a.d-b.d).slice(-12);
-  if(asc.length<2){ctx.fillStyle='#9aa3c0';ctx.font='600 13px sans-serif';ctx.textAlign='center';ctx.fillText('Registre 2+ valores para ver o gráfico',W/2,H/2);return;}
-  let series=[];
-  if(curTab==='peso')series=[{cor:'#60a5fa',pts:asc.map(r=>({x:r.d,y:r.v}))}];
-  if(curTab==='fc')series=[{cor:'#f87171',pts:asc.map(r=>({x:r.d,y:r.v}))}];
-  if(curTab==='acucar')series=[{cor:'#fb923c',pts:asc.map(r=>({x:r.d,y:r.v}))}];
-  if(curTab==='altura')series=[{cor:'#4ade80',pts:asc.map(r=>({x:r.d,y:r.v}))}];
-  if(curTab==='pressao')series=[{cor:'#f87171',pts:asc.map(r=>({x:r.d,y:r.sys}))},{cor:'#60a5fa',pts:asc.map(r=>({x:r.d,y:r.dia}))}];
-  const allY=series.flatMap(s=>s.pts.map(p=>p.y));let minY=Math.min(...allY),maxY=Math.max(...allY);
-  if(minY===maxY){minY-=5;maxY+=5;}const pad=(maxY-minY)*.2;minY-=pad;maxY+=pad;
-  const xs=asc.map(r=>r.d),minX=Math.min(...xs),maxX=Math.max(...xs),L=38,R=12,T=12,B=24;
-  const X=x=>minX===maxX?L+(W-L-R)/2:L+(x-minX)/(maxX-minX)*(W-L-R);
-  const Y=y=>T+(maxY-y)/(maxY-minY)*(H-T-B);
-  ctx.strokeStyle='rgba(255,255,255,.08)';ctx.fillStyle='#9aa3c0';ctx.font='600 10px sans-serif';ctx.lineWidth=1;ctx.textAlign='left';
-  for(let i=0;i<=3;i++){const yv=maxY-(maxY-minY)*i/3,yy=Y(yv);ctx.beginPath();ctx.moveTo(L,yy);ctx.lineTo(W-R,yy);ctx.stroke();ctx.fillText(Math.round(yv),6,yy+3);}
-  const dl=d=>{const dt=new Date(d);return String(dt.getDate()).padStart(2,'0')+'/'+String(dt.getMonth()+1).padStart(2,'0');};
-  ctx.textAlign='center';ctx.fillText(dl(minX),X(minX),H-6);ctx.fillText(dl(maxX),X(maxX),H-6);
-  series.forEach(s=>{ctx.strokeStyle=s.cor;ctx.lineWidth=2.5;ctx.lineJoin='round';ctx.beginPath();
-    s.pts.forEach((p,i)=>i?ctx.lineTo(X(p.x),Y(p.y)):ctx.moveTo(X(p.x),Y(p.y)));ctx.stroke();
-    s.pts.forEach(p=>{ctx.fillStyle=s.cor;ctx.beginPath();ctx.arc(X(p.x),Y(p.y),3.2,0,7);ctx.fill();});});
-}
+  function renderHistory() {
+    const history = JSON.parse(localStorage.getItem('ipace_history') || '[]');
+    const container = document.getElementById('historyList');
+    const btnClear = document.getElementById('btnClear');
 
-/* ============= FORMULÁRIOS ============= */
-const FORMS={
- peso:{t:'Registrar Peso',i:'⚖️',h:`<div class="field"><label>Peso (kg)</label><input id="f-v" type="number" inputmode="decimal" step="0.1" min="1" max="400" placeholder="Ex.: 72.5" autocomplete="off"></div>`},
- pressao:{t:'Registrar Pressão Arterial',i:'🩺',h:`<div class="form-row"><div class="field"><label>Sistólica (mmHg)</label><input id="f-s" type="number" inputmode="numeric" min="40" max="260" placeholder="120"></div><div class="field"><label>Diastólica (mmHg)</label><input id="f-d" type="number" inputmode="numeric" min="20" max="200" placeholder="80"></div></div><div class="field"><label>Pulso (opcional, bpm)</label><input id="f-p" type="number" inputmode="numeric" min="20" max="250" placeholder="72"></div>`},
- acucar:{t:'Registrar Glicemia',i:'🩸',h:`<div class="field"><label>Glicose (mg/dL)</label><input id="f-v" type="number" inputmode="decimal" min="20" max="600" placeholder="Ex.: 95"></div><div class="field"><label>Contexto</label><select id="f-c"><option>Jejum</option><option>Antes da refeição</option><option>Após refeição</option><option>Antes de dormir</option></select></div>`},
- fc:{t:'Registrar Frequência Cardíaca',i:'❤️',h:`<div class="field"><label>Frequência (bpm)</label><input id="f-v" type="number" inputmode="numeric" min="20" max="250" placeholder="Ex.: 72"></div><div class="field"><label>Contexto</label><select id="f-c"><option>Repouso</option><option>Após exercício</option><option>Estresse</option></select></div>`},
- altura:{t:'Registrar Altura',i:'📏',h:`<div class="field"><label>Altura (cm)</label><input id="f-v" type="number" inputmode="decimal" step="0.1" min="30" max="250" placeholder="Ex.: 170" autocomplete="off"></div>`}
-};
-let curForm=null;
-function openForm(t){curForm=t;const f=FORMS[t];
-  q('modalBox').innerHTML=`<div class="m-head"><span class="m-ico">${f.i}</span><h2>${f.t}</h2><button class="x" onclick="closeModal()">✕</button></div>${f.h}<div class="m-foot"><button class="btn ghost" onclick="closeModal()">Cancelar</button><button class="btn primary" onclick="saveForm()">💾 Salvar</button></div>`;
-  q('overlay').classList.add('show');setTimeout(()=>{const el=document.querySelector('#modalBox input');if(el)el.focus();},300);}
-function openQuick(){q('modalBox').innerHTML=`<div class="m-head"><span class="m-ico">💙</span><h2>O que registrar?</h2><button class="x" onclick="closeModal()">✕</button></div><div class="quick-grid"><button class="quick-btn" onclick="openForm('peso')"><span class="qi">⚖️</span>Peso</button><button class="quick-btn" onclick="openForm('pressao')"><span class="qi">🩺</span>Pressão</button><button class="quick-btn" onclick="openForm('acucar')"><span class="qi">🩸</span>Açúcar</button><button class="quick-btn" onclick="openForm('fc')"><span class="qi">❤️</span>Coração</button><button class="quick-btn" onclick="openForm('altura')"><span class="qi">📏</span>Altura</button></div>`;q('overlay').classList.add('show');}
-function closeModal(){q('overlay').classList.remove('show');curForm=null;}
-const gv=id=>{const el=q(id);return el?el.value.trim():'';};
-function saveForm(){const t=curForm;if(!t)return;
-  if(t==='peso'){const v=parseFloat(gv('f-v').replace(',','.'));if(!v||v<1||v>400)return toast('⚠️ Peso inválido');db.peso.push({id:uid(),v,d:Date.now()});}
-  else if(t==='pressao'){const s=parseInt(gv('f-s')),d=parseInt(gv('f-d')),p=gv('f-p')?parseInt(gv('f-p')):null;
-    if(!s||s<40||s>260||!d||d<20||d>200)return toast('⚠️ Valores de pressão inválidos');
-    if(p&&(p<20||p>250))return toast('⚠️ Pulso inválido');db.pressao.push({id:uid(),sys:s,dia:d,pul:p,d:Date.now()});}
-  else if(t==='acucar'){const v=parseFloat(gv('f-v').replace(',','.'));if(!v||v<20||v>600)return toast('⚠️ Glicemia inválida');db.acucar.push({id:uid(),v,ctx:gv('f-c'),d:Date.now()});}
-  else if(t==='fc'){const v=parseInt(gv('f-v'));if(!v||v<20||v>250)return toast('⚠️ Frequência inválida');db.fc.push({id:uid(),v,ctx:gv('f-c'),d:Date.now()});}
-  else if(t==='altura'){const v=parseFloat(gv('f-v').replace(',','.'));if(!v||v<30||v>250)return toast('⚠️ Altura inválida');db.altura.push({id:uid(),v,d:Date.now()});}
-  saveDB();closeModal();renderAll();toast('✅ Registro salvo!');}
+    if (history.length === 0) {
+      container.innerHTML = '<div class="empty-history">Nenhum cálculo registrado</div>';
+      btnClear.style.display = 'none';
+      return;
+    }
 
-/* ============== NAVEGAÇÃO / UTIL ============== */
-function goHome(){show('home');}
-function goHist(){show('hist');renderHistory();}
-function show(s){q('screen-home').classList.toggle('active',s==='home');q('screen-hist').classList.toggle('active',s==='hist');q('nav-home').classList.toggle('active',s==='home');q('nav-hist').classList.toggle('active',s==='hist');window.scrollTo({top:0});}
-let toastTimer;function toast(m){const el=q('toast');el.textContent=m;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2200);}
-function exportCSV(){const recs=[...db[curTab]].sort((a,b)=>a.d-b.d);if(!recs.length)return toast('Nada para exportar');let rows=[];
-  if(curTab==='peso'){rows.push(['Data','Peso (kg)']);recs.forEach(r=>rows.push([fmtDate(r.d),String(r.v).replace('.',',')]));}
-  if(curTab==='pressao'){rows.push(['Data','Sistólica','Diastólica','Pulso']);recs.forEach(r=>rows.push([fmtDate(r.d),r.sys,r.dia,r.pul??'']));}
-  if(curTab==='acucar'){rows.push(['Data','Glicose (mg/dL)','Contexto']);recs.forEach(r=>rows.push([fmtDate(r.d),r.v,r.ctx||'']));}
-  if(curTab==='fc'){rows.push(['Data','BPM','Contexto']);recs.forEach(r=>rows.push([fmtDate(r.d),r.v,r.ctx||'']));}
-  if(curTab==='altura'){rows.push(['Data','Altura (cm)']);recs.forEach(r=>rows.push([fmtDate(r.d),String(r.v).replace('.',',')]));}
-  const csv='\uFEFF'+rows.map(r=>r.join(';')).join('\n');const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='historico_'+curTab+'.csv';
-  document.body.appendChild(a);a.click();a.remove();toast('📥 CSV exportado');}
-function renderAll(){renderHome();renderHistory();}
-window.addEventListener('resize',()=>drawChart([...db[curTab]].sort((a,b)=>b.d-a.d)));
-renderAll();
+    btnClear.style.display = 'block';
+    container.innerHTML = history.map((item, index) => `
+      <div class="history-item">
+        <div class="history-info">
+          <div class="history-pace">${item.pace} min/km</div>
+          <div class="history-details">
+            ${item.distance} km • ${item.time} • ${item.speed} km/h
+          </div>
+        </div>
+        <button class="history-delete" onclick="deleteHistory(${index})" title="Excluir">×</button>
+      </div>
+    `).join('');
+  }
+
+  function deleteHistory(index) {
+    let history = JSON.parse(localStorage.getItem('ipace_history') || '[]');
+    history.splice(index, 1);
+    localStorage.setItem('ipace_history', JSON.stringify(history));
+    renderHistory();
+    showToast('Registro removido');
+  }
+
+  function clearHistory() {
+    if (confirm('Deseja realmente limpar todo o histórico?')) {
+      localStorage.removeItem('ipace_history');
+      renderHistory();
+      showToast('Histórico limpo');
+    }
+  }
+
+  // ============ TOAST ============
+  function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+  }
+
+  // ============ EVENTOS ============
+  // Permite calcular com Enter
+  document.querySelectorAll('input').forEach(input => {
+    input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') calculatePace();
+    });
+  });
+
+  // Auto-avança entre campos de tempo
+  ['hours', 'minutes', 'seconds'].forEach((id, idx, arr) => {
+    const input = document.getElementById(id);
+    input.addEventListener('input', (e) => {
+      if (e.target.value.length >= 2 && idx < arr.length - 1) {
+        document.getElementById(arr[idx + 1]).focus();
+      }
+    });
+  });
+
+  // Inicializa
+  renderHistory();
 </script>
+
 </body>
 </html>
