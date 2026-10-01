@@ -1,798 +1,358 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#0a0a1f">
-<title>iPACE - Calculadora de Pace</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  :root {
-    --neon-cyan: #00f0ff;
-    --neon-magenta: #ff00e5;
-    --neon-purple: #b347ff;
-    --dark-bg: #05051a;
-    --card-bg: rgba(15, 15, 45, 0.6);
-    --text-primary: #ffffff;
-    --text-secondary: #a0a0c0;
-  }
-
-  html, body {
-    height: 100%;
-    overflow-x: hidden;
-  }
-
-  body {
-    font-family: 'Rajdhani', sans-serif;
-    background: var(--dark-bg);
-    color: var(--text-primary);
-    min-height: 100vh;
-    position: relative;
-    overflow-x: hidden;
-  }
-
-  /* Fundo animado com gradiente */
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: 
-      radial-gradient(circle at 20% 30%, rgba(0, 240, 255, 0.15) 0%, transparent 50%),
-      radial-gradient(circle at 80% 70%, rgba(255, 0, 229, 0.15) 0%, transparent 50%),
-      radial-gradient(circle at 50% 50%, rgba(179, 71, 255, 0.1) 0%, transparent 60%);
-    z-index: -2;
-    animation: bgShift 15s ease-in-out infinite alternate;
-  }
-
-  /* Grid futurista de fundo */
-  body::after {
-    content: '';
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-image: 
-      linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
-    background-size: 50px 50px;
-    z-index: -1;
-    transform: perspective(500px) rotateX(60deg);
-    transform-origin: center top;
-    opacity: 0.4;
-  }
-
-  @keyframes bgShift {
-    0% { transform: scale(1) rotate(0deg); }
-    100% { transform: scale(1.1) rotate(3deg); }
-  }
-
-  .container {
-    max-width: 480px;
-    margin: 0 auto;
-    padding: 20px 16px 40px;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* HEADER */
-  .header {
-    text-align: center;
-    padding: 30px 0 20px;
-    position: relative;
-  }
-
-  .logo {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 3rem;
-    font-weight: 900;
-    letter-spacing: 4px;
-    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta), var(--neon-purple));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.5));
-    animation: logoGlow 3s ease-in-out infinite alternate;
-  }
-
-  @keyframes logoGlow {
-    from { filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.4)); }
-    to { filter: drop-shadow(0 0 30px rgba(255, 0, 229, 0.6)); }
-  }
-
-  .tagline {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.85rem;
-    letter-spacing: 6px;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    margin-top: 8px;
-  }
-
-  .tagline::before, .tagline::after {
-    content: '—';
-    margin: 0 8px;
-    color: var(--neon-cyan);
-  }
-
-  /* CARD PRINCIPAL */
-  .card {
-    background: var(--card-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(0, 240, 255, 0.2);
-    border-radius: 24px;
-    padding: 28px 22px;
-    margin-bottom: 20px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  }
-
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 100%; height: 2px;
-    background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
-    animation: scanline 4s linear infinite;
-  }
-
-  @keyframes scanline {
-    0% { left: -100%; }
-    100% { left: 100%; }
-  }
-
-  .card-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.9rem;
-    letter-spacing: 3px;
-    color: var(--neon-cyan);
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .card-title::before {
-    content: '';
-    width: 8px; height: 8px;
-    background: var(--neon-cyan);
-    border-radius: 50%;
-    box-shadow: 0 0 10px var(--neon-cyan);
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
-  }
-
-  /* INPUTS */
-  .input-group {
-    margin-bottom: 18px;
-  }
-
-  .input-label {
-    display: block;
-    font-size: 0.75rem;
-    letter-spacing: 2px;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    margin-bottom: 8px;
-    font-weight: 500;
-  }
-
-  .input-field {
-    width: 100%;
-    padding: 14px 18px;
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(0, 240, 255, 0.2);
-    border-radius: 12px;
-    color: var(--text-primary);
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-    outline: none;
-    transition: all 0.3s ease;
-  }
-
-  .input-field:focus {
-    border-color: var(--neon-cyan);
-    box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.15), 0 0 20px rgba(0, 240, 255, 0.2);
-    background: rgba(0, 240, 255, 0.05);
-  }
-
-  .input-field::placeholder {
-    color: rgba(160, 160, 192, 0.4);
-    font-weight: 400;
-  }
-
-  .time-inputs {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
-  }
-
-  .time-input-wrapper {
-    position: relative;
-  }
-
-  .time-input-wrapper .input-field {
-    text-align: center;
-    padding: 14px 8px;
-  }
-
-  .time-input-wrapper::after {
-    content: attr(data-label);
-    position: absolute;
-    bottom: -18px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.65rem;
-    color: var(--text-secondary);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-
-  /* BOTÃO CALCULAR */
-  .btn-calculate {
-    width: 100%;
-    padding: 18px;
-    margin-top: 10px;
-    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta));
-    border: none;
-    border-radius: 14px;
-    color: #fff;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 25px rgba(0, 240, 255, 0.4);
-  }
-
-  .btn-calculate::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-    transition: left 0.6s ease;
-  }
-
-  .btn-calculate:hover::before {
-    left: 100%;
-  }
-
-  .btn-calculate:active {
-    transform: scale(0.97);
-    box-shadow: 0 0 15px rgba(255, 0, 229, 0.6);
-  }
-
-  /* RESULTADO */
-  .result-card {
-    display: none;
-    animation: slideIn 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .result-card.show {
-    display: block;
-  }
-
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .pace-display {
-    text-align: center;
-    padding: 20px 0;
-    position: relative;
-  }
-
-  .pace-label {
-    font-size: 0.8rem;
-    letter-spacing: 3px;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-
-  .pace-value {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 3.5rem;
-    font-weight: 900;
-    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1;
-    filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.5));
-  }
-
-  .pace-unit {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1rem;
-    color: var(--neon-cyan);
-    letter-spacing: 2px;
-    margin-top: 8px;
-  }
-
-  .stats-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-top: 20px;
-  }
-
-  .stat-box {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(0, 240, 255, 0.15);
-    border-radius: 12px;
-    padding: 14px;
-    text-align: center;
-  }
-
-  .stat-value {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--neon-cyan);
-    margin-bottom: 4px;
-  }
-
-  .stat-label {
-    font-size: 0.7rem;
-    letter-spacing: 2px;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-  }
-
-  /* PROJEÇÕES */
-  .projections {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 16px;
-  }
-
-  .projection-item {
-    background: rgba(0, 0, 0, 0.3);
-    border-left: 3px solid var(--neon-magenta);
-    padding: 12px 14px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-  }
-
-  .projection-item:hover {
-    background: rgba(255, 0, 229, 0.08);
-    transform: translateX(3px);
-  }
-
-  .projection-name {
-    font-size: 0.7rem;
-    letter-spacing: 2px;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-
-  .projection-time {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--neon-magenta);
-  }
-
-  /* HISTÓRICO */
-  .history-item {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(0, 240, 255, 0.1);
-    border-radius: 12px;
-    padding: 14px 16px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: all 0.3s ease;
-  }
-
-  .history-item:hover {
-    border-color: var(--neon-cyan);
-    background: rgba(0, 240, 255, 0.05);
-  }
-
-  .history-info {
-    flex: 1;
-  }
-
-  .history-pace {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--neon-cyan);
-  }
-
-  .history-details {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-    letter-spacing: 1px;
-    margin-top: 2px;
-  }
-
-  .history-delete {
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    cursor: pointer;
-    padding: 6px;
-    font-size: 1.2rem;
-    transition: all 0.2s ease;
-  }
-
-  .history-delete:hover {
-    color: var(--neon-magenta);
-    transform: scale(1.2);
-  }
-
-  .empty-history {
-    text-align: center;
-    padding: 20px;
-    color: var(--text-secondary);
-    font-size: 0.85rem;
-    letter-spacing: 1px;
-  }
-
-  .btn-clear {
-    width: 100%;
-    padding: 12px;
-    margin-top: 10px;
-    background: transparent;
-    border: 1px solid rgba(255, 0, 229, 0.3);
-    border-radius: 10px;
-    color: var(--neon-magenta);
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.75rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .btn-clear:hover {
-    background: rgba(255, 0, 229, 0.1);
-    border-color: var(--neon-magenta);
-  }
-
-  /* FOOTER */
-  .footer {
-    text-align: center;
-    padding: 20px 0;
-    font-size: 0.7rem;
-    letter-spacing: 2px;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-  }
-
-  .footer span {
-    color: var(--neon-cyan);
-  }
-
-  /* TOAST */
-  .toast {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    background: rgba(15, 15, 45, 0.95);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--neon-cyan);
-    color: var(--text-primary);
-    padding: 12px 24px;
-    border-radius: 12px;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.9rem;
-    letter-spacing: 1px;
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
-    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    z-index: 1000;
-  }
-
-  .toast.show {
-    transform: translateX(-50%) translateY(0);
-  }
-
-  /* Responsivo */
-  @media (max-width: 360px) {
-    .logo { font-size: 2.4rem; }
-    .pace-value { font-size: 2.8rem; }
-    .card { padding: 22px 16px; }
-  }
-
-  @media (min-width: 768px) {
-    .container { padding: 30px 20px 50px; }
-    .logo { font-size: 3.5rem; }
-  }
-
-  /* Scrollbar */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--neon-cyan); border-radius: 3px; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Loose Tube - Contador de Fibras</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Cabeçalho */
+        header {
+            background-color: #FF5722;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        header h1 {
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Seletor de Cabo */
+        .selector-container {
+            background: white;
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            font-weight: bold;
+            color: #333;
+            outline: none;
+        }
+
+        /* Área Visual (Barras) */
+        .visual-indicator {
+            padding: 15px;
+            background: #f5f5f5;
+        }
+
+        .bar-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .circle-label {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 1px solid #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 14px;
+            background: white;
+            z-index: 2;
+            color: #555;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .bar {
+            height: 50px;
+            background-color: blue;
+            flex-grow: 1;
+            margin-left: -15px; /* Sobrepõe o círculo */
+            border-radius: 0 5px 5px 0;
+            z-index: 1;
+            transition: background-color 0.3s ease, border 0.3s ease; /* Transição suave para a mudança de cor */
+        }
+
+        /* Display do Visor */
+        .display-area {
+            background: white;
+            margin: 0 15px 15px 15px;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 120px;
+        }
+
+        #result-text {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: bold;
+            line-height: 1.4;
+        }
+
+        #input-display {
+            font-size: 48px;
+            font-weight: bold;
+            color: #FF5722;
+        }
+
+        /* Teclado Numérico */
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            padding: 0 15px 15px 15px;
+        }
+
+        .key {
+            background: white;
+            border: none;
+            border-radius: 8px;
+            padding: 15px 0;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+
+        .key:active {
+            background: #e0e0e0;
+        }
+
+        .key.action {
+            color: #FF5722;
+        }
+        
+        .key.backspace {
+            font-size: 20px;
+        }
+
+    </style>
 </head>
 <body>
 
-<div class="container">
+    <header>
+        <h1>Loose Tube - Count <span id="header-count">12</span></h1>
+        <div style="font-size: 20px;">⋮</div>
+    </header>
 
-  <!-- HEADER -->
-  <header class="header">
-    <h1 class="logo">iPACE</h1>
-    <p class="tagline">Run Beyond Limits</p>
-  </header>
-
-  <!-- CARD DE ENTRADA -->
-  <div class="card">
-    <h2 class="card-title">Dados da Corrida</h2>
-
-    <div class="input-group">
-      <label class="input-label" for="distance">Distância Percorrida</label>
-      <input type="number" id="distance" class="input-field" placeholder="Ex: 5.0" step="0.01" min="0.01" inputmode="decimal">
+    <div class="selector-container">
+        <select id="cable-type" onchange="changeCableType()">
+            <option value="12">Fibra de 12 (6 por Tubo)</option>
+            <option value="24">Fibra de 24 (6 por Tubo)</option>
+            <option value="36">Fibra de 36 (6 por Tubo)</option>
+            <option value="48">Fibra de 48 (12 por Tubo)</option>
+            <option value="72">Fibra de 72 (12 por Tubo)</option>
+            <option value="144">Fibra de 144 (12 por Tubo)</option>
+        </select>
     </div>
 
-    <div class="input-group">
-      <label class="input-label">Tempo Gasto</label>
-      <div class="time-inputs">
-        <div class="time-input-wrapper" data-label="Horas">
-          <input type="number" id="hours" class="input-field" placeholder="00" min="0" max="23" inputmode="numeric">
+    <div class="visual-indicator">
+        <div class="bar-container">
+            <div class="circle-label">Fiber</div>
+            <!-- Adicionado ID para controle de cor -->
+            <div class="bar" id="fiber-bar"></div>
         </div>
-        <div class="time-input-wrapper" data-label="Minutos">
-          <input type="number" id="minutes" class="input-field" placeholder="00" min="0" max="59" inputmode="numeric">
+        <div class="bar-container">
+            <div class="circle-label">Tube</div>
+            <!-- Adicionado ID para controle de cor -->
+            <div class="bar" id="tube-bar"></div>
         </div>
-        <div class="time-input-wrapper" data-label="Segundos">
-          <input type="number" id="seconds" class="input-field" placeholder="00" min="0" max="59" inputmode="numeric">
-        </div>
-      </div>
     </div>
 
-    <button class="btn-calculate" onclick="calculatePace()">
-      ⚡ Calcular Pace
-    </button>
-  </div>
-
-  <!-- CARD DE RESULTADO -->
-  <div class="card result-card" id="resultCard">
-    <h2 class="card-title">Resultado</h2>
-
-    <div class="pace-display">
-      <div class="pace-label">Seu Pace</div>
-      <div class="pace-value" id="paceValue">0:00</div>
-      <div class="pace-unit">MIN / KM</div>
+    <div class="display-area">
+        <div id="result-text">Digite o número da fibra...</div>
+        <div id="input-display"></div>
     </div>
 
-    <div class="stats-grid">
-      <div class="stat-box">
-        <div class="stat-value" id="speedValue">0.0</div>
-        <div class="stat-label">KM/H</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-value" id="metersPerSec">0.0</div>
-        <div class="stat-label">M/S</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-value" id="totalSeconds">0</div>
-        <div class="stat-label">Segundos Total</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-value" id="kmPerMin">0.00</div>
-        <div class="stat-label">KM/MIN</div>
-      </div>
+    <div class="keypad">
+        <button class="key" onclick="pressKey('1')">1</button>
+        <button class="key" onclick="pressKey('2')">2</button>
+        <button class="key" onclick="pressKey('3')">3</button>
+        <button class="key" onclick="pressKey('4')">4</button>
+        <button class="key" onclick="pressKey('5')">5</button>
+        <button class="key" onclick="pressKey('6')">6</button>
+        <button class="key" onclick="pressKey('7')">7</button>
+        <button class="key" onclick="pressKey('8')">8</button>
+        <button class="key" onclick="pressKey('9')">9</button>
+        <button class="key backspace action" onclick="backspace()">⌫</button>
+        <button class="key" onclick="pressKey('0')">0</button>
+        <button class="key action" onclick="calculate()">✓</button>
     </div>
 
-    <h2 class="card-title" style="margin-top: 24px;">Projeções</h2>
-    <div class="projections">
-      <div class="projection-item">
-        <div class="projection-name">5 KM</div>
-        <div class="projection-time" id="proj5k">--:--</div>
-      </div>
-      <div class="projection-item">
-        <div class="projection-name">10 KM</div>
-        <div class="projection-time" id="proj10k">--:--</div>
-      </div>
-      <div class="projection-item">
-        <div class="projection-name">21 KM</div>
-        <div class="projection-time" id="proj21k">--:--</div>
-      </div>
-      <div class="projection-item">
-        <div class="projection-name">42 KM</div>
-        <div class="projection-time" id="proj42k">--:--</div>
-      </div>
-    </div>
-  </div>
+    <script>
+        // Cores padrão EIA/TIA-598
+        const colors = [
+            { name: "Azul", hex: "#0000FF" },
+            { name: "Laranja", hex: "#FFA500" },
+            { name: "Verde", hex: "#008000" },
+            { name: "Marrom", hex: "#8B4513" },
+            { name: "Cinza", hex: "#808080" },
+            { name: "Branco", hex: "#FFFFFF", border: "1px solid #ccc" },
+            { name: "Vermelho", hex: "#FF0000" },
+            { name: "Preto", hex: "#000000" },
+            { name: "Amarelo", hex: "#FFFF00" },
+            { name: "Violeta", hex: "#EE82EE" },
+            { name: "Rosa", hex: "#FFC0CB" },
+            { name: "Aqua", hex: "#00FFFF" }
+        ];
 
-  <!-- CARD DE HISTÓRICO -->
-  <div class="card">
-    <h2 class="card-title">Histórico</h2>
-    <div id="historyList">
-      <div class="empty-history">Nenhum cálculo registrado</div>
-    </div>
-    <button class="btn-clear" id="btnClear" onclick="clearHistory()" style="display:none;">
-      🗑 Limpar Histórico
-    </button>
-  </div>
+        let currentInput = "";
+        let selectedCable = 12;
+        let fibersPerTube = 6;
 
-  <div class="footer">
-    <span>iPACE</span> © 2026 • Futuro do Running
-  </div>
+        // Atualiza a quantidade de fibras por tubo com base na seleção
+        function changeCableType() {
+            const select = document.getElementById("cable-type");
+            selectedCable = parseInt(select.value);
+            
+            // Regra de negócio: 12, 24, 36 tem 6 fibras por tubo. 48, 72, 144 tem 12 fibras por tubo.
+            if (selectedCable === 12 || selectedCable === 24 || selectedCable === 36) {
+                fibersPerTube = 6;
+            } else {
+                fibersPerTube = 12;
+            }
 
-</div>
+            document.getElementById("header-count").innerText = selectedCable;
+            clearDisplay();
+        }
 
-<div class="toast" id="toast"></div>
+        // Adiciona números ao visor
+        function pressKey(num) {
+            if (currentInput.length < 4) { // Limite de 4 dígitos (para caber 144)
+                currentInput += num;
+                updateDisplay();
+            }
+        }
 
-<script>
-  // ============ CÁLCULO DE PACE ============
-  function calculatePace() {
-    const distance = parseFloat(document.getElementById('distance').value);
-    const hours = parseInt(document.getElementById('hours').value) || 0;
-    const minutes = parseInt(document.getElementById('minutes').value) || 0;
-    const seconds = parseInt(document.getElementById('seconds').value) || 0;
+        // Apaga o último número digitado
+        function backspace() {
+            currentInput = currentInput.slice(0, -1);
+            updateDisplay();
+        }
 
-    // Validações
-    if (!distance || distance <= 0) {
-      showToast('⚠ Informe a distância em KM');
-      return;
-    }
+        // Limpa o visor e reseta as cores das barras para o padrão (Azul)
+        function clearDisplay() {
+            currentInput = "";
+            document.getElementById("input-display").innerText = "";
+            document.getElementById("result-text").innerText = "Digite o número da fibra...";
+            
+            // Resetando as cores das barras
+            const fiberBar = document.getElementById('fiber-bar');
+            const tubeBar = document.getElementById('tube-bar');
+            
+            fiberBar.style.backgroundColor = 'blue';
+            fiberBar.style.border = 'none';
+            tubeBar.style.backgroundColor = 'blue';
+            tubeBar.style.border = 'none';
+        }
 
-    const totalSeconds = hours * 3600 + minutes * 60 + seconds;
-    if (totalSeconds <= 0) {
-      showToast('⚠ Informe o tempo gasto');
-      return;
-    }
+        // Atualiza o que é mostrado na tela
+        function updateDisplay() {
+            document.getElementById("input-display").innerText = currentInput;
+            
+            if (currentInput === "") {
+                document.getElementById("result-text").innerText = "Digite o número da fibra...";
+            } else {
+                document.getElementById("result-text").innerText = "Pressione ✓ para calcular";
+            }
+        }
 
-    // Cálculos
-    const totalMinutes = totalSeconds / 60;
-    const paceMinPerKm = totalMinutes / distance; // min/km
-    const paceMinutes = Math.floor(paceMinPerKm);
-    const paceSeconds = Math.round((paceMinPerKm - paceMinutes) * 60);
+        // Calcula a cor e o tubo
+        function calculate() {
+            if (currentInput === "") return;
 
-    const speedKmh = distance / (totalSeconds / 3600);
-    const speedMs = (distance * 1000) / totalSeconds;
-    const kmPerMin = distance / totalMinutes;
+            const fiberNumber = parseInt(currentInput);
 
-    // Atualiza a UI
-    document.getElementById('paceValue').textContent = 
-      `${paceMinutes}:${paceSeconds.toString().padStart(2, '0')}`;
-    document.getElementById('speedValue').textContent = speedKmh.toFixed(1);
-    document.getElementById('metersPerSec').textContent = speedMs.toFixed(2);
-    document.getElementById('totalSeconds').textContent = totalSeconds;
-    document.getElementById('kmPerMin').textContent = kmPerMin.toFixed(2);
+            // Validação
+            if (fiberNumber < 1 || fiberNumber > selectedCable) {
+                document.getElementById("result-text").innerHTML = `<span style="color: red;">Erro: O cabo selecionado tem apenas ${selectedCable} fibras.</span>`;
+                return;
+            }
 
-    // Projeções
-    document.getElementById('proj5k').textContent = formatTime(paceMinPerKm * 5);
-    document.getElementById('proj10k').textContent = formatTime(paceMinPerKm * 10);
-    document.getElementById('proj21k').textContent = formatTime(paceMinPerKm * 21.0975);
-    document.getElementById('proj42k').textContent = formatTime(paceMinPerKm * 42.195);
+            // Lógica de cálculo
+            const tubeNumber = Math.ceil(fiberNumber / fibersPerTube);
+            let fiberInTube = fiberNumber % fibersPerTube;
+            
+            // Se o resto for 0, significa que é a última fibra do tubo
+            if (fiberInTube === 0) {
+                fiberInTube = fibersPerTube;
+            }
 
-    // Mostra card de resultado
-    const resultCard = document.getElementById('resultCard');
-    resultCard.classList.add('show');
-    resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Obtendo as cores (subtraindo 1 porque arrays começam em 0)
+            const tubeColor = colors[(tubeNumber - 1) % 12];
+            const fiberColor = colors[(fiberInTube - 1) % 12];
 
-    // Salva no histórico
-    saveToHistory({
-      distance: distance,
-      time: formatTime(totalMinutes),
-      pace: `${paceMinutes}:${paceSeconds.toString().padStart(2, '0')}`,
-      speed: speedKmh.toFixed(1),
-      timestamp: Date.now()
-    });
+            // Montando o texto de resultado
+            let resultHTML = `
+                <div style="font-size: 18px; margin-bottom: 5px;">Fibra ${fiberNumber}</div>
+                <div style="font-size: 14px; color: #555;">
+                    <strong>Tubo ${tubeNumber}</strong> (Cor: ${tubeColor.name})<br>
+                    <strong>Fibra ${fiberInTube}</strong> (Cor: ${fiberColor.name})
+                </div>
+            `;
 
-    showToast('✓ Pace calculado com sucesso!');
-  }
+            document.getElementById("result-text").innerHTML = resultHTML;
+            
+            // ==========================================
+            // NOVA LÓGICA: Alterar a cor das barras visuais
+            // ==========================================
+            const fiberBar = document.getElementById('fiber-bar');
+            const tubeBar = document.getElementById('tube-bar');
 
-  // ============ FORMATADORES ============
-  function formatTime(totalMinutes) {
-    const h = Math.floor(totalMinutes / 60);
-    const m = Math.floor(totalMinutes % 60);
-    const s = Math.round((totalMinutes * 60) % 60);
-    if (h > 0) {
-      return `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-    }
-    return `${m}:${s.toString().padStart(2, '0')}`;
-  }
+            // Aplicar cor no Tubo
+            tubeBar.style.backgroundColor = tubeColor.hex;
+            // Se a cor for branca, aplica a borda para não sumir no fundo
+            if (tubeColor.border) {
+                tubeBar.style.border = tubeColor.border;
+            } else {
+                tubeBar.style.border = 'none';
+            }
 
-  // ============ HISTÓRICO ============
-  function saveToHistory(entry) {
-    let history = JSON.parse(localStorage.getItem('ipace_history') || '[]');
-    history.unshift(entry);
-    if (history.length > 20) history = history.slice(0, 20);
-    localStorage.setItem('ipace_history', JSON.stringify(history));
-    renderHistory();
-  }
+            // Aplicar cor na Fibra
+            fiberBar.style.backgroundColor = fiberColor.hex;
+            // Se a cor for branca, aplica a borda para não sumir no fundo
+            if (fiberColor.border) {
+                fiberBar.style.border = fiberColor.border;
+            } else {
+                fiberBar.style.border = 'none';
+            }
+        }
 
-  function renderHistory() {
-    const history = JSON.parse(localStorage.getItem('ipace_history') || '[]');
-    const container = document.getElementById('historyList');
-    const btnClear = document.getElementById('btnClear');
-
-    if (history.length === 0) {
-      container.innerHTML = '<div class="empty-history">Nenhum cálculo registrado</div>';
-      btnClear.style.display = 'none';
-      return;
-    }
-
-    btnClear.style.display = 'block';
-    container.innerHTML = history.map((item, index) => `
-      <div class="history-item">
-        <div class="history-info">
-          <div class="history-pace">${item.pace} min/km</div>
-          <div class="history-details">
-            ${item.distance} km • ${item.time} • ${item.speed} km/h
-          </div>
-        </div>
-        <button class="history-delete" onclick="deleteHistory(${index})" title="Excluir">×</button>
-      </div>
-    `).join('');
-  }
-
-  function deleteHistory(index) {
-    let history = JSON.parse(localStorage.getItem('ipace_history') || '[]');
-    history.splice(index, 1);
-    localStorage.setItem('ipace_history', JSON.stringify(history));
-    renderHistory();
-    showToast('Registro removido');
-  }
-
-  function clearHistory() {
-    if (confirm('Deseja realmente limpar todo o histórico?')) {
-      localStorage.removeItem('ipace_history');
-      renderHistory();
-      showToast('Histórico limpo');
-    }
-  }
-
-  // ============ TOAST ============
-  function showToast(message) {
-    const toast = document.getElementById('toast');
-    toast.textContent = message;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2500);
-  }
-
-  // ============ EVENTOS ============
-  // Permite calcular com Enter
-  document.querySelectorAll('input').forEach(input => {
-    input.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') calculatePace();
-    });
-  });
-
-  // Auto-avança entre campos de tempo
-  ['hours', 'minutes', 'seconds'].forEach((id, idx, arr) => {
-    const input = document.getElementById(id);
-    input.addEventListener('input', (e) => {
-      if (e.target.value.length >= 2 && idx < arr.length - 1) {
-        document.getElementById(arr[idx + 1]).focus();
-      }
-    });
-  });
-
-  // Inicializa
-  renderHistory();
-</script>
-
+        // Inicializa o app
+        changeCableType();
+    </script>
 </body>
 </html>
