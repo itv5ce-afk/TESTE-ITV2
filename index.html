@@ -38,6 +38,79 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* ===== MENU ===== */
+        .menu-container {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .menu-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            line-height: 1;
+            padding: 4px 6px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background 0.15s;
+            display: block;
+        }
+
+        .menu-btn:active,
+        .menu-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .menu-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: 10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.28);
+            overflow: hidden;
+            min-width: 240px;
+            z-index: 200;
+        }
+
+        .menu-dropdown.open {
+            display: block;
+        }
+
+        .menu-dropdown button {
+            display: block;
+            width: 100%;
+            background: white;
+            border: none;
+            padding: 13px 15px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background 0.15s;
+        }
+
+        .menu-dropdown button:hover {
+            background: #f0f0f0;
+        }
+
+        .menu-dropdown button.active {
+            color: #FF5722;
+            background: #fff1eb;
+        }
+
+        .menu-dropdown button + button {
+            border-top: 1px solid #eee;
         }
 
         /* Seletor de Cabo */
@@ -164,13 +237,24 @@
             font-size: 20px;
         }
 
+        /* Ajustes para telas muito estreitas */
+        @media (max-width: 380px) {
+            header h1 { font-size: 15px; }
+            .menu-dropdown { min-width: 210px; }
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>CÓDIGO DE CORES INTERNACIONAL</h1>
-        <div style="font-size: 20px;">⋮</div>
+        <h1 id="header-title">CÓDIGO DE CORES INTERNACIONAL</h1>
+        <div class="menu-container" id="menu-container">
+            <button class="menu-btn" id="menu-btn" onclick="toggleMenu(event)" aria-label="Menu">⋮</button>
+            <div class="menu-dropdown" id="menu-dropdown">
+                <button id="btn-internacional" class="active" onclick="setMode('internacional')">CÓDIGO DE CORES INTERNACIONAL</button>
+                <button id="btn-brasileiro" onclick="setMode('brasileiro')">CÓDIGO DE CORES BRASILEIRO</button>
+            </div>
+        </div>
     </header>
 
     <div class="selector-container">
@@ -216,8 +300,9 @@
     </div>
 
     <script>
-        // Cores padrão EIA/TIA-598
-        const colors = [
+        // ===== PALETAS DE CORES =====
+        // Cores padrão EIA/TIA-598 (Internacional)
+        const colorsInternacional = [
             { name: "Azul", hex: "#0000FF" },
             { name: "Laranja", hex: "#FFA500" },
             { name: "Verde", hex: "#008000" },
@@ -232,9 +317,71 @@
             { name: "Aqua", hex: "#00FFFF" }
         ];
 
+        // Cores padrão BRASILEIRO
+        const colorsBrasileiro = [
+            { name: "Verde", hex: "#008000" },
+            { name: "Amarelo", hex: "#FFFF00" },
+            { name: "Branco", hex: "#FFFFFF", border: "1px solid #ccc" },
+            { name: "Azul", hex: "#0000FF" },
+            { name: "Vermelho", hex: "#FF0000" },
+            { name: "Violeta", hex: "#EE82EE" },
+            { name: "Marrom", hex: "#8B4513" },
+            { name: "Rosa", hex: "#FFC0CB" },
+            { name: "Preto", hex: "#000000" },
+            { name: "Cinza", hex: "#808080" },
+            { name: "Laranja", hex: "#FFA500" },
+            { name: "Água", hex: "#00FFFF" }
+        ];
+
+        // Paleta ativa (inicia no Internacional)
+        let colors = colorsInternacional;
+        let currentMode = "internacional";
+
         let currentInput = "";
         let selectedCable = 12;
         let fibersPerTube = 6;
+
+        // ===== MENU =====
+        function toggleMenu(event) {
+            if (event) event.stopPropagation();
+            document.getElementById("menu-dropdown").classList.toggle("open");
+        }
+
+        function closeMenu() {
+            document.getElementById("menu-dropdown").classList.remove("open");
+        }
+
+        // Fecha o menu ao clicar fora
+        document.addEventListener("click", function (e) {
+            const container = document.getElementById("menu-container");
+            if (container && !container.contains(e.target)) {
+                closeMenu();
+            }
+        });
+
+        // Troca entre os padrões Internacional e Brasileiro
+        function setMode(mode) {
+            if (mode !== "internacional" && mode !== "brasileiro") return;
+
+            currentMode = mode;
+
+            if (mode === "brasileiro") {
+                colors = colorsBrasileiro;
+                document.getElementById("header-title").innerText = "CÓDIGO DE CORES BRASILEIRO";
+                document.title = "CÓDIGO DE CORES BRASILEIRO";
+            } else {
+                colors = colorsInternacional;
+                document.getElementById("header-title").innerText = "CÓDIGO DE CORES INTERNACIONAL";
+                document.title = "CÓDIGO DE CORES INTERNACIONAL";
+            }
+
+            // Marca o botão ativo
+            document.getElementById("btn-internacional").classList.toggle("active", mode === "internacional");
+            document.getElementById("btn-brasileiro").classList.toggle("active", mode === "brasileiro");
+
+            closeMenu();
+            clearDisplay();
+        }
 
         // Atualiza a quantidade de fibras por tubo com base na seleção
         function changeCableType() {
@@ -266,7 +413,7 @@
             updateDisplay();
         }
 
-        // Limpa o visor e reseta as cores das barras para o padrão (Azul)
+        // Limpa o visor e reseta as cores das barras para o padrão (primeira cor da paleta ativa)
         function clearDisplay() {
             currentInput = "";
             document.getElementById("input-display").innerText = "";
@@ -276,9 +423,9 @@
             const fiberBar = document.getElementById('fiber-bar');
             const tubeBar = document.getElementById('tube-bar');
             
-            fiberBar.style.backgroundColor = 'blue';
+            fiberBar.style.backgroundColor = colors[0].hex;
             fiberBar.style.border = 'none';
-            tubeBar.style.backgroundColor = 'blue';
+            tubeBar.style.backgroundColor = colors[0].hex;
             tubeBar.style.border = 'none';
         }
 
